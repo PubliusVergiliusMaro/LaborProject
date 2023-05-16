@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="AuthorServices\" />
+    <Folder Include="BookServices\" />
+    <Folder Include="CatalogServices\" />
+    <Folder Include="CustomerServices\" />
+    <Folder Include="LibrarianServices\" />
+    <Folder Include="NavigationServices\" />
+    <Folder Include="OrderServices\" />
+    <Folder Include="RegistrationServices\" />
+  </ItemGroup>
+
+</Project>
