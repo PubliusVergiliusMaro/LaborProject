@@ -1,0 +1,66 @@
+﻿<Page x:Class="LaborProjectOOP.Dekstop.Views.Pages.CustomerOrderPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
+      mc:Ignorable="d" 
+     d:DesignHeight="800" d:DesignWidth="1250"
+      Title="CustomerOrderPage">
+
+    <Page.Resources >
+        <Style x:Key="TextBoxStyle">
+            <Setter Property="ItemsControl.Width" Value="300"/>
+            <Setter Property="ItemsControl.Height" Value="35"/>
+        </Style>
+        <Style x:Key="LabelStyle">
+            <Setter Property="ItemsControl.FontFamily" Value="Arial"/>
+            <Setter Property="ItemsControl.FontSize" Value="25"/>
+            <Setter Property="ItemsControl.Width" Value="200"/>
+            <Setter Property="ItemsControl.Height" Value="35"/>
+            <Setter Property="ItemsControl.Margin" Value="0 0 0 0"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle">
+            <Setter Property="ItemsControl.Width" Value="150"/>
+            <Setter Property="ItemsControl.Height" Value="45"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="newPageGrid">
+            <Frame x:Name="pagesFrame" NavigationUIVisibility="Hidden"/>
+        </Grid>
+        <Grid x:Name="customerOrdersPageGrid" Grid.Row="0">
+            <StackPanel Orientation="Vertical" 
+                    Margin="0 0 0 0" >
+                <Label Style="{StaticResource LabelStyle}">Дата Взяття книг</Label>
+                <TextBox x:Name="startDataTextBox"  Style="{StaticResource TextBoxStyle}"></TextBox>
+                <Label Style="{StaticResource LabelStyle}">Дата повернення</Label>
+                <TextBox x:Name="endDataTextBox"  Style="{StaticResource TextBoxStyle}"></TextBox>
+                <Label Style="{StaticResource LabelStyle}">Selected Books</Label>
+
+                <DataGrid 
+                      x:Name="booksListDataGrid"
+                      IsReadOnly="True" 
+                      Height="200"
+                Width="400"
+                Margin="0 50 0 0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="100" Header="Title" Binding="{Binding Title}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="100" Header="Price" Binding="{Binding Price}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="100" Header="Author Name" Binding="{Binding Author.Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="100" Header="Author Surname" Binding="{Binding Author.Surname}" ></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Button Margin="0 100 0 0" Style="{StaticResource ButtonStyle}" Click="Button_Click">Cancel</Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

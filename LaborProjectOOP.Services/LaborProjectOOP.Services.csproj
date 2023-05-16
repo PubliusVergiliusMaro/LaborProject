@@ -7,14 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="AuthorServices\" />
-    <Folder Include="BookServices\" />
-    <Folder Include="CatalogServices\" />
-    <Folder Include="CustomerServices\" />
-    <Folder Include="LibrarianServices\" />
-    <Folder Include="NavigationServices\" />
-    <Folder Include="OrderServices\" />
+    <Folder Include="NavigationServices\Stores\" />
     <Folder Include="RegistrationServices\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LaborProjectOOP.Constants\LaborProjectOOP.Constants.csproj" />
+    <ProjectReference Include="..\LaborProjectOOP.Database\LaborProjectOOP.Database.csproj" />
+    <ProjectReference Include="..\LaborProjectOOP.EntityFramework\LaborProjectOOP.EntityFramework.csproj" />
   </ItemGroup>
 
 </Project>
