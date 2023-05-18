@@ -68,7 +68,18 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 				booksListDataGrid.Items.Add(book);
 			librariansListDataGrid.Items.Clear();
 			foreach (LibrarianEntity librarian in _librarianService.GetAll())
-				librariansListDataGrid.Items.Add(librarian);
+			librariansListDataGrid.Items.Add(librarian);
+			foreach (OrderEntity order in _orderService.GetAll())
+			ordersListDataGrid.Items.Add(order);
+
+			List<AuthorEntity> authors = _authorService.GetAll();
+			authorsComboBox.ItemsSource = authors;
+			authorsComboBox.DisplayMemberPath = "FullName";
+
+			List<CatalogEntity> catalogs = _catalogService.GetAll();
+			catalogs.Add(new CatalogEntity { Name = "None" });
+			catalogComboBox.ItemsSource = catalogs;
+			catalogComboBox.DisplayMemberPath = "Name";
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
@@ -237,7 +248,12 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			foreach (LibrarianEntity librarian in _librarianService.GetAll())
 				librariansListDataGrid.Items.Add(librarian);
 		}
-
+		private void RefreshOrdersDataGrid_Click(object sender, RoutedEventArgs e)
+		{
+			ordersListDataGrid.Items.Clear();
+			foreach(OrderEntity order in _orderService.GetAll())
+				ordersListDataGrid.Items.Add(order);
+		}
 		private void MakeAnAdminBtn_Click(object sender, RoutedEventArgs e)
 		{
 			LibrarianEntity selectedLibrarian = librariansListDataGrid.SelectedItem as LibrarianEntity;
@@ -251,6 +267,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 				{
 					selectedLibrarian.IsAdmin = true;
 					_librarianService.Update(selectedLibrarian);
+					MessageBox.Show("Succesfully updated");
 				}
 			}
 			else
@@ -267,6 +284,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 				if (selectedLibrarian.Login != "admin")
 				{
 					_librarianService.Delete(selectedLibrarian.Id);
+					MessageBox.Show("Succesfully deleted");
 				}
 				else
 				{
@@ -276,6 +294,100 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			else
 			{
 				MessageBox.Show("Select some librarian");
+			}
+		}
+		private void MakeNotActiveSelectedOrderBtn_Click(object sender, RoutedEventArgs e)
+		{
+			OrderEntity selectedOrder = ordersListDataGrid.SelectedItem as OrderEntity;
+			if (selectedOrder != null)
+			{
+				selectedOrder.IsActual = false;
+				_orderService.Update(selectedOrder);
+				MessageBox.Show("Succesfully make not active");
+			}
+			else
+			{
+				MessageBox.Show("Select some order");
+			}
+		}
+
+		private void DeleteSelectedOrderBtn_Click(object sender, RoutedEventArgs e)
+		{
+			OrderEntity selectedOrder = ordersListDataGrid.SelectedItem as OrderEntity;
+			if (selectedOrder != null)
+			{
+				_orderService.Delete(selectedOrder.Id);
+				MessageBox.Show("Succesfully delete");
+			}
+			else
+			{
+				MessageBox.Show("Select some order");
+			}
+		}
+
+		private void AddBookToCatalogBtn_Click(object sender, RoutedEventArgs e)
+		{
+			CatalogEntity selectedCatalog = catalogComboBox.SelectedItem as CatalogEntity;
+			BookEntity selectedBook = booksListDataGrid.SelectedItem as BookEntity;
+			if (selectedCatalog != null)
+			{
+				if(selectedBook != null)
+				{
+					if(selectedCatalog.Name == "None")
+					{
+						selectedBook.CatalogFK = null;
+						_bookService.Update(selectedBook);
+						MessageBox.Show("Succesfully added");
+					}
+					else
+					{
+					selectedBook.CatalogFK = selectedCatalog.Id;
+					_bookService.Update(selectedBook);
+					MessageBox.Show("Succesfully added");
+					}
+				}
+			}
+		}
+
+		private void DeleteSelectedBookBtn_Click(object sender, RoutedEventArgs e)
+		{
+			BookEntity selectedBook = booksListDataGrid.SelectedItem as BookEntity;
+			if (selectedBook != null)
+			{
+				_bookService.Delete(selectedBook.Id);
+				MessageBox.Show("Succesfully delete");
+			}
+			else
+			{
+				MessageBox.Show("Select some book");
+			}
+			
+		}
+
+		private void CreateLibrarianBtn_Click(object sender, RoutedEventArgs e)
+		{
+			if (!string.IsNullOrEmpty(loginTextBox.Text) && !string.IsNullOrEmpty(passwordTextBox.Text) && !string.IsNullOrEmpty(salaryTextBox.Text))
+			{
+				LibrarianEntity librarianEntity = new()
+				{
+					IsAdmin = adminCheckBox.IsChecked.Value,
+					Login = loginTextBox.Text,
+					Password = passwordTextBox.Text,
+					Salary = Convert.ToInt32(salaryTextBox.Text),
+					WorkExperience = Convert.ToByte(experienceTextBox.Text),
+				};
+				_librarianService.Create(librarianEntity);
+				MessageBox.Show("Succesfully create");
+
+				adminCheckBox.IsChecked = false;
+				loginTextBox.Text = "";
+				passwordTextBox.Text = "";
+				salaryTextBox.Text = "";
+				experienceTextBox.Text = "";
+			}
+			else
+			{
+				MessageBox.Show("Fill all Fields");
 			}
 		}
 	}
