@@ -5,6 +5,7 @@
 		public OrderEntity()
 		{
 			Books = new List<BookEntity>();
+			
 		}
 		public int Id { get; set; }
 		public DateTime CreatedOn { get; set; }

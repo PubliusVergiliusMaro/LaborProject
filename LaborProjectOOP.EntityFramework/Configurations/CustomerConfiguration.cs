@@ -10,12 +10,6 @@ namespace LaborProjectOOP.EntityFramework.Configurations
 		{
 			builder.ToTable("Customers")
 				.HasKey(cust => cust.Id);
-
-			//builder
-			//	.HasOne<OrderEntity>(cust => cust.Order)
-			//	.WithOne(order => order.Customer)
-			//	.HasForeignKey<CustomerEntity>(cust => cust.OrderFK)
-			//	.OnDelete(DeleteBehavior.Cascade);
 		}
 	}
 }

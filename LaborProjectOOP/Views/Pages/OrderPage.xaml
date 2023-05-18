@@ -16,9 +16,9 @@
         <Style x:Key="LabelStyle">
             <Setter Property="ItemsControl.FontFamily" Value="Arial"/>
             <Setter Property="ItemsControl.FontSize" Value="25"/>
-            <Setter Property="ItemsControl.Width" Value="200"/>
-            <Setter Property="ItemsControl.Height" Value="35"/>
-            <Setter Property="ItemsControl.Margin" Value="60 0 0 0"/>
+            <Setter Property="ItemsControl.Width" Value="auto"/>
+            <Setter Property="ItemsControl.Height" Value="auto"/>
+            <Setter Property="ItemsControl.Margin" Value="0 0 0 0"/>
         </Style>
 
         <Style x:Key="ButtonStyle">
@@ -44,13 +44,12 @@
                     Grid.Row="0" 
                     HorizontalAlignment="Right" 
                     Margin="0 100 50 0" >
-                <Label Style="{StaticResource LabelStyle}">Login</Label>
-
-                <TextBox x:Name="loginTextBox"  Style="{StaticResource TextBoxStyle}"></TextBox>
-                <Label Style="{StaticResource LabelStyle}">Email</Label>
-                <TextBox x:Name="emailTextBox"  Style="{StaticResource TextBoxStyle}"></TextBox>
-                <Label Style="{StaticResource LabelStyle}">Phone Number</Label>
-                <TextBox x:Name="phoneTextBox" Style="{StaticResource TextBoxStyle}"></TextBox>
+                <Label Style="{StaticResource LabelStyle}">Login:</Label>
+                <Label x:Name="loginLabel" FontSize="20" Style="{StaticResource LabelStyle}">Login</Label>
+                <Label Style="{StaticResource LabelStyle}">Email:</Label>
+                <Label x:Name="emailLabel"  FontSize="20" Style="{StaticResource LabelStyle}">Email</Label>
+                <Label Style="{StaticResource LabelStyle}">Phone Number:</Label>
+                <Label x:Name="phoneLabel" FontSize="20" Style="{StaticResource LabelStyle}">Phone Number</Label>
                 <DataGrid 
                       x:Name="booksListDataGrid"
                       IsReadOnly="True" 

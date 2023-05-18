@@ -56,8 +56,19 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			//List<CatalogEntity> catalogs = new List<CatalogEntity>() { catalog };
 			//CatalogService.SaveCatalogs(catalogs);
 
-			UpdateData();
-
+			//UpdateData();
+			customerListDataGrid.Items.Clear();
+			foreach (CustomerEntity customer in _customerService.GetAll())
+				customerListDataGrid.Items.Add(customer);
+			catalogListDataGrid.Items.Clear();
+			foreach (CatalogEntity catalog in _catalogService.GetAll())
+				catalogListDataGrid.Items.Add(catalog);
+			booksListDataGrid.Items.Clear();
+			foreach (BookEntity book in _bookService.GetAll())
+				booksListDataGrid.Items.Add(book);
+			librariansListDataGrid.Items.Clear();
+			foreach (LibrarianEntity librarian in _librarianService.GetAll())
+				librariansListDataGrid.Items.Add(librarian);
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
@@ -67,17 +78,48 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			pagesFrame.Navigate(new AdminMenuPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _adminEntity));
 		}
 
-		private void Button_Click_1(object sender, RoutedEventArgs e)
+		private void DeleteCustomer_Click(object sender, RoutedEventArgs e)
 		{
+
+			CustomerEntity selectedCustomer = customerListDataGrid.SelectedItem as CustomerEntity;
+			if(selectedCustomer == null)
+			{
+				MessageBox.Show("Select Customer");
+			}
+			else
+			_customerService.Delete(selectedCustomer.Id);
+
 			//Переробити на бд
 			//List<CustomerEntity> customers = _customerService.GetAll();
 			////CustomerEntity selectedCustomer = customers.Where(c=>c.Login == customersComboBox.SelectedItem.ToString()).FirstOrDefault();
 			//customers.Remove(customers.Where(c => c.Login == customersComboBox.SelectedItem.ToString()).FirstOrDefault());
 			//_customerService.SaveCustomers(customers);
-			UpdateData();
+			//UpdateData();
 		}
-		private void Button_Click_2(object sender, RoutedEventArgs e)
+		private void DeleteCatalog_Click(object sender, RoutedEventArgs e)
 		{
+			CatalogEntity catalog = catalogListDataGrid.SelectedItem as CatalogEntity;
+
+			_catalogService.Delete(catalog.Id);
+		}
+		private void AddToBlackList_Click(object sender, RoutedEventArgs e)
+		{
+			CustomerEntity selectedCustomer = customerListDataGrid.SelectedItem as CustomerEntity;
+			if (selectedCustomer == null)
+			{
+				MessageBox.Show("Select Customer");
+			}
+			else
+			{
+				if (selectedCustomer.IsBanned)
+				{
+					selectedCustomer.IsBanned = false;
+				}
+				else
+					selectedCustomer.IsBanned = true;
+
+				_customerService.Update(selectedCustomer);
+			}
 			//Переробити на бд
 
 			//List<CustomerEntity> customers = _customerService.GetAll();
@@ -87,43 +129,17 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			//customers.Add(selectedCustomer);
 			//foreach (CustomerEntity customer in customers)
 			//	_customerService.Update(customer);
-			UpdateData();
-		}
-		private void UpdateData()
-		{
-			catalogListDataGrid.Items.Clear();
-			customerListDataGrid.Items.Clear();
-			//customersComboBox.Items.Clear();
-			List<CatalogEntity> catalogsFromFile = _catalogService.GetAll();
-			foreach (CatalogEntity catalog in catalogsFromFile)
-			{
-				catalogListDataGrid.Items.Add(catalog);
-				foreach (BookEntity book in catalog.Books)
-					booksListDataGrid.Items.Add(book);
-			}
 
-			List<CustomerEntity> customersFromFile = _customerService.GetAll();
-			foreach (CustomerEntity customer in customersFromFile)
-			{
-				customerListDataGrid.Items.Add(customer);
-				//customersComboBox.Items.Add(customer.Login);
-			}
-
-			List<AuthorEntity> authors = _authorService.GetAll();
-			authorsComboBox.ItemsSource = authors;
-			authorsComboBox.DisplayMemberPath = "FullName";
-			//foreach(AuthorEntity author in authors)
-			//{
-			//	//authorsComboBox.Items.Add(author);
-			//	authorsComboBox.Items.Add(author.Surname + " " + author.Name);
-			//}
+			
 		}
 
-		private void addImageBtn_Click(object sender, RoutedEventArgs e)
+		private void AddImageBtn_Click(object sender, RoutedEventArgs e)
 		{
-			OpenFileDialog openFileDialog = new OpenFileDialog();
-			openFileDialog.Multiselect = false;
-			openFileDialog.Filter = "Images|*.png;*.jpg";
+			OpenFileDialog openFileDialog = new()
+			{
+				Multiselect = false,
+				Filter = "Images|*.png;*.jpg"
+			};
 			openFileDialog.ShowDialog();
 
 			if (!openFileDialog.CheckFileExists || string.IsNullOrEmpty(openFileDialog.FileName))
@@ -131,17 +147,17 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 				//MessageBox.Show("Error with getting image.");
 				return;
 			}
-			BitmapImage image = new BitmapImage(new Uri(openFileDialog.FileName));
+			BitmapImage image = new(new Uri(openFileDialog.FileName));
 			bookImage.Source = image;
 			bookImagePath = openFileDialog.FileName;
 		}
 
-		private void addBookBtn_Click(object sender, RoutedEventArgs e)
+		private void AddBookBtn_Click(object sender, RoutedEventArgs e)
 		{
-			List<AuthorEntity> authors = _authorService.GetAll();
+			//List<AuthorEntity> authors = _authorService.GetAll();
 			AuthorEntity selectedAuthor = authorsComboBox.SelectedItem as AuthorEntity;
 
-			BookEntity book = new BookEntity()
+			BookEntity book = new()
 			{
 				Title = titleTextBox.Text,
 				Description = descriptionTextBox.Text,
@@ -161,7 +177,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 
 		private void AddAuthorBtn_Click(object sender, RoutedEventArgs e)
 		{
-			AuthorEntity authorEntity = new AuthorEntity
+			AuthorEntity authorEntity = new()
 			{
 				Name = nameAuthorTextBox.Text,
 				Surname = surnameAuthorTextBox.Text,
@@ -170,19 +186,97 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			MessageBox.Show("Succesfully create a new Author");
 			nameAuthorTextBox.Text = "";
 			surnameAuthorTextBox.Text = "";
-			UpdateData();
+
+
+			List<AuthorEntity> authors = _authorService.GetAll();
+			authorsComboBox.ItemsSource = authors;
+			authorsComboBox.DisplayMemberPath = "FullName";
 		}
 
 		private void CreateCatalogBtn_Click(object sender, RoutedEventArgs e)
 		{
-			CatalogEntity catalog = new CatalogEntity()
+			CatalogEntity catalog = new()
 			{
 				Name = nameCatalogTextBox.Text
 			};
 			_catalogService.Create(catalog);
 			MessageBox.Show("Succesfully create a new Catalog");
 			nameCatalogTextBox.Text = "";
-			UpdateData();
+		}
+
+		private void CustomerListDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+		{
+			DeleteCustomerBtn.IsEnabled = true;
+			AddToBlackListCustomerBtn.IsEnabled = true;
+		}
+		
+		private void RefreshCustomerDataGrid_Click(object sender, RoutedEventArgs e)
+		{
+			customerListDataGrid.Items.Clear();
+			foreach (CustomerEntity customer in _customerService.GetAll())
+				customerListDataGrid.Items.Add(customer);
+		}
+
+		private void RefreshCatalogsDataGrid_Click(object sender, RoutedEventArgs e)
+		{
+			catalogListDataGrid.Items.Clear();
+			foreach (CatalogEntity catalog in _catalogService.GetAll())
+				catalogListDataGrid.Items.Add(catalog);
+		}
+		
+		private void RefreshBooksDataGrid_Click(object sender, RoutedEventArgs e)
+		{
+			booksListDataGrid.Items.Clear();
+			foreach (BookEntity book in _bookService.GetAll())
+				booksListDataGrid.Items.Add(book);
+		}
+
+		private void RefreshLibrariansDataGrid_Click(object sender, RoutedEventArgs e)
+		{
+			librariansListDataGrid.Items.Clear();
+			foreach (LibrarianEntity librarian in _librarianService.GetAll())
+				librariansListDataGrid.Items.Add(librarian);
+		}
+
+		private void MakeAnAdminBtn_Click(object sender, RoutedEventArgs e)
+		{
+			LibrarianEntity selectedLibrarian = librariansListDataGrid.SelectedItem as LibrarianEntity;
+			if (selectedLibrarian != null)
+			{
+				if (selectedLibrarian.IsAdmin == true)
+				{
+					MessageBox.Show("Such librarian is already an admin");
+				}
+				else
+				{
+					selectedLibrarian.IsAdmin = true;
+					_librarianService.Update(selectedLibrarian);
+				}
+			}
+			else
+			{
+				MessageBox.Show("Select some librarian");
+			}
+		}
+
+		private void DeleteSelectedLibrarianBtn_Click(object sender, RoutedEventArgs e)
+		{
+			LibrarianEntity selectedLibrarian = librariansListDataGrid.SelectedItem as LibrarianEntity;
+			if (selectedLibrarian != null)
+			{
+				if (selectedLibrarian.Login != "admin")
+				{
+					_librarianService.Delete(selectedLibrarian.Id);
+				}
+				else
+				{
+					MessageBox.Show("You can`t delete an admin");
+				}
+			}
+			else
+			{
+				MessageBox.Show("Select some librarian");
+			}
 		}
 	}
 }

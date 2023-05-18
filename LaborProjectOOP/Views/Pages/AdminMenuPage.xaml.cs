@@ -57,5 +57,12 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			};
 			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, customer, new List<BookEntity>()));
 		}
-	}
+
+		private void BackToLoginPage_Click(object sender, RoutedEventArgs e)
+		{
+			menuPageGrid.Visibility = Visibility.Hidden;
+			newPageGrid.Visibility = Visibility.Visible;
+			pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService));
+		}
+    }
 }

@@ -20,7 +20,6 @@ namespace LaborProjectOOP.EntityFramework
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			optionsBuilder.UseNpgsql(DbConfiguration.CONECTION_STRING_POSTGRESQL);
-			//optionsBuilder.UseSqlServer(@"Data Source=localhost;Database=LabOOPDb;Trusted_Connection=True;TrustServerCertificate=True;");
 		}
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

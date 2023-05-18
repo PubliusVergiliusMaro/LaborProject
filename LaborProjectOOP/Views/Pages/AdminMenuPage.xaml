@@ -9,15 +9,29 @@
       Title="AdminMenuPage">
 
     <Grid>
-        <Grid x:Name="newPageGrid">
+        
+        <Grid x:Name="newPageGrid" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <Frame x:Name="pagesFrame" NavigationUIVisibility="Hidden"/>
         </Grid>
-        <Grid x:Name="menuPageGrid">
-
-            <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
+        <Grid x:Name="menuPageGrid" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <Grid>
+                 <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
                 <Button Width="200" Height="30" Click="enterAsAdminBtn_Click">Enter as Admin</Button>
                 <Button Width="200" Height="30" Click="enterAsCustomerBtn_Click">Enter as Customer</Button>
             </StackPanel>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="169*"/>
+            <ColumnDefinition Width="1081*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="719*"/>
+            <RowDefinition Height="81*"/>
+        </Grid.RowDefinitions>
+                <Button Click="BackToLoginPage_Click" Grid.Column="0" Grid.Row="1" Margin="10 0 0 0" Height="50" FontSize="20">Back to Autoriz</Button>
+            </Grid>
+            
         </Grid>
     </Grid>
 </Page>

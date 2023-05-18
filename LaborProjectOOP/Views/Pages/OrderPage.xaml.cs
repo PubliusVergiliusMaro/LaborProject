@@ -39,9 +39,9 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_authorService = authorService;
 			InitializeComponent();
 
-			loginTextBox.Text = _currentCustomer.Login;
-			emailTextBox.Text = _currentCustomer.Email;
-			phoneTextBox.Text = _currentCustomer.Phone;
+			loginLabel.Content = _currentCustomer.Login;
+			emailLabel.Content = _currentCustomer.Email;
+			phoneLabel.Content = _currentCustomer.Phone;
 
 			DateTime startDate = DateTime.Now;
 			DateTime endDate = DateTime.Now.AddDays(10);

@@ -35,25 +35,13 @@
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <!--<StackPanel Orientation="Vertical" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"> 
-                        <Label>Login</Label>
-                        <TextBox Width="200"></TextBox>
-                        <Label>Email</Label>
-                        <TextBox></TextBox>
-                        <Label>Phone</Label>
-                        <TextBox></TextBox>
-                        <Label></Label>
-                        <TextBox></TextBox>
-                        <Label>Password</Label>
-                        <TextBox></TextBox>
-                        <Button Content="Add" Height="30" Width="70" Margin="0 30 0 0"></Button>
-                    </StackPanel>-->
-
+               
                         <DataGrid 
                               x:Name="customerListDataGrid"
                               IsReadOnly="True" 
                               HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch">
+                              VerticalAlignment="Stretch"
+                             SelectedCellsChanged="CustomerListDataGrid_SelectedCellsChanged">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="100" Header="Login" Binding="{Binding Login}"></DataGridTextColumn>
                                 <DataGridTextColumn Width="100" Header="Password" Binding="{Binding Password}"></DataGridTextColumn>
@@ -68,14 +56,26 @@
                                 <RowDefinition Height="5*"/>
                                 <RowDefinition Height="5*"/>
                             </Grid.RowDefinitions>
+                            <Button x:Name="refreshCustomerDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Click="RefreshCustomerDataGrid_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid>
+                                            <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
+                                            <Image Height="30" Source="C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\Images\RefreshIcon.png"></Image>
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+
+                            </Button>
                             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
                                 <Label HorizontalContentAlignment="Center">Sorting Types</Label>
                                 <ComboBox x:Name="sortingBooksComboBox" Width="100" Height="30" Text="Sort Table"/>
 
                             </StackPanel>
                             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="2">
-                                <Button Margin="0 50 0 0" Width="150" Height="30" Click="Button_Click_1">Delete Selected Customer</Button>
-                                <Button Margin="0 20 0 0" Width="150" Height="30" Click="Button_Click_2">Ban Selected Customer</Button>
+                                <Button x:Name="DeleteCustomerBtn" IsEnabled="False" Margin="0 50 0 0" Width="150" Height="30" Click="DeleteCustomer_Click">Delete Selected Customer</Button>
+                                <Button x:Name="AddToBlackListCustomerBtn" IsEnabled="False" Margin="0 20 0 0" Width="200" Height="30" Click="AddToBlackList_Click">Add To Black List Selected Customer</Button>
                                 <!--<Button Margin="0 20 0 0" Width="150" Height="30"></Button>-->
                             </StackPanel>
                         </Grid>
@@ -116,13 +116,24 @@
                                 <RowDefinition Height="5*"/>
                             </Grid.RowDefinitions>
 
+                            <Button x:Name="refreshCatalogsDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Click="RefreshCatalogsDataGrid_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid>
+                                            <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
+                                            <Image Height="30" Source="C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\Images\RefreshIcon.png"></Image>
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
                             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
                                 <Label HorizontalContentAlignment="Center">Sorting Types</Label>
                                 <ComboBox x:Name="sortingCatalogComboBox_Copy" Width="100" Height="30" Text="Sort Table"/>
 
                             </StackPanel>
                             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="2">
-                                <Button Margin="0 50 0 0" Width="150" Height="30">Delete Selected Catalog</Button>
+                                <Button Margin="0 50 0 0" Width="150" Height="30" Click="DeleteCatalog_Click">Delete Selected Catalog</Button>
                                 <!--<Button Margin="0 20 0 0" Width="150" Height="30"></Button>-->
                             </StackPanel>
                         </Grid>
@@ -156,6 +167,17 @@
                                 <RowDefinition Height="5*"/>
                                 <RowDefinition Height="5*"/>
                             </Grid.RowDefinitions>
+                            <Button x:Name="refreshBooksDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Click="RefreshBooksDataGrid_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid>
+                                            <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
+                                            <Image Height="30" Source="C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\Images\RefreshIcon.png"></Image>
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
                             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
                                 <Label HorizontalContentAlignment="Center">Sorting Types</Label>
                                 <ComboBox x:Name="sortingCustomersComboBox" Width="100" Height="30" Text="Sort Table"/>
@@ -172,6 +194,65 @@
                                 <Button Margin="0 50 0 0" Width="150" Height="30">Delete Selected Book</Button>
                             </StackPanel>
 
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>Edit Librarians</TextBlock>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <DataGrid 
+                              x:Name="librariansListDataGrid"
+                              IsReadOnly="True" 
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="100" Header="Login" Binding="{Binding Login}"></DataGridTextColumn>
+                                    <DataGridTextColumn Width="100" Header="Is Admin" Binding="{Binding IsAdmin}"></DataGridTextColumn>
+                                    <DataGridTextColumn Width="100" Header="Work Experience" Binding="{Binding WorkExperience}"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="4*"/>
+                                <RowDefinition Height="4*"/>
+                            </Grid.RowDefinitions>
+                            <Button x:Name="refreshLibrariansDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Click="RefreshLibrariansDataGrid_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid>
+                                            <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
+                                            <Image Height="30" Source="C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\Images\RefreshIcon.png"></Image>
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Grid Grid.Row="1">
+                                <StackPanel>
+                                    <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Click="MakeAnAdminBtn_Click">
+                                        Make selected an Admin
+                                    </Button>
+                                    <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Click="DeleteSelectedLibrarianBtn_Click">
+                                        Delete Selected
+                                    </Button>
+                                </StackPanel>
+                                
+                            </Grid>
                         </Grid>
                     </Grid>
                 </TabItem>
@@ -200,7 +281,7 @@
                             <TextBox></TextBox>-->
                             <Label>Authors</Label>
                             <ComboBox x:Name="authorsComboBox"></ComboBox>
-                            <Button x:Name="addBookBtn" Click="addBookBtn_Click" Content="Add" Height="30" Width="70" Margin="0 30 0 0"/>
+                            <Button x:Name="addBookBtn" Click="AddBookBtn_Click" Content="Add" Height="30" Width="70" Margin="0 30 0 0"/>
                         </StackPanel>
 
                         <Grid Grid.Column="1" Margin="0 0 10 0">
@@ -210,7 +291,7 @@
                                 <RowDefinition Height="10*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="1">
-                                <Button x:Name="addImageBtn" Click="addImageBtn_Click" FontSize="25" >Add Image</Button>
+                                <Button x:Name="addImageBtn" Click="AddImageBtn_Click" FontSize="25" >Add Image</Button>
                             </Grid>
                             <Grid Grid.Row="2">
                                 <Image x:Name="bookImage"></Image>
@@ -245,6 +326,62 @@
 
                         <Button Content="Add Author" Height="30" Click="AddAuthorBtn_Click" Margin="0 90 0 0"/>
                     </StackPanel>
+                </TabItem>
+                <TabItem Header="Add Librarian">
+                    <Grid Grid.Row="0">
+                        <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                            <Label 
+                     Content="Login" 
+                     HorizontalAlignment="Center"
+                     Margin="0,0,0,0" 
+                     VerticalAlignment="Top"
+                    />
+                            <TextBox 
+                    x:Name="loginTextBox"
+                     HorizontalAlignment="Center"
+                     Height="30" 
+                     Margin="0,0,0,0"
+                     Width="332"
+                    />
+                            <Label 
+                     Content="Password" 
+                     HorizontalAlignment="Center"
+                     Margin="0,0,0,0"
+                    />
+                            <TextBox 
+                     HorizontalAlignment="Center" 
+                    x:Name="passwordTextBox"
+                     Height="30" 
+                     Width="332" 
+                     Margin="0,0,0,0" 
+                    />
+                            <Label 
+                     Content="Email" 
+                     HorizontalAlignment="Center"
+                     Margin="0,0,0,0" 
+                     VerticalAlignment="Top"
+                    />
+                            <TextBox 
+                    x:Name="emailTextBox"
+                     HorizontalAlignment="Center"
+                     Height="30" 
+                     Margin="0,0,0,0"
+                     Width="332"
+                    />
+                            <Label 
+                     Content="Phone" 
+                     HorizontalAlignment="Center"
+                     Margin="0,0,0,0"
+                    />
+                            <TextBox 
+                     HorizontalAlignment="Center" 
+                    x:Name="phoneTextBox"
+                     Height="30" 
+                     Width="332" 
+                     Margin="0,0,0,0" 
+                    />
+                        </StackPanel>
+                    </Grid>
                 </TabItem>
             </TabControl>
 
