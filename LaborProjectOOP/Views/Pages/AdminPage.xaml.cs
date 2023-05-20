@@ -1,4 +1,5 @@
-﻿using LaborProjectOOP.Database.Models;
+﻿using LaborProjectOOP.Constants.Enums;
+using LaborProjectOOP.Database.Models;
 using LaborProjectOOP.Services.AuthorServices;
 using LaborProjectOOP.Services.BookServices;
 using LaborProjectOOP.Services.CatalogServices;
@@ -8,6 +9,7 @@ using LaborProjectOOP.Services.OrderServices;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -40,23 +42,6 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_adminEntity = adminEntity;
 			InitializeComponent();
 
-			//CatalogService catalogService = new CatalogService();
-			//for(int i = 0; i < 10; i++)
-			//{
-			//	Books.Add(new BookEntity($"Name{i}",$"desc",100+i,true,new AuthorEntity() { Name=$"Grd{i}",Surname=$"FRfdfsd{i}"}));
-			//}
-
-
-			//CatalogEntity catalog = new CatalogEntity()
-			//{
-			//	Id = 1,
-			//	Name = "First CatalogEntity",
-			//	Books= Books
-			//};
-			//List<CatalogEntity> catalogs = new List<CatalogEntity>() { catalog };
-			//CatalogService.SaveCatalogs(catalogs);
-
-			//UpdateData();
 			customerListDataGrid.Items.Clear();
 			foreach (CustomerEntity customer in _customerService.GetAll())
 				customerListDataGrid.Items.Add(customer);
@@ -78,18 +63,33 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 
 			List<CatalogEntity> catalogs = _catalogService.GetAll();
 			catalogs.Add(new CatalogEntity { Name = "None" });
-			catalogComboBox.ItemsSource = catalogs;
-			catalogComboBox.DisplayMemberPath = "Name";
+			catalogsComboBox.ItemsSource = catalogs;
+			catalogsComboBox.DisplayMemberPath = "Name";
+
+			sortingCustomersComboBox.ItemsSource = Enum.GetValues(typeof(CustomersSorting)).Cast<CustomersSorting>();
+			sortingCatalogsComboBox.ItemsSource = Enum.GetValues(typeof(CatalogsSorting)).Cast<CatalogsSorting>();
+			sortingBooksComboBox.ItemsSource = Enum.GetValues(typeof(BooksSorting)).Cast<BooksSorting>();
+			sortingLibrariansComboBox.ItemsSource = Enum.GetValues(typeof(LibrariansSorting)).Cast<LibrariansSorting>();
+			sortingOrdersComboBox.ItemsSource = Enum.GetValues(typeof(OrdersSorting)).Cast<OrdersSorting>();
+
+			sortingCustomersComboBox.SelectedIndex = 0;
+			sortingCatalogsComboBox.SelectedIndex = 0;
+			sortingBooksComboBox.SelectedIndex = 0;
+			sortingLibrariansComboBox.SelectedIndex = 0;
+			sortingOrdersComboBox.SelectedIndex = 0;
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		#region Navigation Methods
+		private void BackToMenuBtn_Click(object sender, RoutedEventArgs e)
 		{
 			newPageGrid.Visibility = Visibility.Visible;
 			adminPageGrid.Visibility = Visibility.Hidden;
 			pagesFrame.Navigate(new AdminMenuPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _adminEntity));
 		}
+		#endregion
+		#region Deleting methods
 
-		private void DeleteCustomer_Click(object sender, RoutedEventArgs e)
+	    private void DeleteCustomer_Click(object sender, RoutedEventArgs e)
 		{
 
 			CustomerEntity selectedCustomer = customerListDataGrid.SelectedItem as CustomerEntity;
@@ -113,6 +113,55 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 
 			_catalogService.Delete(catalog.Id);
 		}
+		private void DeleteSelectedLibrarianBtn_Click(object sender, RoutedEventArgs e)
+		{
+			LibrarianEntity selectedLibrarian = librariansListDataGrid.SelectedItem as LibrarianEntity;
+			if (selectedLibrarian != null)
+			{
+				if (selectedLibrarian.Login != "admin")
+				{
+					_librarianService.Delete(selectedLibrarian.Id);
+					MessageBox.Show("Succesfully deleted");
+				}
+				else
+				{
+					MessageBox.Show("You can`t delete an admin");
+				}
+			}
+			else
+			{
+				MessageBox.Show("Select some librarian");
+			}
+		}
+		private void DeleteSelectedOrderBtn_Click(object sender, RoutedEventArgs e)
+		{
+			OrderEntity selectedOrder = ordersListDataGrid.SelectedItem as OrderEntity;
+			if (selectedOrder != null)
+			{
+				_orderService.Delete(selectedOrder.Id);
+				MessageBox.Show("Succesfully delete");
+			}
+			else
+			{
+				MessageBox.Show("Select some order");
+			}
+		}
+
+		private void DeleteSelectedBookBtn_Click(object sender, RoutedEventArgs e)
+		{
+			BookEntity selectedBook = booksListDataGrid.SelectedItem as BookEntity;
+			if (selectedBook != null)
+			{
+				_bookService.Delete(selectedBook.Id);
+				MessageBox.Show("Succesfully delete");
+			}
+			else
+			{
+				MessageBox.Show("Select some book");
+			}
+		}
+		#endregion
+		#region Add/Create methods
 		private void AddToBlackList_Click(object sender, RoutedEventArgs e)
 		{
 			CustomerEntity selectedCustomer = customerListDataGrid.SelectedItem as CustomerEntity;
@@ -143,7 +192,6 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 
 			
 		}
-
 		private void AddImageBtn_Click(object sender, RoutedEventArgs e)
 		{
 			OpenFileDialog openFileDialog = new()
@@ -185,7 +233,6 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			bookImage.Source = new BitmapImage();
 
 		}
-
 		private void AddAuthorBtn_Click(object sender, RoutedEventArgs e)
 		{
 			AuthorEntity authorEntity = new()
@@ -203,7 +250,6 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			authorsComboBox.ItemsSource = authors;
 			authorsComboBox.DisplayMemberPath = "FullName";
 		}
-
 		private void CreateCatalogBtn_Click(object sender, RoutedEventArgs e)
 		{
 			CatalogEntity catalog = new()
@@ -214,13 +260,58 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			MessageBox.Show("Succesfully create a new Catalog");
 			nameCatalogTextBox.Text = "";
 		}
-
-		private void CustomerListDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+		private void CreateLibrarianBtn_Click(object sender, RoutedEventArgs e)
 		{
-			DeleteCustomerBtn.IsEnabled = true;
-			AddToBlackListCustomerBtn.IsEnabled = true;
+			if (!string.IsNullOrEmpty(loginTextBox.Text) && !string.IsNullOrEmpty(passwordTextBox.Text) && !string.IsNullOrEmpty(salaryTextBox.Text))
+			{
+				LibrarianEntity librarianEntity = new()
+				{
+					IsAdmin = adminCheckBox.IsChecked.Value,
+					Login = loginTextBox.Text,
+					Password = passwordTextBox.Text,
+					Salary = Convert.ToInt32(salaryTextBox.Text),
+					WorkExperience = Convert.ToByte(experienceTextBox.Text),
+				};
+				_librarianService.Create(librarianEntity);
+				MessageBox.Show("Succesfully create");
+
+				adminCheckBox.IsChecked = false;
+				loginTextBox.Text = "";
+				passwordTextBox.Text = "";
+				salaryTextBox.Text = "";
+				experienceTextBox.Text = "";
+			}
+			else
+			{
+				MessageBox.Show("Fill all Fields");
+			}
 		}
-		
+		private void AddBookToCatalogBtn_Click(object sender, RoutedEventArgs e)
+		{
+			CatalogEntity selectedCatalog = catalogsComboBox.SelectedItem as CatalogEntity;
+			BookEntity selectedBook = booksListDataGrid.SelectedItem as BookEntity;
+			if (selectedCatalog != null)
+			{
+				if (selectedBook != null)
+				{
+					if (selectedCatalog.Name == "None")
+					{
+						selectedBook.CatalogFK = null;
+						_bookService.Update(selectedBook);
+						MessageBox.Show("Succesfully added");
+					}
+					else
+					{
+						selectedBook.CatalogFK = selectedCatalog.Id;
+						_bookService.Update(selectedBook);
+						MessageBox.Show("Succesfully added");
+					}
+				}
+			}
+		}
+		#endregion
+		#region Refresh methods
+
 		private void RefreshCustomerDataGrid_Click(object sender, RoutedEventArgs e)
 		{
 			customerListDataGrid.Items.Clear();
@@ -254,6 +345,10 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			foreach(OrderEntity order in _orderService.GetAll())
 				ordersListDataGrid.Items.Add(order);
 		}
+		#endregion
+		#region Make Methods
+
+
 		private void MakeAnAdminBtn_Click(object sender, RoutedEventArgs e)
 		{
 			LibrarianEntity selectedLibrarian = librariansListDataGrid.SelectedItem as LibrarianEntity;
@@ -276,26 +371,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			}
 		}
 
-		private void DeleteSelectedLibrarianBtn_Click(object sender, RoutedEventArgs e)
-		{
-			LibrarianEntity selectedLibrarian = librariansListDataGrid.SelectedItem as LibrarianEntity;
-			if (selectedLibrarian != null)
-			{
-				if (selectedLibrarian.Login != "admin")
-				{
-					_librarianService.Delete(selectedLibrarian.Id);
-					MessageBox.Show("Succesfully deleted");
-				}
-				else
-				{
-					MessageBox.Show("You can`t delete an admin");
-				}
-			}
-			else
-			{
-				MessageBox.Show("Select some librarian");
-			}
-		}
+		
 		private void MakeNotActiveSelectedOrderBtn_Click(object sender, RoutedEventArgs e)
 		{
 			OrderEntity selectedOrder = ordersListDataGrid.SelectedItem as OrderEntity;
@@ -311,84 +387,105 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			}
 		}
 
-		private void DeleteSelectedOrderBtn_Click(object sender, RoutedEventArgs e)
+		#endregion
+
+		#region Sorting methods
+		private void sortingCustomersComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			OrderEntity selectedOrder = ordersListDataGrid.SelectedItem as OrderEntity;
-			if (selectedOrder != null)
+			CustomersSorting selectedSort = (CustomersSorting)sortingCustomersComboBox.SelectedItem;
+			List<CustomerEntity> customers = _customerService.GetAll();
+			switch (selectedSort)
 			{
-				_orderService.Delete(selectedOrder.Id);
-				MessageBox.Show("Succesfully delete");
+				case CustomersSorting.None:
+					customerListDataGrid.Items.Clear();
+					foreach (CustomerEntity customer in customers)
+						customerListDataGrid.Items.Add(customer);
+					break;
+				case CustomersSorting.BannedCustomers:
+					customerListDataGrid.Items.Clear();
+					foreach (CustomerEntity customer in customers.Where(customer=>customer.IsBanned==true))
+						customerListDataGrid.Items.Add(customer);
+					break;
+				default:
+					break;
 			}
-			else
+		}
+		private void sortingCatalogComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			CatalogsSorting selectedSort = (CatalogsSorting)sortingCatalogsComboBox.SelectedItem;
+			List<CatalogEntity> catalogs = _catalogService.GetAll();
+			switch (selectedSort)
 			{
-				MessageBox.Show("Select some order");
+				case CatalogsSorting.None:
+					catalogListDataGrid.Items.Clear();
+					foreach(CatalogEntity catalog in catalogs)
+						catalogListDataGrid.Items.Add(catalog);
+					break;
+				default : break;
+			}
+		}
+		private void sortingBooksComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			BooksSorting selectedSort = (BooksSorting)sortingBooksComboBox.SelectedItem;
+			List<BookEntity> books = _bookService.GetAll();
+			switch (selectedSort)
+			{
+				case BooksSorting.None:
+					booksListDataGrid.Items.Clear();
+					foreach (BookEntity book in books)
+						booksListDataGrid.Items.Add(book);
+					break;
+				default: break;
 			}
 		}
 
-		private void AddBookToCatalogBtn_Click(object sender, RoutedEventArgs e)
+		private void sortingLibrariansComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			CatalogEntity selectedCatalog = catalogComboBox.SelectedItem as CatalogEntity;
-			BookEntity selectedBook = booksListDataGrid.SelectedItem as BookEntity;
-			if (selectedCatalog != null)
+			LibrariansSorting selectedSort = (LibrariansSorting)sortingLibrariansComboBox.SelectedItem;
+			List<LibrarianEntity> librarians = _librarianService.GetAll();
+			switch (selectedSort)
 			{
-				if(selectedBook != null)
-				{
-					if(selectedCatalog.Name == "None")
-					{
-						selectedBook.CatalogFK = null;
-						_bookService.Update(selectedBook);
-						MessageBox.Show("Succesfully added");
-					}
-					else
-					{
-					selectedBook.CatalogFK = selectedCatalog.Id;
-					_bookService.Update(selectedBook);
-					MessageBox.Show("Succesfully added");
-					}
-				}
+				case LibrariansSorting.None:
+					librariansListDataGrid.Items.Clear();
+					foreach (LibrarianEntity librarian in librarians)
+						librariansListDataGrid.Items.Add(librarian);
+					break;
+				case LibrariansSorting.AdminsOnly:
+					librariansListDataGrid.Items.Clear();
+					foreach (LibrarianEntity librarian in librarians.Where(librarian=>librarian.IsAdmin==true))
+						librariansListDataGrid.Items.Add(librarian);
+					break;
+				default: break;
 			}
 		}
 
-		private void DeleteSelectedBookBtn_Click(object sender, RoutedEventArgs e)
+		private void sortingOrdersComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			BookEntity selectedBook = booksListDataGrid.SelectedItem as BookEntity;
-			if (selectedBook != null)
+			OrdersSorting selectedSort = (OrdersSorting)sortingOrdersComboBox.SelectedItem;
+			List<OrderEntity> orders = _orderService.GetAll();
+			switch (selectedSort)
 			{
-				_bookService.Delete(selectedBook.Id);
-				MessageBox.Show("Succesfully delete");
-			}
-			else
-			{
-				MessageBox.Show("Select some book");
-			}
-			
-		}
-
-		private void CreateLibrarianBtn_Click(object sender, RoutedEventArgs e)
-		{
-			if (!string.IsNullOrEmpty(loginTextBox.Text) && !string.IsNullOrEmpty(passwordTextBox.Text) && !string.IsNullOrEmpty(salaryTextBox.Text))
-			{
-				LibrarianEntity librarianEntity = new()
-				{
-					IsAdmin = adminCheckBox.IsChecked.Value,
-					Login = loginTextBox.Text,
-					Password = passwordTextBox.Text,
-					Salary = Convert.ToInt32(salaryTextBox.Text),
-					WorkExperience = Convert.ToByte(experienceTextBox.Text),
-				};
-				_librarianService.Create(librarianEntity);
-				MessageBox.Show("Succesfully create");
-
-				adminCheckBox.IsChecked = false;
-				loginTextBox.Text = "";
-				passwordTextBox.Text = "";
-				salaryTextBox.Text = "";
-				experienceTextBox.Text = "";
-			}
-			else
-			{
-				MessageBox.Show("Fill all Fields");
+				case OrdersSorting.None:
+					ordersListDataGrid.Items.Clear();
+					foreach (OrderEntity order in orders)
+						ordersListDataGrid.Items.Add(order);
+					break;
+                case OrdersSorting.ActiveOnly:
+					ordersListDataGrid.Items.Clear();
+					foreach (OrderEntity order in orders.Where(order => order.IsActual == true))
+						ordersListDataGrid.Items.Add(order);
+					break;
+				default: break;
 			}
 		}
+		#endregion
+
+		private void CustomerListDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+		{
+			DeleteCustomerBtn.IsEnabled = true;
+			AddToBlackListCustomerBtn.IsEnabled = true;
+		}
+
+		
 	}
 }

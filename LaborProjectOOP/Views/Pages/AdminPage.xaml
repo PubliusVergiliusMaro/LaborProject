@@ -66,11 +66,10 @@
                                         </Grid>
                                     </ControlTemplate>
                                 </Button.Template>
-
                             </Button>
                             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
                                 <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                                <ComboBox x:Name="sortingBooksComboBox" Width="100" Height="30" Text="Sort Table"/>
+                                <ComboBox SelectionChanged="sortingCustomersComboBox_SelectionChanged" x:Name="sortingCustomersComboBox" Width="100" Height="30" Text="Sort Table"/>
 
                             </StackPanel>
                             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="2">
@@ -129,8 +128,7 @@
                             </Button>
                             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
                                 <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                                <ComboBox x:Name="sortingCatalogComboBox_Copy" Width="100" Height="30" Text="Sort Table"/>
-
+                                <ComboBox SelectionChanged="sortingCatalogComboBox_SelectionChanged"  x:Name="sortingCatalogsComboBox" Width="100" Height="30" Text="Sort Table"/>
                             </StackPanel>
                             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="2">
                                 <Button Margin="0 50 0 0" Width="150" Height="30" Click="DeleteCatalog_Click">Delete Selected Catalog</Button>
@@ -181,12 +179,12 @@
                             </Button>
                             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
                                 <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                                <ComboBox x:Name="sortingCustomersComboBox" Width="100" Height="30" Text="Sort Table"/>
+                                <ComboBox SelectionChanged="sortingBooksComboBox_SelectionChanged" x:Name="sortingBooksComboBox" Width="100" Height="30" Text="Sort Table"/>
 
                             </StackPanel>
                             <StackPanel Orientation="Vertical" Grid.Row="2">
                                 <Label HorizontalAlignment="Center">Choose Catalog</Label>
-                                <ComboBox x:Name="catalogComboBox" Width="300" Height="30"></ComboBox>
+                                <ComboBox x:Name="catalogsComboBox" Width="300" Height="30"></ComboBox>
                                 <Button x:Name="addBookToCatalog" Width="250" Height="35" Margin="0 50 0 0" Click="AddBookToCatalogBtn_Click">
                                     Add selected Book to the selected Catalog
                                 </Button>
@@ -242,15 +240,26 @@
                                 </Button.Template>
                             </Button>
                             <Grid Grid.Row="1">
-                                <StackPanel>
-                                    <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Click="MakeAnAdminBtn_Click">
-                                        Make selected an Admin
-                                    </Button>
-                                    <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Click="DeleteSelectedLibrarianBtn_Click">
-                                        Delete Selected
-                                    </Button>
-                                </StackPanel>
-
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="2*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
+                                        <Label HorizontalContentAlignment="Center">Sorting Types</Label>
+                                        <ComboBox SelectionChanged="sortingLibrariansComboBox_SelectionChanged" x:Name="sortingLibrariansComboBox" Width="100" Height="30" Text="Sort Table"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <StackPanel>
+                                        <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Click="MakeAnAdminBtn_Click">
+                                            Make selected an Admin
+                                        </Button>
+                                        <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Click="DeleteSelectedLibrarianBtn_Click">
+                                            Delete Selected
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -296,15 +305,26 @@
                                         </ControlTemplate>
                                     </Button.Template>
                                 </Button>
-                                <StackPanel Grid.Row="1">
-                                    <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Click="MakeNotActiveSelectedOrderBtn_Click">
-                                        Make selected not Active
-                                    </Button>
-                                    <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Click="DeleteSelectedOrderBtn_Click">
-                                        Delete Selected
-                                    </Button>
-                                </StackPanel>
-
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="5*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
+                                            <Label HorizontalContentAlignment="Center">Sorting Types</Label>
+                                            <ComboBox SelectionChanged="sortingOrdersComboBox_SelectionChanged" x:Name="sortingOrdersComboBox" Width="100" Height="30" Text="Sort Table"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <StackPanel Grid.Row="1">
+                                        <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Click="MakeNotActiveSelectedOrderBtn_Click">
+                                            Make selected not Active
+                                        </Button>
+                                        <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Click="DeleteSelectedOrderBtn_Click">
+                                            Delete Selected
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -446,7 +466,7 @@
              VerticalAlignment="Bottom" 
              HorizontalAlignment="Left" 
              Margin="10,0,0,10"
-             Click="Button_Click">Back To Menu</Button>
+             Click="BackToMenuBtn_Click">Back To Menu</Button>
         </Grid>
 
     </Grid>

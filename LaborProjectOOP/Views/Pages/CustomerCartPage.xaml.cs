@@ -8,8 +8,11 @@ using LaborProjectOOP.Services.OrderServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -119,65 +122,60 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 					VerticalAlignment = VerticalAlignment.Center,
 				};
 
-				//removeLabel.MouseLeftButtonDown += async (object sender, MouseButtonEventArgs e) => await RemoveHandler(book.Id, $"image{book.Id}");
+				removeLabel.MouseLeftButtonDown += async (object sender, MouseButtonEventArgs e) => await RemoveHandler(book.Id, $"image{book.Id}");
 				removeBorder.Child = removeLabel;
 				bookPanel.Children.Add(removeBorder);
 
 				booksViewPanel.Children.Add(bookPanel);
 			}
 		}
-		//private async Task RemoveHandler(long id, string imageName)
-		//{
-		//	MessageBoxButton button = MessageBoxButton.YesNo;
-		//	MessageBoxResult result = MessageBox.Show(UILabels.CONFIRM_REMOVING, string.Empty, button);
+		private async Task RemoveHandler(int id, string imageName)
+		{
+			MessageBoxButton button = MessageBoxButton.YesNo;
+			MessageBoxResult result = MessageBox.Show("Do you want delete?", string.Empty, button);
 
-		//	if (result == MessageBoxResult.Yes)
-		//	{
-		//		Image imageToDelete = FindChild<Image>(this, imageName);
-		//		if (imageToDelete == null)
-		//		{
-		//			return;
-		//		}
+			if (result == MessageBoxResult.Yes)
+			{
+				Image imageToDelete = FindChild<Image>(this, imageName);
+				if (imageToDelete == null)
+				{
+					return;
+				}
 
-		//		imageToDelete.Source = null;
-		//		var response = await _lampService.Delete(id);
-		//		if (response.IsError)
-		//		{
-		//			MessageBox.Show(response.ErrorMessage);
-		//			return;
-		//		}
+				imageToDelete.Source = null;
+				_customerCart.Remove(_customerCart.Where(book => book.Id == id).FirstOrDefault());
 
-		//		var panels = lampViewPanel.Children.OfType<StackPanel>();
-		//		var panelToDelete = panels.FirstOrDefault(panel => panel.Name == $"panel_{id}");
-		//		lampViewPanel.Children.Remove(panelToDelete);
+				var panels = booksViewPanel.Children.OfType<StackPanel>();
+				var panelToDelete = panels.FirstOrDefault(panel => panel.Name == $"panel_{id}");
+				booksViewPanel.Children.Remove(panelToDelete);
 
-		//		MessageBox.Show(Messages.DELETED_SUCCESSFULT_MESSAGE);
-		//		return;
-		//	}
-		//}
+				MessageBox.Show("Succesfully deleted");
+				return;
+			}
+		}
 
-		//public static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
-		//{
-		//	for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
-		//	{
-		//		var child = VisualTreeHelper.GetChild(parent, i);
+		public static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
+		{
+			for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+			{
+				var child = VisualTreeHelper.GetChild(parent, i);
 
-		//		if (child != null && child is T && child.GetValue(FrameworkElement.NameProperty) as string == childName)
-		//		{
-		//			return (T)child;
-		//		}
-		//		else
-		//		{
-		//			var result = FindChild<T>(child, childName);
-		//			if (result != null)
-		//			{
-		//				return result;
-		//			}
-		//		}
-		//	}
+				if (child != null && child is T && child.GetValue(FrameworkElement.NameProperty) as string == childName)
+				{
+					return (T)child;
+				}
+				else
+				{
+					var result = FindChild<T>(child, childName);
+					if (result != null)
+					{
+						return result;
+					}
+				}
+			}
 
-		//	return null;
-		//}
+			return null;
+		}
 		#endregion
 
 		private void backBtn_Click(object sender, RoutedEventArgs e)

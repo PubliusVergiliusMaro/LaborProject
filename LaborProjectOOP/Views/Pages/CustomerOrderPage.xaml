@@ -39,11 +39,11 @@
         <Grid x:Name="customerOrdersPageGrid" Grid.Row="0">
             <StackPanel Orientation="Vertical" 
                     Margin="0 0 0 0" >
-                <Label Style="{StaticResource LabelStyle}">Дата Взяття книг</Label>
+                <!--<Label Style="{StaticResource LabelStyle}">Дата Взяття книг</Label>
                 <TextBox x:Name="startDataTextBox"  Style="{StaticResource TextBoxStyle}"></TextBox>
                 <Label Style="{StaticResource LabelStyle}">Дата повернення</Label>
                 <TextBox x:Name="endDataTextBox"  Style="{StaticResource TextBoxStyle}"></TextBox>
-                <Label Style="{StaticResource LabelStyle}">Selected Books</Label>
+                <Label Style="{StaticResource LabelStyle}">Selected Books</Label>-->
 
                 <DataGrid 
                       x:Name="booksListDataGrid"
@@ -52,14 +52,13 @@
                 Width="400"
                 Margin="0 50 0 0">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="100" Header="Title" Binding="{Binding Title}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="100" Header="Date of Ordering" Binding="{Binding Title}"></DataGridTextColumn>
                         <DataGridTextColumn Width="100" Header="Price" Binding="{Binding Price}"></DataGridTextColumn>
                         <DataGridTextColumn Width="100" Header="Author Name" Binding="{Binding Author.Name}"></DataGridTextColumn>
                         <DataGridTextColumn Width="100" Header="Author Surname" Binding="{Binding Author.Surname}" ></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-
-                <Button Margin="0 100 0 0" Style="{StaticResource ButtonStyle}" Click="Button_Click">Cancel</Button>
+                <Button Margin="0 100 0 0" Style="{StaticResource ButtonStyle}" Click="CancelBtn_Click">Cancel</Button>
             </StackPanel>
         </Grid>
     </Grid>

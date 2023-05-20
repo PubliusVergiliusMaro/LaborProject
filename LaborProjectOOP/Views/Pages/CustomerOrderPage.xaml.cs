@@ -5,20 +5,10 @@ using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderServices;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LaborProjectOOP.Dekstop.Views.Pages
 {
@@ -50,17 +40,21 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			InitializeComponent();
 
 			OrderEntity order = _orderService.GetAll().Where(ord => ord.Customer.Login == _currentCustomer.Login).FirstOrDefault();
-			startDataTextBox.Text = order.CreatedOn.ToString();
-			endDataTextBox.Text = order.CreatedOn.AddDays(10).ToString();
+
 			foreach (BookEntity book in order.Books)
 				booksListDataGrid.Items.Add(book);
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void CancelBtn_Click(object sender, RoutedEventArgs e)
 		{
 			newPageGrid.Visibility = Visibility.Visible;
 			customerOrdersPageGrid.Visibility = Visibility.Hidden;
 			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerBuyList));
+		}
+
+		private void Button_Click_1(object sender, RoutedEventArgs e)
+		{
+
 		}
 	}
 }

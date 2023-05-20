@@ -15,16 +15,19 @@
         <Grid x:Name="editProfilePage" Visibility="Visible">
             <StackPanel Orientation="Vertical" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label>Login</Label>
-                <TextBox Width="200"></TextBox>
-                <Label>OldPassword</Label>
-                <TextBox></TextBox>
-                <Label>NewPassword</Label>
-                <TextBox></TextBox>
-
-                <Button Content="Save" Height="30" Width="70" Margin="0 30 0 0"></Button>
+                <TextBox x:Name="loginTextBox" Width="200"></TextBox>
+                <Label>Email</Label>
+                <TextBox x:Name="emailTextBox" Width="200"></TextBox>
+                <Label Content="Phone"/>
+                <TextBox x:Name="phoneTextBox" Width="200"></TextBox>
+                <Label>Old Password</Label>
+                <TextBox x:Name="oldPasswordTextBox"></TextBox>
+                <Label>New Password</Label>
+                <TextBox x:Name="newPasswordTextBox"></TextBox>
+                <Button Content="Save" Height="30" Width="70" Margin="0 30 0 0" Click="SaveBtn_Click"></Button>
 
             </StackPanel>
-            <Button Height="30" Width="70" Margin="84,387,646,33" Click="Button_Click">Cancel</Button>
+            <Button Height="30" Width="70" Margin="84,387,646,33" Click="CancelBtn_Click">Cancel</Button>
         </Grid>
     </Grid>
 </Page>

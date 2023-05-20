@@ -105,12 +105,13 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 				pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService));
 		}
 
-		private void myOrderBtn_Click(object sender, RoutedEventArgs e)
-		{
-			bookPageGrid.Visibility = Visibility.Hidden;
-			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new CustomerOrderPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerCart));
-		}
+		// Customer Orders
+		//private void myOrderBtn_Click(object sender, RoutedEventArgs e)
+		//{
+		//	bookPageGrid.Visibility = Visibility.Hidden;
+		//	newPageGrid.Visibility = Visibility.Visible;
+		//	pagesFrame.Navigate(new CustomerOrderPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerCart));
+		//}
 
 		private void bookList_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -119,13 +120,6 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			newPageGrid.Visibility = Visibility.Visible;
 			pagesFrame.Navigate(new BookPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, selectedBook, _customerCart));
 
-		}
-
-		private void addToBuyListBtn_Click(object sender, RoutedEventArgs e)
-		{
-
-			//bookList.SelectedItem as BookEntity
-			//selectedBooks.Add();
 		}
 
 		private void Grid_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

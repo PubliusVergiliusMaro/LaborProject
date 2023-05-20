@@ -70,7 +70,6 @@
                     <Label Margin="0,50,0,5" Content="Sort Books By:" HorizontalContentAlignment="Center"/>
                     <ComboBox Width="170" Height="30"  Grid.Row="1"/>
                     <Button Width="180" Height="40" Grid.Row="0" x:Name="takeSelectedBtn" Click="TakeSelectedBtn_Click" Margin="0 20 0 0">Take Selected</Button>
-                    <Button Width="180" Height="40" Grid.Row="0" x:Name="myOrderBtn" Click="myOrderBtn_Click" Margin="0 20 0 0">My Order</Button>
 
                 </StackPanel>
                 <Grid Grid.Row="1">

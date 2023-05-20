@@ -5,20 +5,9 @@ using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderServices;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LaborProjectOOP.Dekstop.Views.Pages
 {
@@ -27,7 +16,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 	/// </summary>
 	public partial class EditProfilePage : Page
 	{
-		private readonly CustomerEntity _customer;
+		private readonly CustomerEntity _currentCustomer;
 		// Лишні прибрати
 		private readonly IBookService _bookService;
 		private readonly ICatalogService _catalogService;
@@ -36,10 +25,10 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private readonly IOrderService _orderService;
 		private readonly IAuthorService _authorService;
 		private readonly List<BookEntity> _customerBuyList;
-		public EditProfilePage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, CustomerEntity customer, List<BookEntity> customerBuyList)
+		public EditProfilePage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, CustomerEntity currentCustomer, List<BookEntity> customerBuyList)
 		{
 
-			_customer = customer;
+			_currentCustomer = currentCustomer;
 			_customerBuyList = customerBuyList;
 			// Лишні прибрати
 			_bookService = bookService;
@@ -49,14 +38,28 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_orderService = orderService;
 			_authorService = authorService;
 			InitializeComponent();
+
+			loginTextBox.Text = _currentCustomer.Login;
+			phoneTextBox.Text = _currentCustomer.Phone;
+			emailTextBox.Text = _currentCustomer.Email;
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void CancelBtn_Click(object sender, RoutedEventArgs e)
 		{
 			newPageGrid.Visibility = Visibility.Visible;
 			editProfilePage.Visibility = Visibility.Hidden;
-			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _customer, _customerBuyList));
+			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerBuyList));
 		}
 
+		private void SaveBtn_Click(object sender, RoutedEventArgs e)
+		{
+			_currentCustomer.Login = loginTextBox.Text;
+			_currentCustomer.Phone = phoneTextBox.Text;
+			_currentCustomer.Email = emailTextBox.Text;
+			if (_currentCustomer.Password == oldPasswordTextBox.Text)
+				_currentCustomer.Password = newPasswordTextBox.Text;
+			_customerService.Update(_currentCustomer);
+			MessageBox.Show("Succesfully updated");
+		}
 	}
 }
