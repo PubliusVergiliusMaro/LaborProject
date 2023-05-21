@@ -3,6 +3,7 @@ using LaborProjectOOP.Services.AuthorServices;
 using LaborProjectOOP.Services.BookServices;
 using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
+using LaborProjectOOP.Services.Helpers;
 using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderServices;
 using System.Collections.Generic;
@@ -48,7 +49,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			newPageGrid.Visibility = Visibility.Visible;
 			editProfilePage.Visibility = Visibility.Hidden;
-			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerBuyList));
+			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer,false, _customerBuyList));
 		}
 
 		private void SaveBtn_Click(object sender, RoutedEventArgs e)
@@ -56,8 +57,8 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_currentCustomer.Login = loginTextBox.Text;
 			_currentCustomer.Phone = phoneTextBox.Text;
 			_currentCustomer.Email = emailTextBox.Text;
-			if (_currentCustomer.Password == oldPasswordTextBox.Text)
-				_currentCustomer.Password = newPasswordTextBox.Text;
+			if (_currentCustomer.Password == HashService.GetMD5Hash(oldPasswordTextBox.Text))
+				_currentCustomer.Password = HashService.GetMD5Hash(newPasswordTextBox.Text);
 			_customerService.Update(_currentCustomer);
 			MessageBox.Show("Succesfully updated");
 		}

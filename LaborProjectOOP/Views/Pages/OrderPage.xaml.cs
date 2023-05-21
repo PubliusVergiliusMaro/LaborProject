@@ -58,7 +58,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			newPageGrid.Visibility = Visibility.Visible;
 			orderPageGrid.Visibility = Visibility.Hidden;
-			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerCart));
+			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, false, _customerCart));
 		}
 
 		private void MakeOrderBtn_Click(object sender, RoutedEventArgs e)
@@ -85,14 +85,14 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 
 			newPageGrid.Visibility = Visibility.Visible;
 			orderPageGrid.Visibility = Visibility.Hidden;
-			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerCart));
+			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer,false, _customerCart));
 		}
 
 		private void editCartBtn_Click(object sender, RoutedEventArgs e)
 		{
 			newPageGrid.Visibility = Visibility.Visible;
 			orderPageGrid.Visibility = Visibility.Hidden;
-			pagesFrame.Navigate(new CustomerCartPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerCart));
+			pagesFrame.Navigate(new CustomerCartPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer,false, _customerCart));
 		}
 	}
 }

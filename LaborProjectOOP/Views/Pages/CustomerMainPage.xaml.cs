@@ -7,17 +7,10 @@ using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderServices;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace LaborProjectOOP.Dekstop.Views.Pages
@@ -35,21 +28,26 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private readonly IAuthorService _authorService;
 		private readonly CustomerEntity _currentCustomer;
 		private static List<BookEntity> _customerCart;
+		private readonly bool _isItAdmin;
+		
 		//private static BookEntity selectedBook;
 		public CustomerMainPage(
 			IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService,
-			CustomerEntity currentCustomer, List<BookEntity> customerCart)
+			CustomerEntity currentEntity, bool isItAdmin, List<BookEntity> customerCart)
 		{
 			_bookService = bookService;
 			_catalogService = catalogService;
 			_customerService = customerService;
 			_librarianService = librarianService;
 			_orderService = orderService;
-			_currentCustomer = currentCustomer;
+			_currentCustomer = currentEntity;
 			_authorService = authorService;
 			_customerCart = customerCart;
-
+			this._isItAdmin = isItAdmin;
+			//CustomerAvatar = _currentCustomer.AvatarImagePath;
+			
 			InitializeComponent();
+
 			bookBuyNumberTextBlock.Text = customerCart.Count.ToString();
 			bookList.ItemsSource = _bookService.GetAll();
 			//foreach (CatalogEntity catalog in _catalogService.GetAll())
@@ -60,15 +58,13 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			//BooksList.Items.Add(book);
 			//}
 			//}
+			
+			if (_isItAdmin) AdminFunctionality();
 		}
-
-		private void EditProfileBtn_Click(object sender, RoutedEventArgs e)
+		private void AdminFunctionality()
 		{
-			bookPageGrid.Visibility = Visibility.Hidden;
-			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new EditProfilePage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerCart));
+			takeSelectedBtn.IsEnabled = false;	
 		}
-
 		private void TakeSelectedBtn_Click(object sender, RoutedEventArgs e)
 		{
 
@@ -81,7 +77,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			else MessageBox.Show("Select some book for making order");
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void BackBtn_Click(object sender, RoutedEventArgs e)
 		{
 
 			bookPageGrid.Visibility = Visibility.Hidden;
@@ -118,7 +114,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			BookEntity selectedBook = bookList.SelectedItem as BookEntity;
 			bookPageGrid.Visibility = Visibility.Hidden;
 			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new BookPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, selectedBook, _customerCart));
+			pagesFrame.Navigate(new BookPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, selectedBook, _isItAdmin, _customerCart));
 
 		}
 
@@ -126,7 +122,22 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			bookPageGrid.Visibility = Visibility.Hidden;
 			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new CustomerCartPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerCart));
+			pagesFrame.Navigate(new CustomerCartPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _isItAdmin, _customerCart));
+		}
+
+		private void Ellipse_Loaded(object sender, RoutedEventArgs e)
+		{
+			Ellipse ellipse = (Ellipse)sender;
+			ImageBrush imageBrush = (ImageBrush)ellipse.Fill;
+			imageBrush.ImageSource = new BitmapImage(new Uri(_currentCustomer.AvatarImagePath));
+		}
+
+		private void ProfileBtn_Click(object sender, RoutedEventArgs e)
+		{
+			bookPageGrid.Visibility = Visibility.Hidden;
+			newPageGrid.Visibility = Visibility.Visible;
+			pagesFrame.Navigate(new EditProfilePage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerCart));
+
 		}
 	}
 }

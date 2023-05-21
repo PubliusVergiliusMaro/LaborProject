@@ -31,9 +31,10 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private readonly IAuthorService _authorService;
 		private readonly CustomerEntity _currentCustomer;
 		private static List<BookEntity> _customerCart;
+		private readonly bool _isItAdmin;
 		public CustomerCartPage(
 			IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService,
-			CustomerEntity currentCustomer, List<BookEntity> customerCart)
+			CustomerEntity currentCustomer,bool isItAdmin, List<BookEntity> customerCart)
 		{
 
 			_bookService = bookService;
@@ -43,7 +44,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_orderService = orderService;
 			_currentCustomer = currentCustomer;
 			_authorService = authorService;
-
+			_isItAdmin = isItAdmin;
 			_customerCart = customerCart;
 			InitializeComponent();
 		}
@@ -182,7 +183,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			cartPageGrid.Visibility = System.Windows.Visibility.Hidden;
 			newPageGrid.Visibility = System.Windows.Visibility.Visible;
-			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerCart));
+			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer,_isItAdmin, _customerCart));
 		}
 	}
 }

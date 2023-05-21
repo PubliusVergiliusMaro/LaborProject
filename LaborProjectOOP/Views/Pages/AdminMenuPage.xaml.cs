@@ -55,7 +55,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 				Login = _currentAdmin.Login,
 				Password = _currentAdmin.Password,
 			};
-			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, customer, new List<BookEntity>()));
+			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, customer,true, new List<BookEntity>()));
 		}
 
 		private void BackToLoginPage_Click(object sender, RoutedEventArgs e)

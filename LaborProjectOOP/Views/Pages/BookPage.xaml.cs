@@ -27,7 +27,8 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private readonly IAuthorService _authorService;
 		private readonly CustomerEntity _currentCustomer;
 		private readonly List<BookEntity> _customerBuyList;
-		public BookPage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, CustomerEntity currentCustomer, BookEntity selectedBook, List<BookEntity> customerBuyList)
+		private readonly bool _isItAdmin;
+		public BookPage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, CustomerEntity currentCustomer, BookEntity selectedBook,bool isItAdmin, List<BookEntity> customerBuyList)
 		{
 			_bookService = bookService;
 			_catalogService = catalogService;
@@ -38,6 +39,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_authorService = authorService;
 			_selectedBook = selectedBook;
 			_customerBuyList = customerBuyList;
+			_isItAdmin = isItAdmin;
 			InitializeComponent();
 			titleTextBlock.Text = _selectedBook.Title;
 			descriptionTextBlock.Text = _selectedBook.Description;
@@ -53,7 +55,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			bookPageGrid.Visibility = System.Windows.Visibility.Hidden;
 			newPageGrid.Visibility = System.Windows.Visibility.Visible;
-			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerBuyList));
+			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer,_isItAdmin, _customerBuyList));
 
 		}
 
@@ -63,7 +65,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			MessageBox.Show("Succesfully added");
 			bookPageGrid.Visibility = System.Windows.Visibility.Hidden;
 			newPageGrid.Visibility = System.Windows.Visibility.Visible;
-			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerBuyList));
+			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer,_isItAdmin, _customerBuyList));
 
 		}
 	}

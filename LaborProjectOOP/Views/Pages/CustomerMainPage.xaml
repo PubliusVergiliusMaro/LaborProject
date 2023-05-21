@@ -64,17 +64,32 @@
                     <Image Width="40" Height="30" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="C:\Users\user\source\repos\LAB_2_OOP.Dekstop\Images\basketIcon.png"/>
                     <Border CornerRadius="15" Background="Red" Margin="30,21,7,16"/>
                     <TextBlock x:Name="bookBuyNumberTextBlock" Text="0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,19,0,0"/>
-
                 </Grid>
-                <StackPanel Grid.Row="0">
-                    <Label Margin="0,50,0,5" Content="Sort Books By:" HorizontalContentAlignment="Center"/>
+
+                <Button Grid.Row="0" Width="65" Click="ProfileBtn_Click" Height="65" HorizontalAlignment="Right" Margin="0 0 20 0" VerticalAlignment="Top">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border CornerRadius="35" Width="65" Height="65" Background="Black" />
+                                <Ellipse Width="55" Height="55" Loaded="Ellipse_Loaded">
+                                    <Ellipse.Fill>
+                                        <ImageBrush x:Name="customerAvatarImage" Stretch="UniformToFill" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+
+                <StackPanel Grid.Row="0" Margin="0 110 0 0">
+                    <Label Margin="0 0,0,5" Content="Sort Books By:" HorizontalContentAlignment="Center"/>
                     <ComboBox Width="170" Height="30"  Grid.Row="1"/>
                     <Button Width="180" Height="40" Grid.Row="0" x:Name="takeSelectedBtn" Click="TakeSelectedBtn_Click" Margin="0 20 0 0">Take Selected</Button>
 
                 </StackPanel>
                 <Grid Grid.Row="1">
-                    <Button Width="180" Height="40" Grid.Row="0" x:Name="editProfileBtn" Click="EditProfileBtn_Click">Edit Profile</Button>
-                    <Button Content="Back" Click="Button_Click" Width="180" Height="40" VerticalAlignment="Bottom" Margin="0 0 0 10" />
+                    <Button Content="Back" Click="BackBtn_Click" Width="180" Height="40" VerticalAlignment="Bottom" Margin="0 0 0 10" />
                 </Grid>
 
             </Grid>

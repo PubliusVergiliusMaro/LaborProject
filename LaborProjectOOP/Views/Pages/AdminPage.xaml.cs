@@ -4,6 +4,7 @@ using LaborProjectOOP.Services.AuthorServices;
 using LaborProjectOOP.Services.BookServices;
 using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
+using LaborProjectOOP.Services.Helpers;
 using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderServices;
 using Microsoft.Win32;
@@ -266,11 +267,11 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			{
 				LibrarianEntity librarianEntity = new()
 				{
-					IsAdmin = adminCheckBox.IsChecked.Value,
 					Login = loginTextBox.Text,
-					Password = passwordTextBox.Text,
+					Password = HashService.GetMD5Hash(passwordTextBox.Text),
 					Salary = Convert.ToInt32(salaryTextBox.Text),
 					WorkExperience = Convert.ToByte(experienceTextBox.Text),
+					IsAdmin = adminCheckBox.IsChecked.Value,
 				};
 				_librarianService.Create(librarianEntity);
 				MessageBox.Show("Succesfully create");

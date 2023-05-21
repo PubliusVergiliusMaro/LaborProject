@@ -139,7 +139,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 
 			foreach (LibrarianEntity libr in librarians)
 			{
-				if (libr.Login == loginTextBox.Text && libr.Password == passwordTextBox.Password)
+				if (libr.Login == loginTextBox.Text && libr.Password == HashService.GetMD5Hash(passwordTextBox.Password))
 				{
 					if (libr.IsAdmin == true)
 					{
@@ -165,7 +165,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 				{
 					isBaned = true;
 				}
-				if (cust.Login == loginTextBox.Text && cust.Password == passwordTextBox.Password)
+				if (cust.Login == loginTextBox.Text && cust.Password == HashService.GetMD5Hash(passwordTextBox.Password))
 				{
 					canLogin = true;
 					_currentCustomer = cust;
@@ -182,7 +182,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			{
 				loginGrid.Visibility = Visibility.Hidden;
 				newPageGrid.Visibility = Visibility.Visible;
-				pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, new List<BookEntity>()));
+				pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer,false, new List<BookEntity>()));
 			}
 			else
 			{

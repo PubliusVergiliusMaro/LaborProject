@@ -6,6 +6,7 @@ namespace LaborProjectOOP.Database.Models
 	{
 		public string Email { get; set; }
 		public string Phone { get; set; }
+		public string AvatarImagePath { get; set; }
 		public bool IsBanned { get; set; }
 		public List<OrderEntity> Orders { get; set; }
 	}

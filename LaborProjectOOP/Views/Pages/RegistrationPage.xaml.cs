@@ -3,22 +3,14 @@ using LaborProjectOOP.Services.AuthorServices;
 using LaborProjectOOP.Services.BookServices;
 using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
+using LaborProjectOOP.Services.Helpers;
 using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderServices;
+using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LaborProjectOOP.Dekstop.Views.Pages
 {
@@ -34,7 +26,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private readonly ILibrarianService _librarianService;
 		private readonly IOrderService _orderService;
 		private readonly IAuthorService _authorService;
-
+		private static string ImagePath;
 		public RegistrationPage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService)
 		{
 			// Лишні прибрати
@@ -45,6 +37,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_orderService = orderService;
 			_authorService = authorService;
 			InitializeComponent();
+			avatarImageGrid.Visibility = Visibility.Hidden;
 		}
 
 		private void SaveBtn_Click(object sender, RoutedEventArgs e)
@@ -55,13 +48,28 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			}
 			else
 			{
+				if (defaultImageCheckBox.IsChecked.Value)
+				{
+					_customerService.Create(new CustomerEntity
+					{
+						Login = loginTextBox.Text,
+						Password = HashService.GetMD5Hash(passwordTextBox.Text),
+						Email = emailTextBox.Text,
+						Phone = phoneTextBox.Text,
+						AvatarImagePath = @"C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\Images\defaultAvatarIcon.png"
+					});
+				}
+				else
+				{
 				_customerService.Create(new CustomerEntity
 				{
 					Login = loginTextBox.Text,
-					Password = passwordTextBox.Text,
+					Password = HashService.GetMD5Hash(passwordTextBox.Text),
 					Email = emailTextBox.Text,
 					Phone = phoneTextBox.Text,
+					AvatarImagePath = ImagePath
 				});
+				}
 
 				//List<CustomerEntity> customers = _customerService.GetAll();
 				//customers.Add(customer);
@@ -79,6 +87,27 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			registrationPageGrid.Visibility = Visibility.Hidden;
 			newPageGrid.Visibility = Visibility.Visible;
 			pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService));
+		}
+
+		private void selectAvatarImage_Click(object sender, RoutedEventArgs e)
+		{
+			avatarImageGrid.Visibility = Visibility.Visible;
+			OpenFileDialog openFileDialog = new()
+			{
+				Multiselect = false,
+				Filter = "Images|*.png;*.jpg"
+			};
+			openFileDialog.ShowDialog();
+
+			if (!openFileDialog.CheckFileExists || string.IsNullOrEmpty(openFileDialog.FileName))
+			{
+				//MessageBox.Show("Error with getting image.");
+				return;
+			}
+			BitmapImage image = new(new Uri(openFileDialog.FileName));
+			ImagePath = openFileDialog.FileName;
+			customerAvatarImage.ImageSource = image;
+
 		}
 	}
 }
