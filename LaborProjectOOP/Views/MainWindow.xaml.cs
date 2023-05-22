@@ -1,10 +1,12 @@
 ﻿using LaborProjectOOP.Dekstop.Views.Pages;
 using LaborProjectOOP.Services.AuthorServices;
 using LaborProjectOOP.Services.BookServices;
+using LaborProjectOOP.Services.CartListServices;
 using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderServices;
+using LaborProjectOOP.Services.WishListServices;
 using System.Windows;
 
 namespace LaborProjectOOP.Dekstop.Views
@@ -21,8 +23,10 @@ namespace LaborProjectOOP.Dekstop.Views
 		private readonly ILibrarianService _librarianService;
 		private readonly IOrderService _orderService;
 		private readonly IAuthorService _authorService;
+		private readonly IWishListService _wishListService;
+		private readonly ICartListService _cartListService;
 
-		public MainWindow(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService)
+		public MainWindow(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, IWishListService wishListService, ICartListService cartListService)
 		{
 			// Лишні прибрати
 			_bookService = bookService;
@@ -31,8 +35,10 @@ namespace LaborProjectOOP.Dekstop.Views
 			_librarianService = librarianService;
 			_orderService = orderService;
 			_authorService = authorService;
+			_wishListService= wishListService;
+			_cartListService= cartListService;
 			InitializeComponent();
-			pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService));
+			pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService,_wishListService,_cartListService));
 		}
 	}
 }

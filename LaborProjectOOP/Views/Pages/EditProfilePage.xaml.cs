@@ -1,11 +1,13 @@
 ﻿using LaborProjectOOP.Database.Models;
 using LaborProjectOOP.Services.AuthorServices;
 using LaborProjectOOP.Services.BookServices;
+using LaborProjectOOP.Services.CartListServices;
 using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.Helpers;
 using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderServices;
+using LaborProjectOOP.Services.WishListServices;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,12 +27,14 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private readonly ILibrarianService _librarianService;
 		private readonly IOrderService _orderService;
 		private readonly IAuthorService _authorService;
-		private readonly List<BookEntity> _customerBuyList;
-		public EditProfilePage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, CustomerEntity currentCustomer, List<BookEntity> customerBuyList)
+		private readonly IWishListService _wishListService;
+		private readonly ICartListService _cartListService;
+	
+		public EditProfilePage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, IWishListService wishListService,ICartListService cartListService, CustomerEntity currentCustomer)
 		{
 
 			_currentCustomer = currentCustomer;
-			_customerBuyList = customerBuyList;
+			
 			// Лишні прибрати
 			_bookService = bookService;
 			_catalogService = catalogService;
@@ -38,6 +42,8 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_librarianService = librarianService;
 			_orderService = orderService;
 			_authorService = authorService;
+			_wishListService = wishListService;
+			_cartListService = cartListService;
 			InitializeComponent();
 
 			loginTextBox.Text = _currentCustomer.Login;
@@ -49,7 +55,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			newPageGrid.Visibility = Visibility.Visible;
 			editProfilePage.Visibility = Visibility.Hidden;
-			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer,false, _customerBuyList));
+			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService,_wishListService, _cartListService, _currentCustomer,false));
 		}
 
 		private void SaveBtn_Click(object sender, RoutedEventArgs e)

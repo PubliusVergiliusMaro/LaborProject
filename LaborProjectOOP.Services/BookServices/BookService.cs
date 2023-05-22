@@ -27,6 +27,7 @@ namespace LaborProjectOOP.Services.BookServices
 				.Include(b => b.Author)
 				.Include(b => b.Catalog)
 				.Include(b => b.Order)
+				.Include(b => b.WishLists)
 				.FirstOrDefault(b => b.Id == id);
 			if (dbRecord == null)
 			{
@@ -41,6 +42,7 @@ namespace LaborProjectOOP.Services.BookServices
 				.Include(b => b.Author)
 				.Include(b => b.Catalog)
 				.Include(b => b.Order)
+				.Include(b => b.WishLists)
 				.ToList();
 			if (dbRecord == null)
 			{
@@ -54,6 +56,7 @@ namespace LaborProjectOOP.Services.BookServices
 					.Include(b => b.Author)
 					.Include(b => b.Catalog)
 					.Include(b => b.Order)
+					.Include(b => b.WishLists)
 					.FirstOrDefault(book => book.Id == id);
 			if (dbRecord == null)
 			{
@@ -70,6 +73,7 @@ namespace LaborProjectOOP.Services.BookServices
 					.Include(b => b.Author)
 					.Include(b => b.Catalog)
 					.Include(b => b.Order)
+					.Include(b => b.WishLists)
 					.FirstOrDefault();
 				if (dbRecord == null)
 				{

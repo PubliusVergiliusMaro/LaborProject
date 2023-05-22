@@ -2,6 +2,7 @@
 using LaborProjectOOP.EntityFramework.Repository;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Reflection.Metadata.Ecma335;
 
 namespace LaborProjectOOP.Services.CustomerServices
 {
@@ -23,6 +24,7 @@ namespace LaborProjectOOP.Services.CustomerServices
 			CustomerEntity dbRecord = _customerRepository.Table
 				.Where(customer => customer.Id == id)
 				.Include(customer => customer.Orders)
+				.Include(customer => customer.WishList)
 				.FirstOrDefault();
 			if (dbRecord == null)
 			{
@@ -34,6 +36,8 @@ namespace LaborProjectOOP.Services.CustomerServices
 		public List<CustomerEntity> GetAll()
 		{
 			List<CustomerEntity> dbRecord = _customerRepository.Table
+				.Include(customer => customer.Orders)
+				.Include(customer => customer.WishList)
 				.ToList();
 			if (dbRecord == null)
 			{
@@ -46,6 +50,7 @@ namespace LaborProjectOOP.Services.CustomerServices
 			CustomerEntity dbRecord = _customerRepository.Table
 				.Where(customer => customer.Id == id)
 				.Include(c => c.Orders)
+				.Include(customer => customer.WishList)
 				.FirstOrDefault();
 			if (dbRecord == null)
 			{
@@ -60,6 +65,7 @@ namespace LaborProjectOOP.Services.CustomerServices
 				CustomerEntity dbRecord = _customerRepository.Table
 					.Where(catalogus => catalogus.Id == customer.Id)
 					.Include(c => c.Orders)
+					.Include(customer => customer.WishList)
 					.FirstOrDefault();
 				if (dbRecord == null)
 				{

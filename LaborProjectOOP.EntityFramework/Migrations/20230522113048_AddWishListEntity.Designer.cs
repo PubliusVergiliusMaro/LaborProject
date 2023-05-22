@@ -3,6 +3,7 @@ using System;
 using LaborProjectOOP.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LaborProjectOOP.EntityFramework.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230522113048_AddWishListEntity")]
+    partial class AddWishListEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,29 +90,6 @@ namespace LaborProjectOOP.EntityFramework.Migrations
                     b.HasIndex("OrderFK");
 
                     b.ToTable("Books", (string)null);
-                });
-
-            modelBuilder.Entity("LaborProjectOOP.Database.Models.CartListEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BookFK")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CustomerFK")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookFK");
-
-                    b.HasIndex("CustomerFK");
-
-                    b.ToTable("CartLists", (string)null);
                 });
 
             modelBuilder.Entity("LaborProjectOOP.Database.Models.CatalogEntity", b =>
@@ -277,25 +257,6 @@ namespace LaborProjectOOP.EntityFramework.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("LaborProjectOOP.Database.Models.CartListEntity", b =>
-                {
-                    b.HasOne("LaborProjectOOP.Database.Models.BookEntity", "Book")
-                        .WithMany("CartLists")
-                        .HasForeignKey("BookFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LaborProjectOOP.Database.Models.CustomerEntity", "Customer")
-                        .WithMany("CartList")
-                        .HasForeignKey("CustomerFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Customer");
-                });
-
             modelBuilder.Entity("LaborProjectOOP.Database.Models.OrderEntity", b =>
                 {
                     b.HasOne("LaborProjectOOP.Database.Models.CustomerEntity", "Customer")
@@ -333,8 +294,6 @@ namespace LaborProjectOOP.EntityFramework.Migrations
 
             modelBuilder.Entity("LaborProjectOOP.Database.Models.BookEntity", b =>
                 {
-                    b.Navigation("CartLists");
-
                     b.Navigation("WishLists");
                 });
 
@@ -345,8 +304,6 @@ namespace LaborProjectOOP.EntityFramework.Migrations
 
             modelBuilder.Entity("LaborProjectOOP.Database.Models.CustomerEntity", b =>
                 {
-                    b.Navigation("CartList");
-
                     b.Navigation("Orders");
 
                     b.Navigation("WishList");

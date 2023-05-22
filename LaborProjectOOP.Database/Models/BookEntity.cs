@@ -2,15 +2,10 @@
 {
 	public class BookEntity
 	{
-		public BookEntity() { }
-		public BookEntity(string title, string description, double price, bool istakes, string imagePath, AuthorEntity author)
+		public BookEntity() 
 		{
-			Title = title;
-			Description = description;
-			Price = price;
-			IsTaken = istakes;
-			Author = author;
-			ImagePath = imagePath;
+		    WishLists = new List<WishListEntity>();
+			CartLists= new List<CartListEntity>();
 		}
 		public int Id { get; set; }
 		public string Title { get; set; }
@@ -27,5 +22,7 @@
 
 		public OrderEntity? Order { get; set; }
 		public int? OrderFK { get; set; }
+		public ICollection<WishListEntity> WishLists { get; set; }
+		public ICollection<CartListEntity> CartLists { get; set; }
 	}
 }

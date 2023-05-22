@@ -61,7 +61,7 @@
                                     <ControlTemplate TargetType="Button">
                                         <Grid>
                                             <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
-                                            <Image Height="30" Source="C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\Images\RefreshIcon.png"></Image>
+                                            <Image Height="30" Source="/Views/Pages/RefreshIcon.png"></Image>
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Grid>
                                     </ControlTemplate>

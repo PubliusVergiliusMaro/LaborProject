@@ -8,7 +8,7 @@
 		}
 		public int Id { get; set; }
 		public string Name { get; set; }
-		public List<BookEntity> Books { get; set; }
+		public ICollection<BookEntity> Books { get; set; }
 
 
 		#region Lab3

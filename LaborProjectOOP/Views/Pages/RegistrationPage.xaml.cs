@@ -1,11 +1,13 @@
 ﻿using LaborProjectOOP.Database.Models;
 using LaborProjectOOP.Services.AuthorServices;
 using LaborProjectOOP.Services.BookServices;
+using LaborProjectOOP.Services.CartListServices;
 using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.Helpers;
 using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderServices;
+using LaborProjectOOP.Services.WishListServices;
 using Microsoft.Win32;
 using System;
 using System.Windows;
@@ -26,8 +28,10 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private readonly ILibrarianService _librarianService;
 		private readonly IOrderService _orderService;
 		private readonly IAuthorService _authorService;
+		private readonly IWishListService _wishListService;
+		private readonly ICartListService _cartListService;
 		private static string ImagePath;
-		public RegistrationPage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService)
+		public RegistrationPage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, IWishListService wishListService, ICartListService cartListService)
 		{
 			// Лишні прибрати
 			_bookService = bookService;
@@ -36,6 +40,8 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_librarianService = librarianService;
 			_orderService = orderService;
 			_authorService = authorService;
+			_wishListService = wishListService;
+			_cartListService = cartListService;
 			InitializeComponent();
 			avatarImageGrid.Visibility = Visibility.Hidden;
 		}
@@ -56,7 +62,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 						Password = HashService.GetMD5Hash(passwordTextBox.Text),
 						Email = emailTextBox.Text,
 						Phone = phoneTextBox.Text,
-						AvatarImagePath = @"C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\Images\defaultAvatarIcon.png"
+						AvatarImagePath = "Images/defaultAvatarIcon.png"
 					});
 				}
 				else
@@ -77,7 +83,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 				MessageBox.Show("Succesfuly created");
 				registrationPageGrid.Visibility = Visibility.Hidden;
 				newPageGrid.Visibility = Visibility.Visible;
-				pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService));
+				pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService,_wishListService, _cartListService));
 			}
 
 		}
@@ -86,7 +92,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			registrationPageGrid.Visibility = Visibility.Hidden;
 			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService));
+			pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService));
 		}
 
 		private void selectAvatarImage_Click(object sender, RoutedEventArgs e)
@@ -101,8 +107,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 
 			if (!openFileDialog.CheckFileExists || string.IsNullOrEmpty(openFileDialog.FileName))
 			{
-				//MessageBox.Show("Error with getting image.");
-				return;
+				openFileDialog.FileName = @"C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\Images\defaultAvatarIcon.png";
 			}
 			BitmapImage image = new(new Uri(openFileDialog.FileName));
 			ImagePath = openFileDialog.FileName;

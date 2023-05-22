@@ -20,7 +20,7 @@ namespace LaborProjectOOP.EntityFramework.Repository
 	//	Task Create(T entity);
 	//	Task Delete(T entity);
 	//	Task Update(T entity);
-	//	Task<T> GetById(long id);
+	//	Task<T> GetById(long Id);
 	//	Task<T> GetBy(Expression<Func<T, bool>> expression);
 	//	IQueryable<T> GetAll();
 	//	IQueryable<T> GetAll(Expression<Func<T, bool>> expression);

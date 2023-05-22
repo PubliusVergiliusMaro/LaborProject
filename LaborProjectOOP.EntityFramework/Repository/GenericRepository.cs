@@ -96,9 +96,9 @@ namespace LaborProjectOOP.EntityFramework.Repository
 	//		return await Table.FirstOrDefaultAsync(expression);
 	//	}
 
-	//	public async Task<T> GetById(long id)
+	//	public async Task<T> GetById(long Id)
 	//	{
-	//		return await Table.FindAsync(id);
+	//		return await Table.FindAsync(Id);
 	//	}
 
 	//	public async Task Update(T entity)

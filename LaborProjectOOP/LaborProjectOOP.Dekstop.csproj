@@ -8,6 +8,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\basketIcon.png" />
+    <None Remove="Images\defaultAvatarIcon.png" />
+    <None Remove="Images\deleteButtonIcon.jpg" />
+    <None Remove="Images\RefreshIcon.png" />
+    <None Remove="Views\Pages\basketIcon.png" />
+    <None Remove="Views\Pages\RefreshIcon.png" />
+    <None Remove="Views\Pages\wishListIcon.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\basketIcon.png" />
+    <Content Include="Images\defaultAvatarIcon.png" />
+    <Content Include="Images\deleteButtonIcon.jpg" />
+    <Content Include="Images\RefreshIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ViewModels\" />
   </ItemGroup>
 
@@ -22,6 +39,12 @@
   <ItemGroup>
     <ProjectReference Include="..\LaborProjectOOP.Database\LaborProjectOOP.Database.csproj" />
     <ProjectReference Include="..\LaborProjectOOP.Services\LaborProjectOOP.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Pages\basketIcon.png" />
+    <Resource Include="Views\Pages\RefreshIcon.png" />
+    <Resource Include="Views\Pages\wishListIcon.jpg" />
   </ItemGroup>
 
 </Project>

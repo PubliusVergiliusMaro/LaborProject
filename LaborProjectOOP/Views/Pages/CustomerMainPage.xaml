@@ -57,38 +57,55 @@
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="47*"/>
+                    <RowDefinition Height="153*"/>
+                    <RowDefinition Height="200*"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Width="50" Height="50" HorizontalAlignment="Left" Margin="10 0 0 0" VerticalAlignment="Top" MouseDown="Grid_MouseDown">
-                    <Image Width="40" Height="30" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="C:\Users\user\source\repos\LAB_2_OOP.Dekstop\Images\basketIcon.png"/>
-                    <Border CornerRadius="15" Background="Red" Margin="30,21,7,16"/>
-                    <TextBlock x:Name="bookBuyNumberTextBlock" Text="0" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,19,0,0"/>
+                <Grid Grid.Row="0">
+
+
+                    <!--#region Icons-->
+                    <Grid Width="55" Height="55" HorizontalAlignment="Left" Margin="10 0 0 0" VerticalAlignment="Top" MouseDown="CartListGrid_MouseDown">
+                        <Image Source="/Views/Pages/basketIcon.png" Width="50" Height="40" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Border CornerRadius="15" Background="Red" Margin="30,21,7,16"/>
+                        <TextBlock x:Name="bookBuyNumberTextBlock" Height="30" FontSize="13" Text="0" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="31,21,0,0" TextAlignment="Center" Width="17"/>
+                    </Grid>
+
+                    <Button Width="55" VerticalAlignment="Top" Click="WishListBtn_Click" Height="55">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <Image x:Name="customerWishListIcon" Width="50" Height="40" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Views/Pages/wishListIcon.jpg" />
+                                    <Border CornerRadius="15" Background="Green" Margin="30,21,7,16"/>
+                                    <TextBlock Loaded="booksInWishListTextBlock_Loaded" x:Name="booksInWishListTextBlock"  Height="30" FontSize="13" Text="0" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="31,21,0,0" TextAlignment="Center" Width="17"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Width="65" Click="ProfileBtn_Click" Height="65" HorizontalAlignment="Right" Margin="0 0 20 0" VerticalAlignment="Top">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <Border CornerRadius="35" Width="65" Height="65" Background="Black" />
+                                    <Ellipse Width="55" Height="55" Loaded="Ellipse_Loaded">
+                                        <Ellipse.Fill>
+                                            <ImageBrush x:Name="customerAvatarImage" Stretch="UniformToFill" />
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                 </Grid>
+                <!--#endregion-->
 
-                <Button Grid.Row="0" Width="65" Click="ProfileBtn_Click" Height="65" HorizontalAlignment="Right" Margin="0 0 20 0" VerticalAlignment="Top">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Grid>
-                                <Border CornerRadius="35" Width="65" Height="65" Background="Black" />
-                                <Ellipse Width="55" Height="55" Loaded="Ellipse_Loaded">
-                                    <Ellipse.Fill>
-                                        <ImageBrush x:Name="customerAvatarImage" Stretch="UniformToFill" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                            </Grid>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-
-                <StackPanel Grid.Row="0" Margin="0 110 0 0">
+                <StackPanel Grid.Row="1" Margin="0,16,0,0">
                     <Label Margin="0 0,0,5" Content="Sort Books By:" HorizontalContentAlignment="Center"/>
                     <ComboBox Width="170" Height="30"  Grid.Row="1"/>
                     <Button Width="180" Height="40" Grid.Row="0" x:Name="takeSelectedBtn" Click="TakeSelectedBtn_Click" Margin="0 20 0 0">Take Selected</Button>
 
                 </StackPanel>
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="2">
                     <Button Content="Back" Click="BackBtn_Click" Width="180" Height="40" VerticalAlignment="Bottom" Margin="0 0 0 10" />
                 </Grid>
 

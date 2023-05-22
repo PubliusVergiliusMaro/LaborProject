@@ -74,9 +74,14 @@
                 Back
             </Button>
             <Grid Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="160 0 0 0">
-                <Button x:Name="addToBuyListBtn" Width="200" Height="40" Click="addToBuyListBtn_Click" >
-                    Add to buy list
-                </Button>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="addToBuyListBtn" Width="200" Height="40" Margin="0 0 40 0" Click="addToBuyListBtn_Click" >
+                         Add to Cart
+                    </Button>
+                    <Button x:Name="addToWishListListBtn" Width="200" Height="40"  Margin="40 0 0 0" Click="addToWishListListBtn_Click" >
+                         Add to Wish List
+                    </Button>
+                </StackPanel>
             </Grid>
         </Grid>
     </Grid>

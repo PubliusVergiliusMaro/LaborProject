@@ -1,12 +1,16 @@
-﻿using LaborProjectOOP.Database.Models;
+﻿using LaborProjectOOP.Constants.Enums;
+using LaborProjectOOP.Database.Models;
 using LaborProjectOOP.Services.AuthorServices;
 using LaborProjectOOP.Services.BookServices;
+using LaborProjectOOP.Services.CartListServices;
 using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderServices;
+using LaborProjectOOP.Services.WishListServices;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -24,12 +28,14 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private readonly ILibrarianService _librarianService;
 		private readonly IOrderService _orderService;
 		private readonly IAuthorService _authorService;
+		private readonly IWishListService _wishListService;
+		private readonly ICartListService _cartListService;
 		private readonly CustomerEntity _currentCustomer;
-		private readonly List<BookEntity> _customerCart;
-		public OrderPage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, CustomerEntity currentCustomer, List<BookEntity> customerCart)
+		private readonly List<BookEntity> _booksInCart;
+		public OrderPage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, IWishListService wishListService, ICartListService cartListService, CustomerEntity currentCustomer)
 		{
 			_currentCustomer = currentCustomer;
-			_customerCart = customerCart;
+			
 			// Лишні прибрати
 			_bookService = bookService;
 			_catalogService = catalogService;
@@ -37,6 +43,8 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_librarianService = librarianService;
 			_orderService = orderService;
 			_authorService = authorService;
+			_wishListService = wishListService;
+			_cartListService = cartListService;
 			InitializeComponent();
 
 			loginLabel.Content = _currentCustomer.Login;
@@ -48,7 +56,12 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 
 			startDataTextBox.Text = startDate.ToString();
 			endDataTextBox.Text = endDate.ToString();
-			foreach (BookEntity book in _customerCart)
+			List<BookEntity> books = new List<BookEntity>();
+			List<CartListEntity> customerCartLists = _cartListService.GetCartListByCustomerId(_currentCustomer.Id);
+			foreach (CartListEntity cartBook in customerCartLists)
+				books.Add(cartBook.Book);
+			_booksInCart = books;
+			foreach (BookEntity book in _booksInCart)
 			{
 				booksListDataGrid.Items.Add(book);
 			}
@@ -58,41 +71,30 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			newPageGrid.Visibility = Visibility.Visible;
 			orderPageGrid.Visibility = Visibility.Hidden;
-			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, false, _customerCart));
+			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService,_wishListService, _cartListService, _currentCustomer, false));
 		}
 
 		private void MakeOrderBtn_Click(object sender, RoutedEventArgs e)
 		{
-			//OrderEntity order = new OrderEntity()
-			//{
-			//	Books = new List<BookEntity> { _book },
-			//	CreatedOn = DateTime.Now,
-			//	Customer = _currentAdmin,
-			//	IsActual = true
-			//};
 
-			//List<OrderEntity> orders = _orderService.GetAll();
-			//if (orders == null)
-			//{
-			//	orders = new List<OrderEntity>();
-			//}
-			//orders.Add(order);
-			//_orderService.SaveOrders(orders);//Переробити на бд
-
-			_bookService.PurchaseBooks(1, _customerCart);
+			_bookService.PurchaseBooks(_currentCustomer.Id, _booksInCart);
 			MessageBox.Show("Succesfuly created");
-
-
+		    foreach(CartListEntity customerCart in _currentCustomer.CartList.ToList())
+			{
+				_cartListService.Delete(customerCart.Id);
+			}
+			_customerService.Update(_currentCustomer);
 			newPageGrid.Visibility = Visibility.Visible;
 			orderPageGrid.Visibility = Visibility.Hidden;
-			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer,false, _customerCart));
+			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService,_wishListService, _cartListService, _currentCustomer,false));
+		
 		}
 
 		private void editCartBtn_Click(object sender, RoutedEventArgs e)
 		{
 			newPageGrid.Visibility = Visibility.Visible;
 			orderPageGrid.Visibility = Visibility.Hidden;
-			pagesFrame.Navigate(new CustomerCartPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer,false, _customerCart));
+			pagesFrame.Navigate(new CustomerActivitiesPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService,_wishListService, _cartListService,  _currentCustomer,false,CustomerActivitiesInfoType.CartList));
 		}
 	}
 }
