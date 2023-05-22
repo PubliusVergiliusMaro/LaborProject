@@ -1,4 +1,6 @@
-﻿namespace LaborProjectOOP.Database.Models
+﻿using LaborProjectOOP.Constants.Enums;
+
+namespace LaborProjectOOP.Database.Models
 {
 	public class BookEntity
 	{
@@ -6,6 +8,7 @@
 		{
 		    WishLists = new List<WishListEntity>();
 			CartLists= new List<CartListEntity>();
+			Genres = new List<BookGenreTypes>();
 		}
 		public int Id { get; set; }
 		public string Title { get; set; }
@@ -13,6 +16,7 @@
 		public double Price { get; set; }
 		public bool IsTaken { get; set; }
 		public string ImagePath { get; set; }
+		ICollection<BookGenreTypes> Genres { get; set; }
 
 		public AuthorEntity? Author { get; set; }
 		public int? AuthorFK { get; set; }

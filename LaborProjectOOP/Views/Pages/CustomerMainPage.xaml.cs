@@ -9,7 +9,6 @@ using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderServices;
 using LaborProjectOOP.Services.WishListServices;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -51,24 +50,9 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_wishListService = wishListService;
 			_cartListService = cartListService;
 			this._isItAdmin = isItAdmin;
-			
+
 			InitializeComponent();
-			
-			bookBuyNumberTextBlock.Text = _currentCustomer.CartList.Count.ToString();
-			
 			bookList.ItemsSource = _bookService.GetAll();
-			
-
-			
-			//foreach (CatalogEntity catalog in _catalogService.GetAll())
-			//{
-			//foreach (BookEntity book in catalog.Books)
-			//{
-
-			//BooksList.Items.Add(book);
-			//}
-			//}
-
 			if (_isItAdmin) AdminFunctionality();
 		}
 		private void AdminFunctionality()
@@ -105,7 +89,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			}
 			if (isAdmin)
 			{
-				pagesFrame.Navigate(new AdminMenuPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService,_wishListService, _cartListService, currentLibrarian));
+				pagesFrame.Navigate(new AdminMenuPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, currentLibrarian));
 			}
 			else
 				pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService));
@@ -124,15 +108,8 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			BookEntity selectedBook = bookList.SelectedItem as BookEntity;
 			bookPageGrid.Visibility = Visibility.Hidden;
 			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new BookPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService,_wishListService, _cartListService, _currentCustomer, selectedBook, _isItAdmin));
+			pagesFrame.Navigate(new BookPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, selectedBook, _isItAdmin));
 
-		}
-
-		private void CartListGrid_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			bookPageGrid.Visibility = Visibility.Hidden;
-			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new CustomerActivitiesPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService,_wishListService, _cartListService, _currentCustomer, _isItAdmin,CustomerActivitiesInfoType.CartList));
 		}
 
 		private void Ellipse_Loaded(object sender, RoutedEventArgs e)
@@ -149,7 +126,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			bookPageGrid.Visibility = Visibility.Hidden;
 			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new EditProfilePage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService,_wishListService, _cartListService, _currentCustomer));
+			pagesFrame.Navigate(new EditProfilePage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer));
 
 		}
 
@@ -157,17 +134,45 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			bookPageGrid.Visibility = Visibility.Hidden;
 			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new CustomerActivitiesPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, _isItAdmin,CustomerActivitiesInfoType.WishList));		
+			pagesFrame.Navigate(new CustomerActivitiesPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, _isItAdmin, CustomerActivitiesInfoType.WishList));
 		}
 
 		private void booksInWishListTextBlock_Loaded(object sender, RoutedEventArgs e)
 		{
-			
+
 			if (!_isItAdmin)
 			{
 				TextBlock textBlock = (TextBlock)sender;
 				textBlock.Text = _currentCustomer.WishList.Count.ToString();
 			}
+		}
+
+		private void CustomerActivitiesBtn_Click(object sender, RoutedEventArgs e)
+		{
+
+			bookPageGrid.Visibility = Visibility.Hidden;
+			newPageGrid.Visibility = Visibility.Visible;
+			pagesFrame.Navigate(new CustomerActivitiesPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, _isItAdmin, CustomerActivitiesInfoType.CartList));
+
+		}
+
+		private void bookBuyNumberTextBlock_Loaded(object sender, RoutedEventArgs e)
+		{
+			if (!_isItAdmin)
+			{
+				TextBlock textBlock = (TextBlock)sender;
+				textBlock.Text = _currentCustomer.CartList.Count.ToString();
+			}
+		}
+
+		private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			bookList.ItemsSource = _bookService.GetAll().Where(book => book.Title.Contains(searchTextBox.Text));
+		}
+
+		private void GenreComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			bookList.ItemsSource = _bookService.GetAll().Where(book => book.Title.Contains(searchTextBox.Text));
 		}
 	}
 }

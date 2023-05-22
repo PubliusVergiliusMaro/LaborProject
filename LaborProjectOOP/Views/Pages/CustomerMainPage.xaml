@@ -18,15 +18,23 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <!--<DataGrid x:Name="BooksList" IsReadOnly="True"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Title" Binding="{Binding Title}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Price" Binding="{Binding Price}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Author Name" Binding="{Binding Author.Name}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Author Surname" Binding="{Binding Author.Surname}" ></DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>-->
-                <ListBox x:Name="bookList" SelectionChanged="bookList_SelectionChanged">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="8*"/>
+                </Grid.RowDefinitions>
+          
+                <StackPanel Grid.Row="0" Orientation="Vertical">
+                    <Grid HorizontalAlignment="Center" Margin="0 0 200 0">
+                        <Label Margin="0 0 0 0" Content="Search at:"/>
+                        <Label  Margin="60 0 0 0" Content="All"></Label>
+                    </Grid>
+                    <StackPanel Margin="10" Orientation="Horizontal">
+                        <TextBox x:Name="searchTextBox" TextChanged="SearchTextBox_TextChanged" Width="500" Height="30"/>
+                        <ComboBox x:Name="catalogsComboBox" Width="150" Height="30"  Grid.Row="1"/>
+                        <ComboBox SelectionChanged="GenreComboBox_SelectionChanged" x:Name="GenreComboBox" Width="150" Height="30"  Grid.Row="1"/>
+                    </StackPanel>
+                </StackPanel>
+                <ListBox x:Name="bookList" SelectionChanged="bookList_SelectionChanged" Grid.Row="1">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid x:Name="bookGrid" HorizontalAlignment="Stretch" Margin="0 20 0 0">
@@ -65,19 +73,25 @@
 
 
                     <!--#region Icons-->
-                    <Grid Width="55" Height="55" HorizontalAlignment="Left" Margin="10 0 0 0" VerticalAlignment="Top" MouseDown="CartListGrid_MouseDown">
-                        <Image Source="/Views/Pages/basketIcon.png" Width="50" Height="40" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                        <Border CornerRadius="15" Background="Red" Margin="30,21,7,16"/>
-                        <TextBlock x:Name="bookBuyNumberTextBlock" Height="30" FontSize="13" Text="0" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="31,21,0,0" TextAlignment="Center" Width="17"/>
-                    </Grid>
+                    <Button Width="55" Height="55" HorizontalAlignment="Left" Margin="10 3 0 0" VerticalAlignment="Top" Click="CustomerActivitiesBtn_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Grid ><!--MouseDown="CartListGrid_MouseDown"-->
+                                    <Image Source="/Views/Pages/basketIcon.png" Width="50" Height="40" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                    <Border CornerRadius="15" Background="Red" Margin="30,21,7,16"/>
+                                    <TextBlock Loaded="bookBuyNumberTextBlock_Loaded" x:Name="bookBuyNumberTextBlock" Height="30" FontSize="13" Text="0" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,21,0,0" TextAlignment="Center" Width="17"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
 
-                    <Button Width="55" VerticalAlignment="Top" Click="WishListBtn_Click" Height="55">
+                    <Button Width="60" VerticalAlignment="Top"  Click="WishListBtn_Click" Height="55">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Grid>
-                                    <Image x:Name="customerWishListIcon" Width="50" Height="40" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Views/Pages/wishListIcon.jpg" />
-                                    <Border CornerRadius="15" Background="Green" Margin="30,21,7,16"/>
-                                    <TextBlock Loaded="booksInWishListTextBlock_Loaded" x:Name="booksInWishListTextBlock"  Height="30" FontSize="13" Text="0" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="31,21,0,0" TextAlignment="Center" Width="17"/>
+                                    <Image x:Name="customerWishListIcon" Width="60" Height="55" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Views/Pages/wishListIcon.jpg" />
+                                    <Border CornerRadius="15" Background="Green" Margin="38,30,1,6"/>
+                                    <TextBlock Loaded="booksInWishListTextBlock_Loaded" x:Name="booksInWishListTextBlock"  Height="30" FontSize="13" Text="0" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,31,0,0" TextAlignment="Center" Width="17"/>
                                 </Grid>
                             </ControlTemplate>
                         </Button.Template>
@@ -86,7 +100,7 @@
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Grid>
-                                    <Border CornerRadius="35" Width="65" Height="65" Background="Black" />
+                                    <Border CornerRadius="35" Width="65" Height="65"  Background="Black" />
                                     <Ellipse Width="55" Height="55" Loaded="Ellipse_Loaded">
                                         <Ellipse.Fill>
                                             <ImageBrush x:Name="customerAvatarImage" Stretch="UniformToFill" />
@@ -101,7 +115,7 @@
 
                 <StackPanel Grid.Row="1" Margin="0,16,0,0">
                     <Label Margin="0 0,0,5" Content="Sort Books By:" HorizontalContentAlignment="Center"/>
-                    <ComboBox Width="170" Height="30"  Grid.Row="1"/>
+                    
                     <Button Width="180" Height="40" Grid.Row="0" x:Name="takeSelectedBtn" Click="TakeSelectedBtn_Click" Margin="0 20 0 0">Take Selected</Button>
 
                 </StackPanel>
