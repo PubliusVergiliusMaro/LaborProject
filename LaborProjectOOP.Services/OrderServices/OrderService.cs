@@ -1,14 +1,8 @@
-﻿using LaborProjectOOP.Constants.Constants;
-using LaborProjectOOP.Database.Models;
+﻿using LaborProjectOOP.Database.Models;
 using LaborProjectOOP.EntityFramework.Repository;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
-namespace LaborProjectOOP.Services.OrderServices
+namespace LaborProjectOOP.Services.OrderHistoryServices
 {
 	public class OrderService : IOrderService
 	{
@@ -26,6 +20,8 @@ namespace LaborProjectOOP.Services.OrderServices
 		public bool Delete(int id)
 		{
 			OrderEntity dbRecord = _orderRepository.Table
+				.Include(ord => ord.OrderList)
+				.Include(ord => ord.Book)
 				.FirstOrDefault(order => order.Id == id);
 			if (dbRecord == null)
 			{
@@ -37,7 +33,9 @@ namespace LaborProjectOOP.Services.OrderServices
 		public List<OrderEntity> GetAll()
 		{
 			List<OrderEntity> dbRecord = _orderRepository.Table
-				 .ToList();
+				.Include(ord => ord.OrderList)
+				.Include(ord => ord.Book)
+			    .ToList();
 			if (dbRecord == null)
 			{
 				return null;
@@ -47,6 +45,8 @@ namespace LaborProjectOOP.Services.OrderServices
 		public OrderEntity GetById(int id)
 		{
 			OrderEntity dbRecord = _orderRepository.Table
+				.Include(ord => ord.OrderList)
+					.Include(ord => ord.Book)
 				.Where(catalog => catalog.Id == id)
 				.FirstOrDefault();
 			if (dbRecord == null)
@@ -60,15 +60,18 @@ namespace LaborProjectOOP.Services.OrderServices
 			try
 			{
 				OrderEntity dbRecord = _orderRepository.Table
+					.Include(ord => ord.OrderList)
+					.Include(ord => ord.Book)
 					.Where(ord => ord.Id == order.Id)
 					.FirstOrDefault();
 				if (dbRecord == null)
 				{
 					return false;
 				}
+				dbRecord.OrderListFK = order.OrderListFK;
+				dbRecord.BookFK = order.BookFK;
 				dbRecord.CreatedOn = order.CreatedOn;
 				dbRecord.IsActual = order.IsActual;
-
 				_orderRepository.SaveChanges();
 				return true;
 			}
@@ -77,10 +80,5 @@ namespace LaborProjectOOP.Services.OrderServices
 				return false;
 			}
 		}
-
-		public List<OrderEntity> GetOrders()
-			=> JsonConvert.DeserializeObject<List<OrderEntity>>(File.ReadAllText(Constants.Constants.Constants.ORDER_FILE_PATH));
-		public void SaveOrders(List<OrderEntity> orders)
-			=> File.WriteAllText(Constants.Constants.Constants.ORDER_FILE_PATH, JsonConvert.SerializeObject(orders));
 	}
 }

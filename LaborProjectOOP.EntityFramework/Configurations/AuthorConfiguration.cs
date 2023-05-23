@@ -11,11 +11,7 @@ namespace LaborProjectOOP.EntityFramework.Configurations
 			builder
 				.ToTable("Authors")
 				.HasKey(a => a.Id);
-			builder
-				.HasMany(author => author.Books)
-				.WithOne(book => book.Author)
-				.HasForeignKey(book => book.AuthorFK)
-				.OnDelete(DeleteBehavior.Cascade);
+			
 		}
 	}
 }

@@ -26,8 +26,9 @@ namespace LaborProjectOOP.Services.BookServices
 			BookEntity dbRecord = _bookRepository.Table
 				.Include(b => b.Author)
 				.Include(b => b.Catalog)
-				.Include(b => b.Order)
 				.Include(b => b.WishLists)
+				.Include(b => b.CartLists)
+				.Include(b => b.OrderList)
 				.FirstOrDefault(b => b.Id == id);
 			if (dbRecord == null)
 			{
@@ -41,8 +42,9 @@ namespace LaborProjectOOP.Services.BookServices
 			List<BookEntity> dbRecord = _bookRepository.Table
 				.Include(b => b.Author)
 				.Include(b => b.Catalog)
-				.Include(b => b.Order)
 				.Include(b => b.WishLists)
+				.Include(b => b.CartLists)
+				.Include(b => b.OrderList)
 				.ToList();
 			if (dbRecord == null)
 			{
@@ -55,8 +57,9 @@ namespace LaborProjectOOP.Services.BookServices
 			BookEntity dbRecord = _bookRepository.Table
 					.Include(b => b.Author)
 					.Include(b => b.Catalog)
-					.Include(b => b.Order)
 					.Include(b => b.WishLists)
+					.Include(b => b.CartLists)
+					.Include(b => b.OrderList)
 					.FirstOrDefault(book => book.Id == id);
 			if (dbRecord == null)
 			{
@@ -72,8 +75,9 @@ namespace LaborProjectOOP.Services.BookServices
 					.Where(b => b.Id == book.Id)
 					.Include(b => b.Author)
 					.Include(b => b.Catalog)
-					.Include(b => b.Order)
 					.Include(b => b.WishLists)
+					.Include(b => b.CartLists)
+					.Include(b => b.OrderList)
 					.FirstOrDefault();
 				if (dbRecord == null)
 				{
@@ -86,8 +90,8 @@ namespace LaborProjectOOP.Services.BookServices
 				dbRecord.Author = book.Author;
 				dbRecord.AuthorFK = book.AuthorFK;
 				dbRecord.CatalogFK = book.CatalogFK;
-				dbRecord.OrderFK = book.OrderFK;
-
+				dbRecord.ImagePath = book.ImagePath;
+					
 				_bookRepository.SaveChanges();
 				return true;
 			}
@@ -105,21 +109,21 @@ namespace LaborProjectOOP.Services.BookServices
 		{
 			CustomerEntity dbRecord = _customerRepository.Table
 				.Where(customer => customer.Id == CustomerId)
+				.Include(b => b.WishList)
+				.Include(b => b.CartList)
+				.Include(b => b.OrderList)
 				.FirstOrDefault();
 			if (dbRecord != null)
 			{
-				OrderEntity order = new OrderEntity()
+				foreach (BookEntity bookEntity in bookEntities) 
 				{
-					Books = bookEntities,
-					CreatedOn = DateTime.UtcNow,
-					Customer = dbRecord,
-					IsActual = true
-				};
-				foreach (BookEntity bookEntity in bookEntities)
-				{
-					bookEntity.OrderFK = order.Id;
+					OrderEntity order = new()
+					{
+						OrderListFK = dbRecord.OrderList.Id,
+						BookFK = bookEntity.Id
+					};
+					_orderRepository.Create(order);
 				}
-				_orderRepository.Create(order);
 			}
 		}
 	}

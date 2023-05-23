@@ -7,6 +7,7 @@ using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.Helpers;
 using LaborProjectOOP.Services.LibrarianServices;
+using LaborProjectOOP.Services.OrderHistoryServices;
 using LaborProjectOOP.Services.OrderServices;
 using LaborProjectOOP.Services.WishListServices;
 using Microsoft.Win32;
@@ -29,24 +30,26 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private readonly ICatalogService _catalogService;
 		private readonly ICustomerService _customerService;
 		private readonly ILibrarianService _librarianService;
-		private readonly IOrderService _orderService;
+		private readonly IOrderListService _orderListService;
 		private readonly IAuthorService _authorService;
 		private readonly IWishListService _wishListService;
 		private readonly ICartListService _cartListService;
+		private readonly IOrderService _orderService;
 		private readonly LibrarianEntity _adminEntity;
 		private static string bookImagePath = "";
-		public AdminPage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, IWishListService wishListService, ICartListService cartListService, LibrarianEntity adminEntity)
+		public AdminPage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderListService orderListService, IOrderService orderService, IAuthorService authorService, IWishListService wishListService, ICartListService cartListService, LibrarianEntity adminEntity)
 		{
 			// Лишні прибрати
 			_bookService = bookService;
 			_catalogService = catalogService;
 			_customerService = customerService;
 			_librarianService = librarianService;
-			_orderService = orderService;
+			_orderListService = orderListService;
 			_authorService = authorService;
 			_adminEntity = adminEntity;
 			_wishListService = wishListService;
 			_cartListService = cartListService;
+			_orderService= orderService;
 			InitializeComponent();
 
 			customerListDataGrid.Items.Clear();
@@ -61,7 +64,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			librariansListDataGrid.Items.Clear();
 			foreach (LibrarianEntity librarian in _librarianService.GetAll())
 			librariansListDataGrid.Items.Add(librarian);
-			foreach (OrderEntity order in _orderService.GetAll())
+			foreach (OrderListEntity order in _orderListService.GetAll())
 			ordersListDataGrid.Items.Add(order);
 
 			List<AuthorEntity> authors = _authorService.GetAll();
@@ -91,7 +94,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			newPageGrid.Visibility = Visibility.Visible;
 			adminPageGrid.Visibility = Visibility.Hidden;
-			pagesFrame.Navigate(new AdminMenuPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService,_wishListService, _cartListService, _adminEntity));
+			pagesFrame.Navigate(new AdminMenuPage(_bookService, _catalogService, _customerService, _librarianService, _orderListService, _orderService, _authorService,_wishListService, _cartListService, _adminEntity));
 		}
 		#endregion
 		#region Deleting methods
@@ -142,10 +145,10 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		}
 		private void DeleteSelectedOrderBtn_Click(object sender, RoutedEventArgs e)
 		{
-			OrderEntity selectedOrder = ordersListDataGrid.SelectedItem as OrderEntity;
+			OrderListEntity selectedOrder = ordersListDataGrid.SelectedItem as OrderListEntity;
 			if (selectedOrder != null)
 			{
-				_orderService.Delete(selectedOrder.Id);
+				_orderListService.Delete(selectedOrder.Id);
 				MessageBox.Show("Succesfully delete");
 			}
 			else
@@ -349,7 +352,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private void RefreshOrdersDataGrid_Click(object sender, RoutedEventArgs e)
 		{
 			ordersListDataGrid.Items.Clear();
-			foreach(OrderEntity order in _orderService.GetAll())
+			foreach(OrderListEntity order in _orderListService.GetAll())
 				ordersListDataGrid.Items.Add(order);
 		}
 		#endregion
@@ -469,17 +472,18 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private void sortingOrdersComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			OrdersSorting selectedSort = (OrdersSorting)sortingOrdersComboBox.SelectedItem;
-			List<OrderEntity> orders = _orderService.GetAll();
+			List<OrderListEntity> orders = _orderListService.GetAll();
 			switch (selectedSort)
 			{
 				case OrdersSorting.None:
 					ordersListDataGrid.Items.Clear();
-					foreach (OrderEntity order in orders)
+					foreach (OrderListEntity order in orders)
 						ordersListDataGrid.Items.Add(order);
 					break;
                 case OrdersSorting.ActiveOnly:
 					ordersListDataGrid.Items.Clear();
-					foreach (OrderEntity order in orders.Where(order => order.IsActual == true))
+					foreach(OrderListEntity orderList in orders)
+					foreach (OrderEntity order in orderList.Orders.Where(order => order.IsActual == true))
 						ordersListDataGrid.Items.Add(order);
 					break;
 				default: break;

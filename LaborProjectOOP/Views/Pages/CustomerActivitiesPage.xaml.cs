@@ -6,6 +6,7 @@ using LaborProjectOOP.Services.CartListServices;
 using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.LibrarianServices;
+using LaborProjectOOP.Services.OrderHistoryServices;
 using LaborProjectOOP.Services.OrderServices;
 using LaborProjectOOP.Services.WishListServices;
 using System;
@@ -30,15 +31,16 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private readonly ICatalogService _catalogService;
 		private readonly ICustomerService _customerService;
 		private readonly ILibrarianService _librarianService;
-		private readonly IOrderService _orderService;
+		private readonly IOrderListService _orderListService;
 		private readonly IAuthorService _authorService;
 		private readonly IWishListService _wishListService;
 		private readonly ICartListService _cartListService;
 		private readonly CustomerActivitiesInfoType _customerActivitiesInfoType;
+		private readonly IOrderService _orderService;
 		private readonly CustomerEntity _currentCustomer;
 		private readonly bool _isItAdmin;
 		public CustomerActivitiesPage(
-			IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, IWishListService wishListService, ICartListService cartListService,
+			IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderListService orderListService, IOrderService orderService, IAuthorService authorService, IWishListService wishListService, ICartListService cartListService,
 			CustomerEntity currentCustomer, bool isItAdmin,CustomerActivitiesInfoType customerActivitiesInfoType)
 		{
 
@@ -46,14 +48,14 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_catalogService = catalogService;
 			_customerService = customerService;
 			_librarianService = librarianService;
-			_orderService = orderService;
+			_orderListService = orderListService;
 			_currentCustomer = currentCustomer;
 			_authorService = authorService;
 			_wishListService = wishListService;
 			_cartListService = cartListService;
 			_isItAdmin = isItAdmin;
 			_customerActivitiesInfoType = customerActivitiesInfoType;
-			
+			_orderService = orderService;
 			InitializeComponent();
 		}
 
@@ -243,7 +245,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			cartPageGrid.Visibility = System.Windows.Visibility.Hidden;
 			newPageGrid.Visibility = System.Windows.Visibility.Visible;
-			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, _isItAdmin));
+			pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderListService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, _isItAdmin));
 		}
 	}
 }

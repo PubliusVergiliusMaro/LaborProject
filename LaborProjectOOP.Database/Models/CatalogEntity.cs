@@ -20,7 +20,7 @@
 		//	{
 		//		try
 		//		{
-		//			return Books[_position];
+		//			return Orders[_position];
 		//		}
 		//		catch(Exception e)
 		//		{
@@ -32,7 +32,7 @@
 		//public bool MoveNext()
 		//{
 		//	_position++;
-		//	return (_position < Books.Count );
+		//	return (_position < Orders.Count );
 		//}
 
 		//public void Reset()

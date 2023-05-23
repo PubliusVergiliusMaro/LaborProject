@@ -6,7 +6,6 @@ namespace LaborProjectOOP.Database.Models
 	{
 		public CustomerEntity() 
 		{
-		    Orders = new List<OrderEntity>();
 			WishList = new List<WishListEntity>();
 			CartList= new List<CartListEntity>();
 		}
@@ -14,7 +13,7 @@ namespace LaborProjectOOP.Database.Models
 		public string Phone { get; set; }
 		public string AvatarImagePath { get; set; }
 		public bool IsBanned { get; set; }
-		public ICollection<OrderEntity> Orders { get; set; }
+		public OrderListEntity OrderList { get; set; }
 		public ICollection<WishListEntity> WishList { get; set; }
 		public ICollection<CartListEntity> CartList { get; set; }
 	}

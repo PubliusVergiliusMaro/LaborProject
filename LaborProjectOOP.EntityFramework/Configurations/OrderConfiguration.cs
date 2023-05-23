@@ -8,14 +8,26 @@ namespace LaborProjectOOP.EntityFramework.Configurations
 	{
 		public void Configure(EntityTypeBuilder<OrderEntity> builder)
 		{
-			builder.ToTable("Orders")
-			.HasKey(ord => ord.Id);
-
 			builder
-			.HasOne<CustomerEntity>(order => order.Customer)
-			.WithMany(customer => customer.Orders)
-			.HasForeignKey(order => order.CustomerFK)
-			.OnDelete(DeleteBehavior.Cascade);
+				.ToTable("Orders")
+				.HasKey(orderHistor => orderHistor.Id);
+			builder
+				.HasOne(oh => oh.OrderList)
+				.WithMany(orderList => orderList.Orders)
+				.HasForeignKey(oh => oh.OrderListFK)
+				.OnDelete(DeleteBehavior.Cascade);
+			builder
+				.HasOne(order => order.Book)
+				.WithMany(book => book.OrderList)
+				.HasForeignKey(order => order.BookFK)
+				.OnDelete(DeleteBehavior.Cascade);
+			/*
+			 * Npgsql.PostgresException: "23503: insert або update в таблиці "Orders" 
+			 * порушує обмеження зовнішнього ключа "FK_Orders_Books_BookFK"
+
+               DETAIL: Detail redacted as it may contain sensitive data. 
+			Specify 'Include Error Detail' in the connection string to include this information."
+			 */
 		}
 	}
 }

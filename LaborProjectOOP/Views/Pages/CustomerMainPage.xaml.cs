@@ -6,6 +6,7 @@ using LaborProjectOOP.Services.CartListServices;
 using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.LibrarianServices;
+using LaborProjectOOP.Services.OrderHistoryServices;
 using LaborProjectOOP.Services.OrderServices;
 using LaborProjectOOP.Services.WishListServices;
 using System;
@@ -28,6 +29,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private readonly ICatalogService _catalogService;
 		private readonly ICustomerService _customerService;
 		private readonly ILibrarianService _librarianService;
+		private readonly IOrderListService _orderListService;
 		private readonly IOrderService _orderService;
 		private readonly IAuthorService _authorService;
 		private readonly IWishListService _wishListService;
@@ -37,18 +39,19 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 
 		//private static BookEntity selectedBook;
 		public CustomerMainPage(
-			IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, IWishListService wishListService, ICartListService cartListService,
+			IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderListService orderListService, IOrderService orderService, IAuthorService authorService, IWishListService wishListService, ICartListService cartListService,
 			CustomerEntity currentEntity, bool isItAdmin)
 		{
 			_bookService = bookService;
 			_catalogService = catalogService;
 			_customerService = customerService;
 			_librarianService = librarianService;
-			_orderService = orderService;
+			_orderListService = orderListService;
 			_currentCustomer = currentEntity;
 			_authorService = authorService;
 			_wishListService = wishListService;
 			_cartListService = cartListService;
+			_orderService= orderService;
 			this._isItAdmin = isItAdmin;
 
 			InitializeComponent();
@@ -66,7 +69,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			{
 				bookPageGrid.Visibility = Visibility.Hidden;
 				newPageGrid.Visibility = Visibility.Visible;
-				pagesFrame.Navigate(new OrderPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer));
+				pagesFrame.Navigate(new OrderPage(_bookService, _catalogService, _customerService, _librarianService, _orderListService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer));
 			}
 			else MessageBox.Show("Select some book for making order");
 		}
@@ -89,10 +92,10 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			}
 			if (isAdmin)
 			{
-				pagesFrame.Navigate(new AdminMenuPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, currentLibrarian));
+				pagesFrame.Navigate(new AdminMenuPage(_bookService, _catalogService, _customerService, _librarianService, _orderListService, _orderService, _authorService, _wishListService, _cartListService, currentLibrarian));
 			}
 			else
-				pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService));
+				pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderListService, _orderService, _authorService, _wishListService, _cartListService));
 		}
 
 		// Customer Orders
@@ -100,7 +103,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		//{
 		//	bookPageGrid.Visibility = Visibility.Hidden;
 		//	newPageGrid.Visibility = Visibility.Visible;
-		//	pagesFrame.Navigate(new CustomerOrderPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _currentCustomer, _customerCart));
+		//	pagesFrame.Navigate(new CustomerOrderPage(_bookService, _catalogService, _customerService, _librarianService, _orderListService, _authorService, _currentCustomer, _customerCart));
 		//}
 
 		private void bookList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -108,7 +111,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			BookEntity selectedBook = bookList.SelectedItem as BookEntity;
 			bookPageGrid.Visibility = Visibility.Hidden;
 			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new BookPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, selectedBook, _isItAdmin));
+			pagesFrame.Navigate(new BookPage(_bookService, _catalogService, _customerService, _librarianService, _orderListService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, selectedBook, _isItAdmin));
 
 		}
 
@@ -126,7 +129,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			bookPageGrid.Visibility = Visibility.Hidden;
 			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new EditProfilePage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer));
+			pagesFrame.Navigate(new EditProfilePage(_bookService, _catalogService, _customerService, _librarianService, _orderListService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer));
 
 		}
 
@@ -134,7 +137,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			bookPageGrid.Visibility = Visibility.Hidden;
 			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new CustomerActivitiesPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, _isItAdmin, CustomerActivitiesInfoType.WishList));
+			pagesFrame.Navigate(new CustomerActivitiesPage(_bookService, _catalogService, _customerService, _librarianService, _orderListService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, _isItAdmin, CustomerActivitiesInfoType.WishList));
 		}
 
 		private void booksInWishListTextBlock_Loaded(object sender, RoutedEventArgs e)
@@ -152,7 +155,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 
 			bookPageGrid.Visibility = Visibility.Hidden;
 			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new CustomerActivitiesPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, _isItAdmin, CustomerActivitiesInfoType.CartList));
+			pagesFrame.Navigate(new CustomerActivitiesPage(_bookService, _catalogService, _customerService, _librarianService, _orderListService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, _isItAdmin, CustomerActivitiesInfoType.CartList));
 
 		}
 
@@ -179,7 +182,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			newPageGrid.Visibility = Visibility.Visible;
 			bookPageGrid.Visibility = Visibility.Hidden;
-			pagesFrame.Navigate(new CustomerOrdersHistoryPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer,_isItAdmin));
+			pagesFrame.Navigate(new CustomerOrdersHistoryPage(_bookService, _catalogService, _customerService, _librarianService, _orderListService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, _isItAdmin));
 		}
 	}
 }

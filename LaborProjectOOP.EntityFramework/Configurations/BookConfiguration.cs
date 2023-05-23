@@ -16,13 +16,6 @@ namespace LaborProjectOOP.EntityFramework.Configurations
 				.WithMany(catalog => catalog.Books)
 				.HasForeignKey(book => book.CatalogFK)
 				.OnDelete(DeleteBehavior.Cascade);
-
-			builder
-				.HasOne(book => book.Order)
-				.WithMany(order => order.Books)
-				.HasForeignKey(book => book.OrderFK)
-				.OnDelete(DeleteBehavior.Cascade);
-
 			builder
 				.HasOne(book => book.Author)
 				.WithMany(author => author.Books)

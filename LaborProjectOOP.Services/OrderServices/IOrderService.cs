@@ -1,6 +1,6 @@
 ﻿using LaborProjectOOP.Database.Models;
 
-namespace LaborProjectOOP.Services.OrderServices
+namespace LaborProjectOOP.Services.OrderHistoryServices
 {
 	public interface IOrderService
 	{
@@ -9,7 +9,5 @@ namespace LaborProjectOOP.Services.OrderServices
 		List<OrderEntity> GetAll();
 		OrderEntity GetById(int id);
 		bool Update(OrderEntity order);
-		List<OrderEntity> GetOrders();
-		void SaveOrders(List<OrderEntity> orders);
 	}
 }

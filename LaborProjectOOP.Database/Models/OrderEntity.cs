@@ -2,15 +2,12 @@
 {
 	public class OrderEntity
 	{
-		public OrderEntity()
-		{
-			Books = new List<BookEntity>();	
-		}
 		public int Id { get; set; }
 		public DateTime CreatedOn { get; set; }
 		public bool IsActual { get; set; }
-		public CustomerEntity Customer { get; set; }
-		public int CustomerFK { get; set; }
-		public IList<BookEntity> Books { get; set; }
+		public int? OrderListFK { get; set; }
+		public OrderListEntity OrderList { get; set; }
+		public int? BookFK { get; set; }
+		public BookEntity Book { get; set; }
 	}
 }

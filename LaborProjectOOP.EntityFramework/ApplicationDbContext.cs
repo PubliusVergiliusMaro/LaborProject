@@ -12,9 +12,10 @@ namespace LaborProjectOOP.EntityFramework
 		public DbSet<CatalogEntity> Catalogs { get; set; }
 		public DbSet<CustomerEntity> Customers { get; set; }
 		public DbSet<LibrarianEntity> Librarians { get; set; }
-		public DbSet<OrderEntity> Orders { get; set; }
+		public DbSet<OrderListEntity> OrderLists { get; set; }
 		public DbSet<WishListEntity> WishLists { get; set; }
 		public DbSet<CartListEntity> CartLists { get; set; }
+		public DbSet<OrderEntity> Orders { get; set; }
 		public ApplicationDbContext()
 		{
 			Database.Migrate();
@@ -30,9 +31,10 @@ namespace LaborProjectOOP.EntityFramework
 			modelBuilder.ApplyConfiguration(new CatalogConfiguration());
 			modelBuilder.ApplyConfiguration(new CustomerConfiguration());
 			modelBuilder.ApplyConfiguration(new LibrarianConfiguration());
-			modelBuilder.ApplyConfiguration(new OrderConfiguration());
+			modelBuilder.ApplyConfiguration(new OrderListConfiguration());
 			modelBuilder.ApplyConfiguration(new WishListConfiguration());
 			modelBuilder.ApplyConfiguration(new CartListConfiguration());
+			modelBuilder.ApplyConfiguration(new OrderConfiguration());
 		}
 	}
 }
