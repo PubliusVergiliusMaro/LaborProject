@@ -16,8 +16,7 @@ namespace LaborProjectOOP.Database.Models
 		public double Price { get; set; }
 		public bool IsTaken { get; set; }
 		public string ImagePath { get; set; }
-		ICollection<BookGenreTypes> Genres { get; set; }
-
+		public List<BookGenreTypes> Genres { get; set; }
 		public AuthorEntity? Author { get; set; }
 		public int? AuthorFK { get; set; }
 

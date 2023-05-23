@@ -13,6 +13,8 @@
     <None Remove="Images\deleteButtonIcon.jpg" />
     <None Remove="Images\RefreshIcon.png" />
     <None Remove="Views\Pages\basketIcon.png" />
+    <None Remove="Views\Pages\ordersHistoryIcon.jpg" />
+    <None Remove="Views\Pages\ordersHistoryImage.jpg" />
     <None Remove="Views\Pages\RefreshIcon.png" />
     <None Remove="Views\Pages\wishListIcon.jpg" />
   </ItemGroup>
@@ -43,6 +45,8 @@
 
   <ItemGroup>
     <Resource Include="Views\Pages\basketIcon.png" />
+    <Resource Include="Views\Pages\ordersHistoryIcon.jpg" />
+    <Resource Include="Views\Pages\ordersHistoryImage.jpg" />
     <Resource Include="Views\Pages\RefreshIcon.png" />
     <Resource Include="Views\Pages\wishListIcon.jpg" />
   </ItemGroup>

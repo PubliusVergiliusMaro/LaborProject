@@ -67,7 +67,7 @@
 
             </StackPanel>
 
-            <Grid Grid.Column="1" Grid.Row="0">
+            <!--<Grid Grid.Column="1" Grid.Row="0">
                 <StackPanel Orientation="Vertical">
                     <Label Style="{StaticResource LabelStyle}">Дата отримання книги</Label>
                     <TextBox x:Name="startDataTextBox" Style="{StaticResource TextBoxStyle}"></TextBox>
@@ -75,7 +75,7 @@
                     <TextBox x:Name="endDataTextBox" Style="{StaticResource TextBoxStyle}"></TextBox>
 
                 </StackPanel>
-            </Grid>
+            </Grid>-->
 
             <Grid Grid.Row="2" Grid.Column="0" ShowGridLines="True">
                 <Grid.RowDefinitions>

@@ -174,5 +174,12 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			bookList.ItemsSource = _bookService.GetAll().Where(book => book.Title.Contains(searchTextBox.Text));
 		}
+
+		private void OrdersHistoryButton_Click(object sender, RoutedEventArgs e)
+		{
+			newPageGrid.Visibility = Visibility.Visible;
+			bookPageGrid.Visibility = Visibility.Hidden;
+			pagesFrame.Navigate(new CustomerOrdersHistoryPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer,_isItAdmin));
+		}
 	}
 }

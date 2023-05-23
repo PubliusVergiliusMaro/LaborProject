@@ -62,7 +62,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 						Password = HashService.GetMD5Hash(passwordTextBox.Text),
 						Email = emailTextBox.Text,
 						Phone = phoneTextBox.Text,
-						AvatarImagePath = "Images/defaultAvatarIcon.png"
+						AvatarImagePath = "C:\\GAmes\\Курси\\LaborProjectOOP\\LaborProjectOOP\\LaborProjectOOP\\Images\\defaultAvatarIcon.png"
 					});
 				}
 				else

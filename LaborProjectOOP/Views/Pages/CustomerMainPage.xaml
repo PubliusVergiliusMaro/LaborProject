@@ -7,7 +7,11 @@
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1250"
       Title="CustomerMainPage">
-
+    <Page.Resources>
+        <Style x:Key="IconButtonStyle">
+            <Setter Property="ItemsControl.Margin" Value="0,0,20,0"/>
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid x:Name="newPageGrid">
             <Frame x:Name="pagesFrame" NavigationUIVisibility="Hidden"/>
@@ -17,7 +21,7 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
+            <Grid Grid.Column="0" Background="Gainsboro">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="8*"/>
@@ -65,38 +69,48 @@
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="47*"/>
-                    <RowDefinition Height="153*"/>
-                    <RowDefinition Height="200*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="0" Background="Gainsboro">
 
-
+                    <StackPanel Orientation="Horizontal">
+                        
                     <!--#region Icons-->
-                    <Button Width="55" Height="55" HorizontalAlignment="Left" Margin="10 3 0 0" VerticalAlignment="Top" Click="CustomerActivitiesBtn_Click">
-                        <Button.Template>
-                            <ControlTemplate>
-                                <Grid ><!--MouseDown="CartListGrid_MouseDown"-->
-                                    <Image Source="/Views/Pages/basketIcon.png" Width="50" Height="40" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                                    <Border CornerRadius="15" Background="Red" Margin="30,21,7,16"/>
-                                    <TextBlock Loaded="bookBuyNumberTextBlock_Loaded" x:Name="bookBuyNumberTextBlock" Height="30" FontSize="13" Text="0" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,21,0,0" TextAlignment="Center" Width="17"/>
-                                </Grid>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-
-                    <Button Width="60" VerticalAlignment="Top"  Click="WishListBtn_Click" Height="55">
+                        <Button Style="{StaticResource IconButtonStyle}" Width="55" Height="55" HorizontalAlignment="Left"  VerticalAlignment="Top" Click="CustomerActivitiesBtn_Click">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Grid >
+                                        <!--MouseDown="CartListGrid_MouseDown"-->
+                                        <Image Source="/Views/Pages/basketIcon.png" Width="50" Height="40" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                        <Border CornerRadius="15" Background="Red" Margin="30,21,7,16"/>
+                                        <TextBlock Loaded="bookBuyNumberTextBlock_Loaded" x:Name="bookBuyNumberTextBlock" Height="30" FontSize="13" Text="0" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,21,0,0" TextAlignment="Center" Width="17"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Style="{StaticResource IconButtonStyle}" Width="60" VerticalAlignment="Top"  Click="WishListBtn_Click" Height="55">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Grid>
-                                    <Image x:Name="customerWishListIcon" Width="60" Height="55" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Views/Pages/wishListIcon.jpg" />
-                                    <Border CornerRadius="15" Background="Green" Margin="38,30,1,6"/>
-                                    <TextBlock Loaded="booksInWishListTextBlock_Loaded" x:Name="booksInWishListTextBlock"  Height="30" FontSize="13" Text="0" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,31,0,0" TextAlignment="Center" Width="17"/>
+                                    <Image x:Name="customerWishListIcon" Width="60" Height="55" Margin="10 -7 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Views/Pages/wishListIcon.jpg" />
+                                    <Border CornerRadius="15" Background="Green" Margin="38,23,1,12"/>
+                                    <TextBlock Loaded="booksInWishListTextBlock_Loaded" x:Name="booksInWishListTextBlock"  Height="30" FontSize="13" Text="0" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,24,0,0" TextAlignment="Center" Width="17"/>
                                 </Grid>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button Width="65" Click="ProfileBtn_Click" Height="65" HorizontalAlignment="Right" Margin="0 0 20 0" VerticalAlignment="Top">
+                        <Button Style="{StaticResource IconButtonStyle}" Click="OrdersHistoryButton_Click" Width="60" VerticalAlignment="Top"  Height="55">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Image x:Name="customerWishListIcon" Width="50" Height="45" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Views/Pages/ordersHistoryIcon.jpg" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Style="{StaticResource IconButtonStyle}" Width="65" Click="ProfileBtn_Click" Height="65" HorizontalAlignment="Right" VerticalAlignment="Top">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Grid>
@@ -110,6 +124,7 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
+                 </StackPanel>
                 </Grid>
                 <!--#endregion-->
 

@@ -54,8 +54,8 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			DateTime startDate = DateTime.Now;
 			DateTime endDate = DateTime.Now.AddDays(10);
 
-			startDataTextBox.Text = startDate.ToString();
-			endDataTextBox.Text = endDate.ToString();
+			//startDataTextBox.Text = startDate.ToString();
+			//endDataTextBox.Text = endDate.ToString();
 			List<BookEntity> books = new List<BookEntity>();
 			List<CartListEntity> customerCartLists = _cartListService.GetCartListByCustomerId(_currentCustomer.Id);
 			foreach (CartListEntity cartBook in customerCartLists)
