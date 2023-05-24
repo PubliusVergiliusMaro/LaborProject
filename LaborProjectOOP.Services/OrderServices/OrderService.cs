@@ -20,7 +20,7 @@ namespace LaborProjectOOP.Services.OrderHistoryServices
 		public bool Delete(int id)
 		{
 			OrderEntity dbRecord = _orderRepository.Table
-				.Include(ord => ord.OrderList)
+				.Include(ord => ord.Customer)
 				.Include(ord => ord.Book)
 				.FirstOrDefault(order => order.Id == id);
 			if (dbRecord == null)
@@ -33,7 +33,7 @@ namespace LaborProjectOOP.Services.OrderHistoryServices
 		public List<OrderEntity> GetAll()
 		{
 			List<OrderEntity> dbRecord = _orderRepository.Table
-				.Include(ord => ord.OrderList)
+				.Include(ord => ord.Customer)
 				.Include(ord => ord.Book)
 			    .ToList();
 			if (dbRecord == null)
@@ -45,7 +45,7 @@ namespace LaborProjectOOP.Services.OrderHistoryServices
 		public OrderEntity GetById(int id)
 		{
 			OrderEntity dbRecord = _orderRepository.Table
-				.Include(ord => ord.OrderList)
+				.Include(ord => ord.Customer)
 					.Include(ord => ord.Book)
 				.Where(catalog => catalog.Id == id)
 				.FirstOrDefault();
@@ -60,7 +60,7 @@ namespace LaborProjectOOP.Services.OrderHistoryServices
 			try
 			{
 				OrderEntity dbRecord = _orderRepository.Table
-					.Include(ord => ord.OrderList)
+					.Include(ord => ord.Customer)
 					.Include(ord => ord.Book)
 					.Where(ord => ord.Id == order.Id)
 					.FirstOrDefault();
@@ -68,7 +68,7 @@ namespace LaborProjectOOP.Services.OrderHistoryServices
 				{
 					return false;
 				}
-				dbRecord.OrderListFK = order.OrderListFK;
+				dbRecord.Customer = order.Customer;
 				dbRecord.BookFK = order.BookFK;
 				dbRecord.CreatedOn = order.CreatedOn;
 				dbRecord.IsActual = order.IsActual;

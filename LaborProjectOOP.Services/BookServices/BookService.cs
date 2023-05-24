@@ -111,7 +111,7 @@ namespace LaborProjectOOP.Services.BookServices
 				.Where(customer => customer.Id == CustomerId)
 				.Include(b => b.WishList)
 				.Include(b => b.CartList)
-				.Include(b => b.OrderList)
+				.Include(b => b.Orders)
 				.FirstOrDefault();
 			if (dbRecord != null)
 			{
@@ -119,7 +119,7 @@ namespace LaborProjectOOP.Services.BookServices
 				{
 					OrderEntity order = new()
 					{
-						OrderListFK = dbRecord.OrderList.Id,
+						CustomerFK = dbRecord.Id,
 						BookFK = bookEntity.Id
 					};
 					_orderRepository.Create(order);

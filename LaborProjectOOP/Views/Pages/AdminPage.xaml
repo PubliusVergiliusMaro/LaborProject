@@ -341,7 +341,7 @@
                             <ColumnDefinition Width="4*"/>
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel Orientation="Vertical" Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <StackPanel Width="200" Orientation="Vertical" Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Label>Title</Label>
                             <TextBox x:Name="titleTextBox" Width="200"></TextBox>
                             <Label>Description</Label>
@@ -354,7 +354,7 @@
                             <TextBox></TextBox>-->
                             <Label>Authors</Label>
                             <ComboBox x:Name="authorsComboBox"></ComboBox>
-                            <Button x:Name="addBookBtn" Click="AddBookBtn_Click" Content="Add" Height="30" Width="70" Margin="0 30 0 0"/>
+                            <Button x:Name="addBookBtn" Click="AddBookBtn_Click" Content="Add" Height="30" Width="200" Margin="0 30 0 0"/>
                         </StackPanel>
 
                         <Grid Grid.Column="1" Margin="0 0 10 0">

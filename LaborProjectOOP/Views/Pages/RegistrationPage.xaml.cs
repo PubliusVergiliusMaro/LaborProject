@@ -7,7 +7,6 @@ using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.Helpers;
 using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderHistoryServices;
-using LaborProjectOOP.Services.OrderServices;
 using LaborProjectOOP.Services.WishListServices;
 using Microsoft.Win32;
 using System;
@@ -26,21 +25,19 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private readonly IBookService _bookService;
 		private readonly ICatalogService _catalogService;
 		private readonly ICustomerService _customerService;
-		private readonly ILibrarianService _librarianService;
-		private readonly IOrderListService _orderListService;
+		private readonly ILibrarianService _librarianService;	
 		private readonly IAuthorService _authorService;
 		private readonly IWishListService _wishListService;
 		private readonly ICartListService _cartListService;
 		private readonly IOrderService _orderService;
 		private static string ImagePath;
-		public RegistrationPage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderListService orderListService, IOrderService orderService, IAuthorService authorService, IWishListService wishListService, ICartListService cartListService)
+		public RegistrationPage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, IWishListService wishListService, ICartListService cartListService)
 		{
 			// Лишні прибрати
 			_bookService = bookService;
 			_catalogService = catalogService;
 			_customerService = customerService;
 			_librarianService = librarianService;
-			_orderListService = orderListService;
 			_authorService = authorService;
 			_wishListService = wishListService;
 			_cartListService = cartListService;
@@ -59,14 +56,15 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			{
 				if (defaultImageCheckBox.IsChecked.Value)
 				{
-					_customerService.Create(new CustomerEntity
+					CustomerEntity customer = new CustomerEntity
 					{
 						Login = loginTextBox.Text,
 						Password = HashService.GetMD5Hash(passwordTextBox.Text),
 						Email = emailTextBox.Text,
 						Phone = phoneTextBox.Text,
 						AvatarImagePath = "C:\\GAmes\\Курси\\LaborProjectOOP\\LaborProjectOOP\\LaborProjectOOP\\Images\\defaultAvatarIcon.png"
-					});
+					};
+					_customerService.Create(customer);
 				}
 				else
 				{
@@ -86,7 +84,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 				MessageBox.Show("Succesfuly created");
 				registrationPageGrid.Visibility = Visibility.Hidden;
 				newPageGrid.Visibility = Visibility.Visible;
-				pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderListService, _orderService, _authorService,_wishListService, _cartListService));
+				pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService,  _orderService, _authorService,_wishListService, _cartListService));
 			}
 
 		}
@@ -95,7 +93,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			registrationPageGrid.Visibility = Visibility.Hidden;
 			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderListService, _orderService, _authorService, _wishListService, _cartListService));
+			pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService,  _orderService, _authorService, _wishListService, _cartListService));
 		}
 
 		private void selectAvatarImage_Click(object sender, RoutedEventArgs e)

@@ -24,7 +24,7 @@ namespace LaborProjectOOP.Services.CustomerServices
 				.Where(customer => customer.Id == id)
 				.Include(customer => customer.WishList)
 				.Include(customer => customer.CartList)
-				.Include(customer => customer.OrderList)
+				.Include(customer => customer.Orders)
 				.FirstOrDefault();
 			if (dbRecord == null)
 			{
@@ -38,7 +38,7 @@ namespace LaborProjectOOP.Services.CustomerServices
 			List<CustomerEntity> dbRecord = _customerRepository.Table
 				.Include(customer => customer.WishList)
 				.Include(customer => customer.CartList)
-				.Include(customer => customer.OrderList)
+				.Include(customer => customer.Orders)
 				.ToList();
 			if (dbRecord == null)
 			{
@@ -52,7 +52,7 @@ namespace LaborProjectOOP.Services.CustomerServices
 				.Where(customer => customer.Id == id)
 				.Include(customer => customer.WishList)
 				.Include(customer => customer.CartList)
-				.Include(customer => customer.OrderList)
+				.Include(customer => customer.Orders)
 				.FirstOrDefault();
 			if (dbRecord == null)
 			{
@@ -68,7 +68,7 @@ namespace LaborProjectOOP.Services.CustomerServices
 					.Where(catalogus => catalogus.Id == customer.Id)
 					.Include(customer => customer.WishList)
 					.Include(customer => customer.CartList)
-					.Include(customer => customer.OrderList)
+					.Include(customer => customer.Orders)
 					.FirstOrDefault();
 				if (dbRecord == null)
 				{
@@ -79,7 +79,7 @@ namespace LaborProjectOOP.Services.CustomerServices
 				dbRecord.Email = customer.Email;
 				dbRecord.Phone = customer.Phone;
 				dbRecord.IsBanned = customer.IsBanned;
-				dbRecord.OrderList = customer.OrderList;
+				dbRecord.Orders = customer.Orders;
 				dbRecord.WishList = customer.WishList;
 				dbRecord.CartList = customer.CartList;
 				_customerRepository.SaveChanges();
