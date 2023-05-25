@@ -22,58 +22,70 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Background="Gainsboro">
+            <Grid Grid.Column="0" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="8*"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0" Orientation="Vertical">
+                <StackPanel Background="Gainsboro" Grid.Row="0" Orientation="Vertical">
                     <Grid HorizontalAlignment="Center" Margin="0 0 200 0">
                         <Label Margin="0 0 0 0" Content="Search at:"/>
                         <Label  Margin="60 0 0 0" Content="All"></Label>
                     </Grid>
                     <StackPanel Margin="10" Orientation="Horizontal">
                         <TextBox x:Name="searchTextBox" TextChanged="SearchTextBox_TextChanged" Width="500" Height="30"/>
-                        <ComboBox x:Name="catalogsComboBox" Width="150" Height="30"  Grid.Row="1"/>
+                        <ComboBox SelectionChanged="catalogsComboBox_SelectionChanged" x:Name="catalogsComboBox" Width="150" Height="30"  Grid.Row="1"/>
                         <ComboBox SelectionChanged="GenreComboBox_SelectionChanged" x:Name="GenreComboBox" Width="150" Height="30"  Grid.Row="1"/>
+                        <Button Click="ClearAllFiltersButton_Click" Width="65">Clear Filters</Button>
                     </StackPanel>
                 </StackPanel>
-                <ListBox x:Name="bookList" SelectionChanged="bookList_SelectionChanged" Grid.Row="1">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid x:Name="bookGrid" HorizontalAlignment="Stretch" Margin="0 20 0 0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
+                <Grid Grid.Row="1" x:Name="booksNotFoundGrid">
+                    <StackPanel Margin="0 50 0 0">
+                        <Image Height="300" Source="/Views/Pages/EmptyBookIcon.png" ></Image>
+                        <Label FontSize="28"  HorizontalAlignment="Center">Such Book was not found</Label>
+                        <TextBlock Width="450" FontSize="15" HorizontalAlignment="Center" TextWrapping="Wrap">Try to change the value in the filters or search globally, if you do not find the book, it may not exist.</TextBlock>
+                    </StackPanel>
+                </Grid >
+                <Grid Grid.Row="1" x:Name ="booksListBoxGrid">
+                    <ListBox x:Name="bookList" SelectionChanged="bookList_SelectionChanged" Grid.Row="1">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid x:Name="bookGrid" HorizontalAlignment="Stretch" Margin="0 20 0 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
 
-                                </Grid.ColumnDefinitions>
+                                    </Grid.ColumnDefinitions>
 
-                                <Image Width="300" Height="200"  Grid.Column="0" Source="{Binding ImagePath}"/>
-                                <Grid Grid.Column="1" Width="auto" Height="200" HorizontalAlignment="Stretch">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="auto"/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock FontSize="25" Margin="10 0 0 0" FontWeight="Normal" Text="{Binding Path=Title}" ></TextBlock>
-                                    <TextBlock  FontSize="22" Grid.Row="1"  Margin="10 20 0 0" Width="300">
+                                    <Image Width="300" Height="200"  Grid.Column="0" Source="{Binding ImagePath}"/>
+                                    <Grid Grid.Column="1" Width="auto" Height="200" HorizontalAlignment="Stretch">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock FontSize="25" Margin="10 0 0 0" FontWeight="Normal" Text="{Binding Path=Title}" ></TextBlock>
+                                        <TextBlock  FontSize="22" Grid.Row="1"  Margin="10 20 0 0" Width="300">
                                     <Run Text="{Binding Author.Name }"></Run>
                                     <Run Text="{Binding Author.Surname}"></Run>
-                                    </TextBlock>
-                                    <!--<Button x:Name="addToBuyListBtn" Width="100" Height="40" Grid.Row="2" Margin="0 60 0 0" Click="addToBuyListBtn_Click" >Add to Buy List</Button>-->
+                                        </TextBlock>
+                                        <!--<Button x:Name="addToBuyListBtn" Width="100" Height="40" Grid.Row="2" Margin="0 60 0 0" Click="addToBuyListBtn_Click" >Add to Buy List</Button>-->
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </Grid>
-            <Grid Grid.Column="1">
+            
+            <Grid Grid.Column="1" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="7*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+           
                 <Grid Grid.Row="0" Background="Gainsboro">
 
                     <StackPanel Orientation="Horizontal">

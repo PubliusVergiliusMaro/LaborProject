@@ -13,6 +13,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -34,6 +35,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		private readonly ICartListService _cartListService;
 		private readonly IOrderService _orderService;
 		private readonly LibrarianEntity _adminEntity;
+		private static List<BookGenreTypes> selectedBooksGenres;
 		private static string bookImagePath = "";
 		public AdminPage(IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, IWishListService wishListService, ICartListService cartListService, LibrarianEntity adminEntity)
 		{
@@ -47,6 +49,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_wishListService = wishListService;
 			_cartListService = cartListService;
 			_orderService= orderService;
+			selectedBooksGenres = new List<BookGenreTypes>();
 			InitializeComponent();
 
 			//customerListDataGrid.Items.Clear();
@@ -87,6 +90,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			sortingBooksComboBox.ItemsSource = Enum.GetValues(typeof(BooksSorting)).Cast<BooksSorting>();
 			sortingLibrariansComboBox.ItemsSource = Enum.GetValues(typeof(LibrariansSorting)).Cast<LibrariansSorting>();
 			sortingOrdersComboBox.ItemsSource = Enum.GetValues(typeof(OrdersSorting)).Cast<OrdersSorting>();
+			genresComboBox.ItemsSource = Enum.GetValues(typeof(BookGenreTypes)).Cast<BookGenreTypes>();
 
 			sortingCustomersComboBox.SelectedIndex = 0;
 			sortingCatalogsComboBox.SelectedIndex = 0;
@@ -235,7 +239,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 				Price = Convert.ToInt32(priceTextBox.Text),
 				ImagePath = bookImagePath,
 				AuthorFK = selectedAuthor.Id,
-
+				Genres = selectedBooksGenres,
 			};
 			_bookService.Create(book);
 			MessageBox.Show("Succesfully create a new Book");
@@ -244,6 +248,8 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			priceTextBox.Text = "";
 			bookImage.Source = new BitmapImage();
 			authorsComboBox.SelectedItem = null;
+			genresComboBox.SelectedItem = null;
+			selectedGenresListView.ItemsSource = null;
 
 		}
 		private void AddAuthorBtn_Click(object sender, RoutedEventArgs e)
@@ -488,15 +494,18 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			DeleteCustomerBtn.IsEnabled = true;
 			AddToBlackListCustomerBtn.IsEnabled = true;
 		}
-
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void AddGenreForBook_Click(object sender, RoutedEventArgs e)
 		{
-			
-		}
+			BookGenreTypes selectedGenre = (BookGenreTypes)Enum.Parse(typeof(BookGenreTypes),genresComboBox.SelectedItem.ToString());
+			selectedBooksGenres.Add(selectedGenre);
 
-		private void TextBlock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-                MessageBox.Show("Test");
+			selectedGenresListView.ItemsSource=null;			
+			List<string> enumNames = new List<string>();
+			foreach (var value in selectedBooksGenres)
+			{
+				enumNames.Add(Enum.GetName(typeof(BookGenreTypes), value));
+			}
+			selectedGenresListView.ItemsSource = enumNames;
 		}
 	}
 }

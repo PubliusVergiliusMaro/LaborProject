@@ -9,6 +9,7 @@ using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderHistoryServices;
 using LaborProjectOOP.Services.WishListServices;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -54,6 +55,12 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			InitializeComponent();
 			bookList.ItemsSource = _bookService.GetAll();
 			if (_isItAdmin) AdminFunctionality();
+
+			catalogsComboBox.ItemsSource = _catalogService.GetAll();
+			catalogsComboBox.DisplayMemberPath = "Name";
+
+			GenreComboBox.ItemsSource = Enum.GetValues(typeof(BookGenreTypes)).Cast<BookGenreTypes>();
+			
 		}
 		private void AdminFunctionality()
 		{
@@ -167,12 +174,53 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 
 		private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			bookList.ItemsSource = _bookService.GetAll().Where(book => book.Title.Contains(searchTextBox.Text));
+			booksListBoxGrid.Visibility = Visibility.Visible;
+			booksNotFoundGrid.Visibility = Visibility.Hidden;
+			if (GenreComboBox.SelectedItem != null)
+			{
+				if (catalogsComboBox.SelectedItem != null)
+				{
+					List<BookEntity> books = _bookService.GetAll().Where(book => book.Catalog == catalogsComboBox.SelectedItem as CatalogEntity
+			        && book.Genres.Contains((BookGenreTypes)Enum.Parse(typeof(BookGenreTypes), GenreComboBox.SelectedItem.ToString()))).ToList();
+					bookList.ItemsSource = books.Where(book => book.Title.Contains(searchTextBox.Text));
+				}
+				else
+				{
+					List<BookEntity> books = _bookService.GetAll().Where(book => book.Genres.Contains((BookGenreTypes)Enum.Parse(typeof(BookGenreTypes), GenreComboBox.SelectedItem.ToString()))).ToList();
+					bookList.ItemsSource = books.Where(book => book.Title.Contains(searchTextBox.Text));
+				}
+			}
+			else
+			{
+				if (catalogsComboBox.SelectedItem != null)
+				{
+					List<BookEntity> books = _bookService.GetAll().Where(book => book.Catalog == catalogsComboBox.SelectedItem as CatalogEntity).ToList();
+					bookList.ItemsSource = books.Where(book => book.Title.Contains(searchTextBox.Text));
+				}
+				else
+				{
+					bookList.ItemsSource = _bookService.GetAll().Where(book => book.Title.Contains(searchTextBox.Text));
+
+				}
+			}
+			if(bookList.Items.Count==0)
+			{
+				booksListBoxGrid.Visibility = Visibility.Hidden;
+				booksNotFoundGrid.Visibility = Visibility.Visible;
+			}
 		}
 
 		private void GenreComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			bookList.ItemsSource = _bookService.GetAll().Where(book => book.Title.Contains(searchTextBox.Text));
+			  if(GenreComboBox.SelectedItem!= null) 
+			  bookList.ItemsSource = _bookService.GetAll().Where(book => book.Genres.Contains((BookGenreTypes)Enum.Parse(typeof(BookGenreTypes), GenreComboBox.SelectedItem.ToString())));
+			booksListBoxGrid.Visibility = Visibility.Visible;
+			booksNotFoundGrid.Visibility = Visibility.Hidden;
+			if (bookList.Items.Count == 0)
+			{
+				booksListBoxGrid.Visibility = Visibility.Hidden;
+				booksNotFoundGrid.Visibility = Visibility.Visible;
+			}
 		}
 
 		private void OrdersHistoryButton_Click(object sender, RoutedEventArgs e)
@@ -180,6 +228,33 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			newPageGrid.Visibility = Visibility.Visible;
 			bookPageGrid.Visibility = Visibility.Hidden;
 			pagesFrame.Navigate(new CustomerOrdersHistoryPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, _isItAdmin));
+		}
+
+		private void catalogsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(catalogsComboBox.SelectedItem!= null)
+			bookList.ItemsSource = _bookService.GetAll().Where(book => book.Catalog == catalogsComboBox.SelectedItem as CatalogEntity);
+			booksListBoxGrid.Visibility = Visibility.Visible;
+			booksNotFoundGrid.Visibility = Visibility.Hidden;
+			if (bookList.Items.Count == 0)
+			{
+				booksListBoxGrid.Visibility = Visibility.Hidden;
+				booksNotFoundGrid.Visibility = Visibility.Visible;
+			}
+		}
+
+		private void ClearAllFiltersButton_Click(object sender, RoutedEventArgs e)
+		{
+			catalogsComboBox.SelectedItem = null;
+			GenreComboBox.SelectedItem = null;
+			bookList.ItemsSource = _bookService.GetAll();
+			booksListBoxGrid.Visibility = Visibility.Visible;
+			booksNotFoundGrid.Visibility = Visibility.Hidden;
+			if (bookList.Items.Count == 0)
+			{
+				booksListBoxGrid.Visibility = Visibility.Hidden;
+				booksNotFoundGrid.Visibility = Visibility.Visible;
+			}
 		}
 	}
 }

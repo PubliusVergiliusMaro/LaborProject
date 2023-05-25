@@ -14,9 +14,9 @@
             <Setter Property="ItemsControl.FontSize" Value="30"/>
         </Style>
     </Page.Resources>
-    
+
     <Grid ShowGridLines="True">
-        
+
         <Grid x:Name="newPageGrid">
             <Frame x:Name="pagesFrame" NavigationUIVisibility="Hidden"/>
         </Grid>
@@ -25,7 +25,7 @@
                 <TabItem>
                     <TabItem.Header>
                         <Grid>
-                            <TextBlock MouseDown="TextBlock_MouseDown">
+                            <TextBlock>
                                 Edit Customers
                             </TextBlock>
                         </Grid>
@@ -346,27 +346,35 @@
                     </TabItem.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="8*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="5*"/>
                             <ColumnDefinition Width="4*"/>
                         </Grid.ColumnDefinitions>
-
-                        <StackPanel Width="200" Orientation="Vertical" Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid Grid.Row="0">
+                            <StackPanel Width="250" Height="575" Orientation="Vertical" VerticalAlignment="Center">
+                                <Label>Select Genre for Book</Label>
+                                <ComboBox x:Name="genresComboBox" Margin="0 2 0 0"></ComboBox>
+                                <Button x:Name="AddGenreForBook" Margin="0 30 0 0" Height="35" Click="AddGenreForBook_Click">Add For Book</Button>
+                            </StackPanel>
+                        </Grid>
+                        <StackPanel Grid.Column="1" Width="200" Orientation="Vertical" Margin="0,100,0,0" HorizontalAlignment="Center">
                             <Label>Title</Label>
                             <TextBox x:Name="titleTextBox" Width="200"></TextBox>
                             <Label>Description</Label>
                             <TextBox x:Name="descriptionTextBox"></TextBox>
                             <Label>Price</Label>
                             <TextBox x:Name="priceTextBox"></TextBox>
-                            <!--<Label>Author Name</Label>
-                            <TextBox></TextBox>
-                            <Label>Author Surname</Label>
-                            <TextBox></TextBox>-->
                             <Label>Authors</Label>
                             <ComboBox x:Name="authorsComboBox"></ComboBox>
+                             <Label>Genres List</Label>
+                            <Grid Margin="0 0 0 0" Height="auto">
+                                <ListView x:Name="selectedGenresListView" Height="50"/>
+                                <!--<ComboBox x:Name="bookGenresCombox"></ComboBox>-->
+                            </Grid>
                             <Button x:Name="addBookBtn" Click="AddBookBtn_Click" Content="Add" Height="30" Width="200" Margin="0 30 0 0"/>
                         </StackPanel>
 
-                        <Grid Grid.Column="1" Margin="0 0 10 0">
+                        <Grid Grid.Column="2" Margin="0,0,10,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
