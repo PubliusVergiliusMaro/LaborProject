@@ -120,7 +120,9 @@ namespace LaborProjectOOP.Services.BookServices
 					OrderEntity order = new()
 					{
 						CustomerFK = dbRecord.Id,
-						BookFK = bookEntity.Id
+						BookFK = bookEntity.Id,
+						CreatedOn = DateTime.UtcNow,
+						IsActual = true
 					};
 					_orderRepository.Create(order);
 				}

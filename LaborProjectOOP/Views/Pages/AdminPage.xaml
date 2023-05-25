@@ -6,14 +6,17 @@
       xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
       mc:Ignorable="d" 
      d:DesignHeight="800" d:DesignWidth="1250"
-      Title="AdminPage">
+      Title="AdminPage"
+      >
 
     <Page.Resources>
         <Style x:Key="LabelStyle">
             <Setter Property="ItemsControl.FontSize" Value="30"/>
         </Style>
     </Page.Resources>
+    
     <Grid ShowGridLines="True">
+        
         <Grid x:Name="newPageGrid">
             <Frame x:Name="pagesFrame" NavigationUIVisibility="Hidden"/>
         </Grid>
@@ -21,10 +24,11 @@
             <TabControl>
                 <TabItem>
                     <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <Ellipse Width="10" Height="10" Fill="DarkGray"/>
-                            <TextBlock>Edit Customers</TextBlock>
-                        </StackPanel>
+                        <Grid>
+                            <TextBlock MouseDown="TextBlock_MouseDown">
+                                Edit Customers
+                            </TextBlock>
+                        </Grid>
                     </TabItem.Header>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -61,7 +65,7 @@
                                     <ControlTemplate TargetType="Button">
                                         <Grid>
                                             <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
-                                            <Image Height="30" Source="/Views/Pages/RefreshIcon.png"></Image>
+                                            <Image Height="30" Source="PagesIcons\RefreshIcon.png" x:Name="refreshIconImage"></Image>
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Grid>
                                     </ControlTemplate>
@@ -83,9 +87,9 @@
                 </TabItem>
                 <TabItem >
                     <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
+                        <Grid>
                             <TextBlock>Edit Catalogs</TextBlock>
-                        </StackPanel>
+                        </Grid>
                     </TabItem.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -120,7 +124,7 @@
                                     <ControlTemplate TargetType="Button">
                                         <Grid>
                                             <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
-                                            <Image Height="30" Source="C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\Images\RefreshIcon.png"></Image>
+                                            <Image Height="30" Source="PagesIcons\RefreshIcon.png"></Image>
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Grid>
                                     </ControlTemplate>
@@ -137,7 +141,12 @@
                         </Grid>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Edit Books">
+                <TabItem>
+                    <TabItem.Header>
+                        <Grid>
+                            <TextBlock>Edit Books</TextBlock>
+                        </Grid>
+                    </TabItem.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*"/>
@@ -171,7 +180,7 @@
                                     <ControlTemplate TargetType="Button">
                                         <Grid>
                                             <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
-                                            <Image Height="30" Source="C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\Images\RefreshIcon.png"></Image>
+                                            <Image Height="30" Source="PagesIcons\RefreshIcon.png"></Image>
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Grid>
                                     </ControlTemplate>
@@ -196,9 +205,9 @@
                 </TabItem>
                 <TabItem>
                     <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
+                        <Grid>
                             <TextBlock>Edit Librarians</TextBlock>
-                        </StackPanel>
+                        </Grid>
                     </TabItem.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -233,7 +242,7 @@
                                     <ControlTemplate TargetType="Button">
                                         <Grid>
                                             <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
-                                            <Image Height="30" Source="C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\Images\RefreshIcon.png"></Image>
+                                            <Image Height="30" Source="PagesIcons\RefreshIcon.png"></Image>
                                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Grid>
                                     </ControlTemplate>
@@ -266,9 +275,9 @@
                 </TabItem>
                 <TabItem>
                     <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
+                        <Grid>
                             <TextBlock>Edit Orders</TextBlock>
-                        </StackPanel>
+                        </Grid>
                     </TabItem.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -299,7 +308,7 @@
                                         <ControlTemplate TargetType="Button">
                                             <Grid>
                                                 <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
-                                                <Image Height="30" Source="C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\Images\RefreshIcon.png"></Image>
+                                                <Image Height="30" Source="PagesIcons\RefreshIcon.png"></Image>
                                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             </Grid>
                                         </ControlTemplate>
@@ -331,9 +340,9 @@
                 </TabItem>
                 <TabItem>
                     <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
+                        <Grid>
                             <TextBlock>Add Book</TextBlock>
-                        </StackPanel>
+                        </Grid>
                     </TabItem.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -372,7 +381,12 @@
                         </Grid>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Add Catalog">
+                <TabItem>
+                    <TabItem.Header>
+                        <Grid>
+                            <TextBlock>Add Catalog</TextBlock>
+                        </Grid>
+                    </TabItem.Header>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -400,7 +414,12 @@
                         <Button Content="Add Author" Height="30" Click="AddAuthorBtn_Click" Margin="0 90 0 0"/>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="Add Librarian">
+                <TabItem>
+                    <TabItem.Header>
+                        <Grid>
+                            <TextBlock>Add Librarian</TextBlock>
+                        </Grid>
+                    </TabItem.Header>
                     <Grid Grid.Row="0">
                         <StackPanel VerticalAlignment="Center" Orientation="Vertical">
                             <Label 

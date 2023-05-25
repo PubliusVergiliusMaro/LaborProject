@@ -49,28 +49,37 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_orderService= orderService;
 			InitializeComponent();
 
-			customerListDataGrid.Items.Clear();
-			foreach (CustomerEntity customer in _customerService.GetAll())
-				customerListDataGrid.Items.Add(customer);
-			catalogListDataGrid.Items.Clear();
-			foreach (CatalogEntity catalog in _catalogService.GetAll())
-				catalogListDataGrid.Items.Add(catalog);
-			booksListDataGrid.Items.Clear();
-			foreach (BookEntity book in _bookService.GetAll())
-				booksListDataGrid.Items.Add(book);
-			librariansListDataGrid.Items.Clear();
-			foreach (LibrarianEntity librarian in _librarianService.GetAll())
-			librariansListDataGrid.Items.Add(librarian);
-			foreach (OrderEntity order in _orderService.GetAll())
-			ordersListDataGrid.Items.Add(order);
+			//customerListDataGrid.Items.Clear();
+			//foreach (CustomerEntity customer in _customerService.GetAll())
+			//	customerListDataGrid.Items.Add(customer);
+			RefreshData(customerListDataGrid, _customerService.GetAll());
+			//catalogListDataGrid.Items.Clear();
+			//foreach (CatalogEntity catalog in _catalogService.GetAll())
+			//	catalogListDataGrid.Items.Add(catalog);
+			RefreshData(catalogListDataGrid, _catalogService.GetAll());
+			//booksListDataGrid.Items.Clear();
+			//foreach (BookEntity book in _bookService.GetAll())
+			//	booksListDataGrid.Items.Add(book);
+			RefreshData(booksListDataGrid, _bookService.GetAll());
+			//librariansListDataGrid.Items.Clear();
+			//foreach (LibrarianEntity librarian in _librarianService.GetAll())
+			//librariansListDataGrid.Items.Add(librarian);
+			RefreshData(librariansListDataGrid, _librarianService.GetAll());
+			//foreach (OrderEntity order in _orderService.GetAll())
+			//ordersListDataGrid.Items.Add(order);
+			RefreshData(ordersListDataGrid, _orderService.GetAll());
 
-			List<AuthorEntity> authors = _authorService.GetAll();
-			authorsComboBox.ItemsSource = authors;
+
+			//List <AuthorEntity> authors = _authorService.GetAll();
+			//authorsComboBox.ItemsSource = authors;
+			RefreshData(authorsComboBox,_authorService.GetAll());
 			authorsComboBox.DisplayMemberPath = "FullName";
 
+			
+			//catalogsComboBox.ItemsSource = catalogs;
 			List<CatalogEntity> catalogs = _catalogService.GetAll();
 			catalogs.Add(new CatalogEntity { Name = "None" });
-			catalogsComboBox.ItemsSource = catalogs;
+			RefreshData(catalogsComboBox, catalogs);
 			catalogsComboBox.DisplayMemberPath = "Name";
 
 			sortingCustomersComboBox.ItemsSource = Enum.GetValues(typeof(CustomersSorting)).Cast<CustomersSorting>();
@@ -84,8 +93,20 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			sortingBooksComboBox.SelectedIndex = 0;
 			sortingLibrariansComboBox.SelectedIndex = 0;
 			sortingOrdersComboBox.SelectedIndex = 0;
-		}
 
+			string RefreshImage = $@"C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\bin\Debug\net7.0-windows\Images\RefreshIcon.png";
+			
+		}
+		public void RefreshData<T>(DataGrid dataGrid, List<T> items)
+		{
+			dataGrid.Items.Clear();
+			foreach (T entity in items)
+				dataGrid.Items.Add(entity);
+		}
+		public void RefreshData<T>(ComboBox comboBox, List<T> items)
+		{
+			comboBox.ItemsSource = items;
+		}
 		#region Navigation Methods
 		private void BackToMenuBtn_Click(object sender, RoutedEventArgs e)
 		{
@@ -106,19 +127,15 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			}
 			else
 			_customerService.Delete(selectedCustomer.Id);
-
-			//Переробити на бд
-			//List<CustomerEntity> customers = _customerService.GetAll();
-			////CustomerEntity selectedCustomer = customers.Where(c=>c.Login == customersComboBox.SelectedItem.ToString()).FirstOrDefault();
-			//customers.Remove(customers.Where(c => c.Login == customersComboBox.SelectedItem.ToString()).FirstOrDefault());
-			//_customerService.SaveCustomers(customers);
-			//UpdateData();
+			MessageBox.Show("Succesfully deleted");
+			
 		}
 		private void DeleteCatalog_Click(object sender, RoutedEventArgs e)
 		{
 			CatalogEntity catalog = catalogListDataGrid.SelectedItem as CatalogEntity;
 
 			_catalogService.Delete(catalog.Id);
+			MessageBox.Show("Succesfully deleted");
 		}
 		private void DeleteSelectedLibrarianBtn_Click(object sender, RoutedEventArgs e)
 		{
@@ -184,20 +201,9 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 				}
 				else
 					selectedCustomer.IsBanned = true;
-
 				_customerService.Update(selectedCustomer);
+				MessageBox.Show("Succesfully added");
 			}
-			//Переробити на бд
-
-			//List<CustomerEntity> customers = _customerService.GetAll();
-			//CustomerEntity selectedCustomer = customers.Where(c => c.Login == customersComboBox.SelectedItem.ToString()).FirstOrDefault();
-			//selectedCustomer.IsBanned = true;
-			//customers.Remove(customers.Where(c => c.Login == customersComboBox.SelectedItem.ToString()).FirstOrDefault());
-			//customers.Add(selectedCustomer);
-			//foreach (CustomerEntity customer in customers)
-			//	_customerService.Update(customer);
-
-			
 		}
 		private void AddImageBtn_Click(object sender, RoutedEventArgs e)
 		{
@@ -220,7 +226,6 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 
 		private void AddBookBtn_Click(object sender, RoutedEventArgs e)
 		{
-			//List<AuthorEntity> authors = _authorService.GetAll();
 			AuthorEntity selectedAuthor = authorsComboBox.SelectedItem as AuthorEntity;
 
 			BookEntity book = new()
@@ -238,6 +243,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			descriptionTextBox.Text = "";
 			priceTextBox.Text = "";
 			bookImage.Source = new BitmapImage();
+			authorsComboBox.SelectedItem = null;
 
 		}
 		private void AddAuthorBtn_Click(object sender, RoutedEventArgs e)
@@ -252,9 +258,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			nameAuthorTextBox.Text = "";
 			surnameAuthorTextBox.Text = "";
 
-
-			List<AuthorEntity> authors = _authorService.GetAll();
-			authorsComboBox.ItemsSource = authors;
+			RefreshData(authorsComboBox, _authorService.GetAll());
 			authorsComboBox.DisplayMemberPath = "FullName";
 		}
 		private void CreateCatalogBtn_Click(object sender, RoutedEventArgs e)
@@ -266,6 +270,11 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			_catalogService.Create(catalog);
 			MessageBox.Show("Succesfully create a new Catalog");
 			nameCatalogTextBox.Text = "";
+
+			List<CatalogEntity> catalogs = _catalogService.GetAll();
+			catalogs.Add(new CatalogEntity { Name = "None" });
+			RefreshData(catalogsComboBox, catalogs);
+			catalogsComboBox.DisplayMemberPath = "Name";
 		}
 		private void CreateLibrarianBtn_Click(object sender, RoutedEventArgs e)
 		{
@@ -318,44 +327,32 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		}
 		#endregion
 		#region Refresh methods
-
 		private void RefreshCustomerDataGrid_Click(object sender, RoutedEventArgs e)
 		{
-			customerListDataGrid.Items.Clear();
-			foreach (CustomerEntity customer in _customerService.GetAll())
-				customerListDataGrid.Items.Add(customer);
+			RefreshData(customerListDataGrid, _customerService.GetAll());
+
 		}
 
 		private void RefreshCatalogsDataGrid_Click(object sender, RoutedEventArgs e)
 		{
-			catalogListDataGrid.Items.Clear();
-			foreach (CatalogEntity catalog in _catalogService.GetAll())
-				catalogListDataGrid.Items.Add(catalog);
+			RefreshData(catalogListDataGrid, _catalogService.GetAll());
 		}
 		
 		private void RefreshBooksDataGrid_Click(object sender, RoutedEventArgs e)
 		{
-			booksListDataGrid.Items.Clear();
-			foreach (BookEntity book in _bookService.GetAll())
-				booksListDataGrid.Items.Add(book);
+			RefreshData(booksListDataGrid, _bookService.GetAll());
 		}
 
 		private void RefreshLibrariansDataGrid_Click(object sender, RoutedEventArgs e)
 		{
-			librariansListDataGrid.Items.Clear();
-			foreach (LibrarianEntity librarian in _librarianService.GetAll())
-				librariansListDataGrid.Items.Add(librarian);
+			RefreshData(librariansListDataGrid, _librarianService.GetAll());
 		}
 		private void RefreshOrdersDataGrid_Click(object sender, RoutedEventArgs e)
 		{
-			ordersListDataGrid.Items.Clear();
-			foreach(OrderEntity order in _orderService.GetAll())
-				ordersListDataGrid.Items.Add(order);
+			RefreshData(ordersListDataGrid, _orderService.GetAll());
 		}
 		#endregion
 		#region Make Methods
-
-
 		private void MakeAnAdminBtn_Click(object sender, RoutedEventArgs e)
 		{
 			LibrarianEntity selectedLibrarian = librariansListDataGrid.SelectedItem as LibrarianEntity;
@@ -395,7 +392,6 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		}
 
 		#endregion
-
 		#region Sorting methods
 		private void sortingCustomersComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -493,6 +489,14 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			AddToBlackListCustomerBtn.IsEnabled = true;
 		}
 
-		
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			
+		}
+
+		private void TextBlock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+                MessageBox.Show("Test");
+		}
 	}
 }

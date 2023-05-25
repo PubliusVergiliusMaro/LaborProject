@@ -13,10 +13,11 @@
         </Style>
     </Page.Resources>
     <Grid>
-        <Grid x:Name="newPageGrid">
+       
+        <Grid x:Name="newPageGrid" Grid.ColumnSpan="2">
             <Frame x:Name="pagesFrame" NavigationUIVisibility="Hidden"/>
         </Grid>
-        <Grid x:Name="bookPageGrid">
+        <Grid x:Name="bookPageGrid" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
@@ -26,7 +27,7 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="8*"/>
                 </Grid.RowDefinitions>
-          
+
                 <StackPanel Grid.Row="0" Orientation="Vertical">
                     <Grid HorizontalAlignment="Center" Margin="0 0 200 0">
                         <Label Margin="0 0 0 0" Content="Search at:"/>
@@ -76,9 +77,9 @@
                 <Grid Grid.Row="0" Background="Gainsboro">
 
                     <StackPanel Orientation="Horizontal">
-                        
-                    <!--#region Icons-->
-                        <Button Style="{StaticResource IconButtonStyle}" Width="55" Height="55" HorizontalAlignment="Left"  VerticalAlignment="Top" Click="CustomerActivitiesBtn_Click">
+
+                        <!--#region Icons-->
+                        <Button  Style="{StaticResource IconButtonStyle}" Width="55" Height="55" HorizontalAlignment="Left"  VerticalAlignment="Top" Click="CustomerActivitiesBtn_Click">
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid >
@@ -90,18 +91,18 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button Style="{StaticResource IconButtonStyle}" Width="60" VerticalAlignment="Top"  Click="WishListBtn_Click" Height="55">
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Grid>
-                                    <Image x:Name="customerWishListIcon" Width="60" Height="55" Margin="10 -7 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Views/Pages/wishListIcon.jpg" />
-                                    <Border CornerRadius="15" Background="Green" Margin="38,23,1,12"/>
-                                    <TextBlock Loaded="booksInWishListTextBlock_Loaded" x:Name="booksInWishListTextBlock"  Height="30" FontSize="13" Text="0" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,24,0,0" TextAlignment="Center" Width="17"/>
-                                </Grid>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                        <Button Style="{StaticResource IconButtonStyle}" Click="OrdersHistoryButton_Click" Width="60" VerticalAlignment="Top"  Height="55">
+                        <Button Margin="0 3 20 0" Style="{StaticResource IconButtonStyle}" Width="60" VerticalAlignment="Top"  Click="WishListBtn_Click" Height="55">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Image x:Name="customerWishListIcon" Width="50" Height="40" Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Views/Pages/addToWishListIcon.png" />
+                                        <Border CornerRadius="25" Background="Green" Margin="23,15,14,18"/>
+                                        <TextBlock Loaded="booksInWishListTextBlock_Loaded" x:Name="booksInWishListTextBlock"  Height="30" FontSize="13" Text="0" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="26,17,0,0" TextAlignment="Center" Width="17"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Margin="0 3 20 0" Style="{StaticResource IconButtonStyle}" Click="OrdersHistoryButton_Click" Width="60" VerticalAlignment="Top"  Height="55">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Grid>
@@ -110,27 +111,27 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button Style="{StaticResource IconButtonStyle}" Width="65" Click="ProfileBtn_Click" Height="65" HorizontalAlignment="Right" VerticalAlignment="Top">
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Grid>
-                                    <Border CornerRadius="35" Width="65" Height="65"  Background="Black" />
-                                    <Ellipse Width="55" Height="55" Loaded="Ellipse_Loaded">
-                                        <Ellipse.Fill>
-                                            <ImageBrush x:Name="customerAvatarImage" Stretch="UniformToFill" />
-                                        </Ellipse.Fill>
-                                    </Ellipse>
-                                </Grid>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                 </StackPanel>
+                        <Button Margin="0 3 20 0" Style="{StaticResource IconButtonStyle}" Width="65" Click="ProfileBtn_Click" Height="65" HorizontalAlignment="Right" VerticalAlignment="Top">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Border CornerRadius="35" Width="65" Height="65"  Background="Black" />
+                                        <Ellipse Width="55" Height="55" Loaded="Ellipse_Loaded">
+                                            <Ellipse.Fill>
+                                                <ImageBrush x:Name="customerAvatarImage" Stretch="UniformToFill" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
                 </Grid>
                 <!--#endregion-->
 
                 <StackPanel Grid.Row="1" Margin="0,16,0,0">
                     <Label Margin="0 0,0,5" Content="Sort Books By:" HorizontalContentAlignment="Center"/>
-                    
+
                     <Button Width="180" Height="40" Grid.Row="0" x:Name="takeSelectedBtn" Click="TakeSelectedBtn_Click" Margin="0 20 0 0">Take Selected</Button>
 
                 </StackPanel>
