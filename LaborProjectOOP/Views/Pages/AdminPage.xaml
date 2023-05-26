@@ -22,7 +22,7 @@
         </Grid>
         <Grid x:Name="adminPageGrid">
             <TabControl>
-                <TabItem>
+                <TabItem x:Name="editCustomerTabItem">
                     <TabItem.Header>
                         <Grid>
                             <TextBlock>
@@ -30,460 +30,77 @@
                             </TextBlock>
                         </Grid>
                     </TabItem.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="10*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <DataGrid 
-                              x:Name="customerListDataGrid"
-                              IsReadOnly="True" 
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch"
-                             SelectedCellsChanged="CustomerListDataGrid_SelectedCellsChanged">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Width="100" Header="Login" Binding="{Binding Login}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="100" Header="Password" Binding="{Binding Password}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="100" Header="Email" Binding="{Binding Email}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="100" Header="Phone" Binding="{Binding Phone}" ></DataGridTextColumn>
-                                <DataGridTextColumn Width="100" Header="isBanned" Binding="{Binding IsBanned}" ></DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <Grid Grid.Row="0" Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="5*"/>
-                                <RowDefinition Height="5*"/>
-                            </Grid.RowDefinitions>
-                            <Button x:Name="refreshCustomerDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Click="RefreshCustomerDataGrid_Click">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Grid>
-                                            <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
-                                            <Image Height="30" Source="PagesIcons\RefreshIcon.png" x:Name="refreshIconImage"></Image>
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-                            <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
-                                <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                                <ComboBox SelectionChanged="sortingCustomersComboBox_SelectionChanged" x:Name="sortingCustomersComboBox" Width="100" Height="30" Text="Sort Table"/>
-
-                            </StackPanel>
-                            <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="2">
-                                <Button x:Name="DeleteCustomerBtn" IsEnabled="False" Margin="0 50 0 0" Width="150" Height="30" Click="DeleteCustomer_Click">Delete Selected Customer</Button>
-                                <Button x:Name="AddToBlackListCustomerBtn" IsEnabled="False" Margin="0 20 0 0" Width="200" Height="30" Click="AddToBlackList_Click">Add To Black List Selected Customer</Button>
-                                <!--<Button Margin="0 20 0 0" Width="150" Height="30"></Button>-->
-                            </StackPanel>
-                        </Grid>
-
-                    </Grid>
+                    <Frame/>
                 </TabItem>
-                <TabItem >
+                <TabItem  x:Name="editCatalogsTabItem">
                     <TabItem.Header>
                         <Grid>
                             <TextBlock>Edit Catalogs</TextBlock>
                         </Grid>
                     </TabItem.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="10*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Grid.Column="0">
-                            <DataGrid 
-                              x:Name="catalogListDataGrid"
-                              IsReadOnly="True" 
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Width="100" Header="Catalog Id" Binding="{Binding Id}"></DataGridTextColumn>
-                                    <DataGridTextColumn Width="100" Header="Catalog Name" Binding="{Binding Name}"></DataGridTextColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
-                        <Grid Grid.Row="0" Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="5*"/>
-                                <RowDefinition Height="5*"/>
-                            </Grid.RowDefinitions>
-
-                            <Button x:Name="refreshCatalogsDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Click="RefreshCatalogsDataGrid_Click">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Grid>
-                                            <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
-                                            <Image Height="30" Source="PagesIcons\RefreshIcon.png"></Image>
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-                            <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
-                                <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                                <ComboBox SelectionChanged="sortingCatalogComboBox_SelectionChanged"  x:Name="sortingCatalogsComboBox" Width="100" Height="30" Text="Sort Table"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="2">
-                                <Button Margin="0 50 0 0" Width="150" Height="30" Click="DeleteCatalog_Click">Delete Selected Catalog</Button>
-                                <!--<Button Margin="0 20 0 0" Width="150" Height="30"></Button>-->
-                            </StackPanel>
-                        </Grid>
-                    </Grid>
+                    <Frame/>
                 </TabItem>
-                <TabItem>
+                <TabItem  x:Name="editBooksTabItem">
                     <TabItem.Header>
                         <Grid>
                             <TextBlock>Edit Books</TextBlock>
                         </Grid>
                     </TabItem.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="10*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <DataGrid 
-                              x:Name="booksListDataGrid"
-                              IsReadOnly="True" 
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Width="100" Header="Title" Binding="{Binding Title}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="100" Header="Price" Binding="{Binding Price}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="100" Header="Author Name" Binding="{Binding Author.Name}"></DataGridTextColumn>
-                                <DataGridTextColumn Width="100" Header="Author Surname" Binding="{Binding Author.Surname}" ></DataGridTextColumn>
-                                <DataGridTextColumn Width="100" Header="Catalog Name" Binding="{Binding Catalog.Name}" ></DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <Grid Grid.Row="0" Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="5*"/>
-                                <RowDefinition Height="5*"/>
-                            </Grid.RowDefinitions>
-                            <Button x:Name="refreshBooksDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Click="RefreshBooksDataGrid_Click">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Grid>
-                                            <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
-                                            <Image Height="30" Source="PagesIcons\RefreshIcon.png"></Image>
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-                            <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
-                                <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                                <ComboBox SelectionChanged="sortingBooksComboBox_SelectionChanged" x:Name="sortingBooksComboBox" Width="100" Height="30" Text="Sort Table"/>
-
-                            </StackPanel>
-                            <StackPanel Orientation="Vertical" Grid.Row="2">
-                                <Label HorizontalAlignment="Center">Choose Catalog</Label>
-                                <ComboBox x:Name="catalogsComboBox" Width="300" Height="30"></ComboBox>
-                                <Button x:Name="addBookToCatalog" Width="250" Height="35" Margin="0 50 0 0" Click="AddBookToCatalogBtn_Click">
-                                    Add selected Book to the selected Catalog
-                                </Button>
-                                <Button Margin="0 50 0 0" Width="150" Height="30" Click="DeleteSelectedBookBtn_Click">Delete Selected Book</Button>
-                            </StackPanel>
-
-                        </Grid>
-                    </Grid>
+                    <Frame/>
                 </TabItem>
-                <TabItem>
+                <TabItem  x:Name="editLibrariansTabItem">
                     <TabItem.Header>
                         <Grid>
                             <TextBlock>Edit Librarians</TextBlock>
                         </Grid>
                     </TabItem.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="10*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Grid.Column="0">
-                            <DataGrid 
-                              x:Name="librariansListDataGrid"
-                              IsReadOnly="True" 
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Width="100" Header="Login" Binding="{Binding Login}"></DataGridTextColumn>
-                                    <DataGridTextColumn Width="100" Header="Is Admin" Binding="{Binding IsAdmin}"></DataGridTextColumn>
-                                    <DataGridTextColumn Width="100" Header="Work Experience" Binding="{Binding WorkExperience}"></DataGridTextColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
-                        <Grid Grid.Row="0" Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="4*"/>
-                                <RowDefinition Height="4*"/>
-                            </Grid.RowDefinitions>
-                            <Button x:Name="refreshLibrariansDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Click="RefreshLibrariansDataGrid_Click">
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Grid>
-                                            <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
-                                            <Image Height="30" Source="PagesIcons\RefreshIcon.png"></Image>
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-                            <Grid Grid.Row="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="2*"/>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
-                                        <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                                        <ComboBox SelectionChanged="sortingLibrariansComboBox_SelectionChanged" x:Name="sortingLibrariansComboBox" Width="100" Height="30" Text="Sort Table"/>
-                                    </StackPanel>
-                                </Grid>
-                                <Grid Grid.Row="1">
-                                    <StackPanel>
-                                        <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Click="MakeAnAdminBtn_Click">
-                                            Make selected an Admin
-                                        </Button>
-                                        <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Click="DeleteSelectedLibrarianBtn_Click">
-                                            Delete Selected
-                                        </Button>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                    <Frame/>
                 </TabItem>
-                <TabItem>
+                <TabItem  x:Name="editOrdersTabItem">
                     <TabItem.Header>
                         <Grid>
                             <TextBlock>Edit Orders</TextBlock>
                         </Grid>
                     </TabItem.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="10*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Grid.Column="0">
-                            <DataGrid x:Name="ordersListDataGrid" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Width="100" Header="CreatedOn" Binding="{Binding CreatedOn}"></DataGridTextColumn>
-                                    <DataGridTextColumn Width="100" Header="IsActual" Binding="{Binding IsActual}"></DataGridTextColumn>
-                                    <DataGridTextColumn Width="100" Header="Customer Login" Binding="{Binding Customer.Login}"></DataGridTextColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
-                        <Grid Grid.Row="0" Grid.Column="1">
-                            <Grid Grid.Row="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="8*"/>
-                                </Grid.RowDefinitions>
-                                <Button x:Name="refreshOrdersDataGrid" Grid.Row="0" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Click="RefreshOrdersDataGrid_Click">
-                                    <Button.Template>
-                                        <ControlTemplate TargetType="Button">
-                                            <Grid>
-                                                <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
-                                                <Image Height="30" Source="PagesIcons\RefreshIcon.png"></Image>
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Grid>
-                                        </ControlTemplate>
-                                    </Button.Template>
-                                </Button>
-                                <Grid Grid.Row="1">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="1*"/>
-                                        <RowDefinition Height="5*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
-                                            <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                                            <ComboBox SelectionChanged="sortingOrdersComboBox_SelectionChanged" x:Name="sortingOrdersComboBox" Width="100" Height="30" Text="Sort Table"/>
-                                        </StackPanel>
-                                    </Grid>
-                                    <StackPanel Grid.Row="1">
-                                        <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Click="MakeNotActiveSelectedOrderBtn_Click">
-                                            Make selected not Active
-                                        </Button>
-                                        <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Click="DeleteSelectedOrderBtn_Click">
-                                            Delete Selected
-                                        </Button>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                    <Frame/>
                 </TabItem>
-                <TabItem>
+                <TabItem x:Name="editAuthorsTabItem">
+                    <TabItem.Header>
+                        <Grid>
+                            <TextBlock>Edit Authors</TextBlock>
+                        </Grid>
+                    </TabItem.Header>
+                    <Frame/>
+                </TabItem>
+                <TabItem  x:Name="addBookTabItem">
                     <TabItem.Header>
                         <Grid>
                             <TextBlock>Add Book</TextBlock>
                         </Grid>
                     </TabItem.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="5*"/>
-                            <ColumnDefinition Width="4*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Row="0">
-                            <StackPanel Width="250" Height="575" Orientation="Vertical" VerticalAlignment="Center">
-                                <Label>Select Genre for Book</Label>
-                                <ComboBox x:Name="genresComboBox" Margin="0 2 0 0"></ComboBox>
-                                <Button x:Name="AddGenreForBook" Margin="0 30 0 0" Height="35" Click="AddGenreForBook_Click">Add For Book</Button>
-                            </StackPanel>
-                        </Grid>
-                        <StackPanel Grid.Column="1" Width="200" Orientation="Vertical" Margin="0,100,0,0" HorizontalAlignment="Center">
-                            <Label>Title</Label>
-                            <TextBox x:Name="titleTextBox" Width="200"></TextBox>
-                            <Label>Description</Label>
-                            <TextBox x:Name="descriptionTextBox"></TextBox>
-                            <Label>Price</Label>
-                            <TextBox x:Name="priceTextBox"></TextBox>
-                            <Label>Authors</Label>
-                            <ComboBox x:Name="authorsComboBox"></ComboBox>
-                             <Label>Genres List</Label>
-                            <Grid Margin="0 0 0 0" Height="auto">
-                                <ListView x:Name="selectedGenresListView" Height="50"/>
-                                <!--<ComboBox x:Name="bookGenresCombox"></ComboBox>-->
-                            </Grid>
-                            <Button x:Name="addBookBtn" Click="AddBookBtn_Click" Content="Add" Height="30" Width="200" Margin="0 30 0 0"/>
-                        </StackPanel>
-
-                        <Grid Grid.Column="2" Margin="0,0,10,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="10*"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="1">
-                                <Button x:Name="addImageBtn" Click="AddImageBtn_Click" FontSize="25" >Add Image</Button>
-                            </Grid>
-                            <Grid Grid.Row="2">
-                                <Image x:Name="bookImage"></Image>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                    <Frame/>
                 </TabItem>
-                <TabItem>
+                <TabItem  x:Name="addCatalogTabItem">
                     <TabItem.Header>
                         <Grid>
                             <TextBlock>Add Catalog</TextBlock>
                         </Grid>
                     </TabItem.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <StackPanel  Orientation="Vertical" Margin="0 100 0 0">
-                                <Label HorizontalAlignment="Center">Title</Label>
-                                <TextBox x:Name="nameCatalogTextBox"  Width="300" Height="30"></TextBox>
-                                <Button Content="Create Catalog" Margin="0 20 0 0" Width="250" Height="30" Click="CreateCatalogBtn_Click"/>
-                            </StackPanel>
-                        </Grid>
-                        <Grid Grid.Row="1">
-
-                        </Grid>
-                    </Grid>
+                    <Frame/>
                 </TabItem>
-                <TabItem Header="Add Author">
-                    <StackPanel Orientation="Vertical" Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Label>Name</Label>
-                        <TextBox x:Name="nameAuthorTextBox" Width="200"></TextBox>
-                        <Label>Surname</Label>
-                        <TextBox x:Name="surnameAuthorTextBox"></TextBox>
-
-                        <Button Content="Add Author" Height="30" Click="AddAuthorBtn_Click" Margin="0 90 0 0"/>
-                    </StackPanel>
+                <TabItem  x:Name="addAuthorTabItem">
+                    <TabItem.Header>
+                        <TextBlock>Add Author</TextBlock>
+                    </TabItem.Header>
+                    <Frame/>
                 </TabItem>
-                <TabItem>
+                <TabItem  x:Name="addLibrarianTabItem">
                     <TabItem.Header>
                         <Grid>
                             <TextBlock>Add Librarian</TextBlock>
                         </Grid>
                     </TabItem.Header>
-                    <Grid Grid.Row="0">
-                        <StackPanel VerticalAlignment="Center" Orientation="Vertical">
-                            <Label 
-                     Content="Login" 
-                     HorizontalAlignment="Center"
-                     Margin="0,0,0,0" 
-                     VerticalAlignment="Top"
-                    />
-                            <TextBox 
-                    x:Name="loginTextBox"
-                     HorizontalAlignment="Center"
-                     Height="30" 
-                     Margin="0,0,0,0"
-                     Width="332"
-                    />
-                            <Label 
-                     Content="Password" 
-                     HorizontalAlignment="Center"
-                     Margin="0,0,0,0"
-                    />
-                            <TextBox 
-                     HorizontalAlignment="Center" 
-                    x:Name="passwordTextBox"
-                     Height="30" 
-                     Width="332" 
-                     Margin="0,0,0,0" 
-                    />
-                            <Label 
-                     Content="Salary" 
-                     HorizontalAlignment="Center"
-                     Margin="0,0,0,0" 
-                     VerticalAlignment="Top"
-                    />
-                            <TextBox 
-                    x:Name="salaryTextBox"
-                     HorizontalAlignment="Center"
-                     Height="30" 
-                     Margin="0,0,0,0"
-                     Width="332"
-                    />
-                            <Label 
-                     Content="Work Experience" 
-                     HorizontalAlignment="Center"
-                     Margin="0,0,0,0"
-                    />
-                            <TextBox 
-                     HorizontalAlignment="Center" 
-                    x:Name="experienceTextBox"
-                     Height="30" 
-                     Width="332" 
-                     Margin="0,0,0,0" 
-                    />
-                            <CheckBox x:Name="adminCheckBox" Margin="0 10 0 0" HorizontalAlignment="Center" Content="IsAdmin"/>
-                            <Button Width="200" Height="40" Margin="0 20 0 0" Content="Create Librarian" Click="CreateLibrarianBtn_Click"/>
-                        </StackPanel>
-                    </Grid>
+                    <Frame/>
                 </TabItem>
             </TabControl>
 

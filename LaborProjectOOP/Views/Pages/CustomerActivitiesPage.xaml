@@ -19,18 +19,18 @@
             </Grid.RowDefinitions>
             <Grid x:Name="emptyCartBooksGrid" Visibility="Hidden">
                 <StackPanel Orientation="Vertical">
-                    <Image Width="500" Height="400" Source="/Views/Pages/emptyCartImage.png"></Image>
-                <Label FontSize="30" HorizontalAlignment="Center">
-                    The cart is empty
-                </Label>
-                <Label FontSize="20" HorizontalAlignment="Center">
-                    But it's never too late to fix it :)
-                </Label>
+                    <Image Width="500" Height="400" Source="PagesIcons/emptyCartImage.png"></Image>
+                    <Label FontSize="30" HorizontalAlignment="Center">
+                        The cart is empty
+                    </Label>
+                    <Label FontSize="20" HorizontalAlignment="Center">
+                        But it's never too late to fix it :)
+                    </Label>
                 </StackPanel>
             </Grid>
             <Grid x:Name="emptyWishListGrid" Visibility="Hidden">
                 <StackPanel Orientation="Vertical">
-                    <Image Width="500" Height="300" Source="/Views/Pages/emptyWishListImage.png"></Image>
+                    <Image Width="500" Height="300" Source="PagesIcons/emptyWishListImage.png"></Image>
                     <Label FontSize="30" HorizontalAlignment="Center">
                         The wish list is empty
                     </Label>

@@ -41,7 +41,7 @@
             <Grid Grid.Row="0" x:Name="emptyOrdersPageGrid" Visibility="Hidden">
             <StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center" Orientation="Vertical">
-                <Image Height="500" Source="/Views/Pages/ordersHistoryImage.jpg"></Image>
+                    <Image Height="500" Source="PagesIcons/ordersHistoryImage.jpg"></Image>
                     <Label FontSize="30" HorizontalAlignment="Center">Your order history is empty</Label>
                     <Label FontSize="20" HorizontalAlignment="Center">Make some purchase to fill it</Label>
             </StackPanel>

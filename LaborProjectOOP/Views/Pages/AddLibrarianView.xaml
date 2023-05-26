@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="LaborProjectOOP.Dekstop.Views.Pages.AddLibrarianView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1250">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+            <Label 
+                     Content="Login" 
+                     HorizontalAlignment="Center"
+                     Margin="0,0,0,0" 
+                     VerticalAlignment="Top"
+                    />
+            <TextBox 
+                    x:Name="loginTextBox"
+                     HorizontalAlignment="Center"
+                     Height="30" 
+                     Margin="0,0,0,0"
+                     Width="332"
+                    />
+            <Label 
+                     Content="Password" 
+                     HorizontalAlignment="Center"
+                     Margin="0,0,0,0"
+                    />
+            <TextBox 
+                     HorizontalAlignment="Center" 
+                    x:Name="passwordTextBox"
+                     Height="30" 
+                     Width="332" 
+                     Margin="0,0,0,0" 
+                    />
+            <Label 
+                     Content="Salary" 
+                     HorizontalAlignment="Center"
+                     Margin="0,0,0,0" 
+                     VerticalAlignment="Top"
+                    />
+            <TextBox 
+                    x:Name="salaryTextBox"
+                     HorizontalAlignment="Center"
+                     Height="30" 
+                     Margin="0,0,0,0"
+                     Width="332"
+                    />
+            <Label 
+                     Content="Work Experience" 
+                     HorizontalAlignment="Center"
+                     Margin="0,0,0,0"
+                    />
+            <TextBox 
+                     HorizontalAlignment="Center" 
+                    x:Name="experienceTextBox"
+                     Height="30" 
+                     Width="332" 
+                     Margin="0,0,0,0" 
+                    />
+            <CheckBox x:Name="adminCheckBox" Margin="0 10 0 0" HorizontalAlignment="Center" Content="IsAdmin"/>
+            <Button Width="200" Height="40" Margin="0 20 0 0" Content="Create Librarian" Click="CreateLibrarianBtn_Click"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

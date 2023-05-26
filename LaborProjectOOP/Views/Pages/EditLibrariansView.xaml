@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="LaborProjectOOP.Dekstop.Views.Pages.EditLibrariansView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1250">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <DataGrid 
+                              x:Name="librariansListDataGrid"
+                              IsReadOnly="True" 
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="100" Header="Login" Binding="{Binding Login}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="100" Header="Is Admin" Binding="{Binding IsAdmin}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="100" Header="Work Experience" Binding="{Binding WorkExperience}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="refreshLibrariansDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Click="RefreshLibrariansDataGrid_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
+                            <Image Height="30" Source="PagesIcons\RefreshIcon.png"></Image>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
+                        <Label HorizontalContentAlignment="Center">Sorting Types</Label>
+                        <ComboBox SelectionChanged="sortingLibrariansComboBox_SelectionChanged" x:Name="sortingLibrariansComboBox" Width="100" Height="30" Text="Sort Table"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <StackPanel>
+                        <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Click="MakeAnAdminBtn_Click">
+                            Make selected an Admin
+                        </Button>
+                        <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Click="DeleteSelectedLibrarianBtn_Click">
+                            Delete Selected
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

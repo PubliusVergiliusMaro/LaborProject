@@ -27,4 +27,8 @@
 		None = 0,
 		ActiveOnly
 	} 
+	public enum AuthorsSorting
+	{
+		None = 0,
+	}
 }

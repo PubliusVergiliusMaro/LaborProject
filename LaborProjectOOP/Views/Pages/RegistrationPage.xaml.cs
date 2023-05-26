@@ -62,7 +62,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 						Password = HashService.GetMD5Hash(passwordTextBox.Text),
 						Email = emailTextBox.Text,
 						Phone = phoneTextBox.Text,
-						AvatarImagePath = @"C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\Views\Pages\PagesIcons\defaultAvatarIcon.png"
+						AvatarImagePath = @"PagesIcons/defaultAvatarIcon.png"
 					};
 					_customerService.Create(customer);
 				}
@@ -108,7 +108,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 
 			if (!openFileDialog.CheckFileExists || string.IsNullOrEmpty(openFileDialog.FileName))
 			{
-				openFileDialog.FileName = @"C:\GAmes\Курси\LaborProjectOOP\LaborProjectOOP\LaborProjectOOP\Images\defaultAvatarIcon.png";
+				openFileDialog.FileName = @"PagesIcons/defaultAvatarIcon.png";
 			}
 			BitmapImage image = new(new Uri(openFileDialog.FileName));
 			ImagePath = openFileDialog.FileName;

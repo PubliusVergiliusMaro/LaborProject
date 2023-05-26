@@ -42,7 +42,7 @@
                 </StackPanel>
                 <Grid Grid.Row="1" x:Name="booksNotFoundGrid">
                     <StackPanel Margin="0 50 0 0">
-                        <Image Height="300" Source="/Views/Pages/EmptyBookIcon.png" ></Image>
+                        <Image Height="300" Source="PagesIcons/EmptyBookIcon.png" ></Image>
                         <Label FontSize="28"  HorizontalAlignment="Center">Such Book was not found</Label>
                         <TextBlock Width="450" FontSize="15" HorizontalAlignment="Center" TextWrapping="Wrap">Try to change the value in the filters or search globally, if you do not find the book, it may not exist.</TextBlock>
                     </StackPanel>
@@ -96,7 +96,7 @@
                                 <ControlTemplate>
                                     <Grid >
                                         <!--MouseDown="CartListGrid_MouseDown"-->
-                                        <Image Source="/Views/Pages/basketIcon.png" Width="50" Height="40" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                        <Image Source="PagesIcons/basketIcon.png" Width="50" Height="40" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" />
                                         <Border CornerRadius="15" Background="Red" Margin="30,21,7,16"/>
                                         <TextBlock Loaded="bookBuyNumberTextBlock_Loaded" x:Name="bookBuyNumberTextBlock" Height="30" FontSize="13" Text="0" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,21,0,0" TextAlignment="Center" Width="17"/>
                                     </Grid>
@@ -107,7 +107,7 @@
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Grid>
-                                        <Image x:Name="customerWishListIcon" Width="50" Height="40" Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Views/Pages/addToWishListIcon.png" />
+                                        <Image x:Name="customerWishListIcon" Width="50" Height="40" Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Images/PagesIcons/addToWishListIcon.png" />
                                         <Border CornerRadius="25" Background="Green" Margin="23,15,14,18"/>
                                         <TextBlock Loaded="booksInWishListTextBlock_Loaded" x:Name="booksInWishListTextBlock"  Height="30" FontSize="13" Text="0" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="26,17,0,0" TextAlignment="Center" Width="17"/>
                                     </Grid>
@@ -118,7 +118,7 @@
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Grid>
-                                        <Image x:Name="customerWishListIcon" Width="50" Height="45" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Views/Pages/ordersHistoryIcon.jpg" />
+                                        <Image x:Name="customerWishListIcon" Width="50" Height="45" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="PagesIcons/ordersHistoryIcon.jpg" />
                                     </Grid>
                                 </ControlTemplate>
                             </Button.Template>

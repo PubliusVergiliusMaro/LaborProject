@@ -8,13 +8,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Views\Pages\addToWishListIcon.png" />
-    <None Remove="Views\Pages\basketIcon.png" />
-    <None Remove="Views\Pages\EmptyBookIcon.png" />
-    <None Remove="Views\Pages\emptyCartImage.png" />
-    <None Remove="Views\Pages\emptyWishListImage.png" />
-    <None Remove="Views\Pages\ordersHistoryIcon.jpg" />
-    <None Remove="Views\Pages\ordersHistoryImage.jpg" />
+    <None Remove="Images\PagesIcons\addToWishListIcon.png" />
+    <None Remove="Images\PagesIcons\basketIcon.png" />
+    <None Remove="Images\PagesIcons\defaultAvatarIcon.png" />
+    <None Remove="Images\PagesIcons\deleteButtonIcon.jpg" />
+    <None Remove="Images\PagesIcons\EmptyBookIcon.png" />
+    <None Remove="Images\PagesIcons\emptyCartImage.png" />
+    <None Remove="Images\PagesIcons\emptyWishListImage.png" />
+    <None Remove="Images\PagesIcons\ordersHistoryIcon.jpg" />
+    <None Remove="Images\PagesIcons\ordersHistoryImage.jpg" />
+    <None Remove="Images\PagesIcons\RefreshIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\PagesIcons\addToWishListIcon.png" />
+    <Resource Include="Images\PagesIcons\basketIcon.png" />
+    <Resource Include="Images\PagesIcons\defaultAvatarIcon.png" />
+    <Resource Include="Images\PagesIcons\deleteButtonIcon.jpg" />
+    <Resource Include="Images\PagesIcons\EmptyBookIcon.png" />
+    <Resource Include="Images\PagesIcons\emptyCartImage.png" />
+    <Resource Include="Images\PagesIcons\emptyWishListImage.png" />
+    <Resource Include="Images\PagesIcons\ordersHistoryIcon.jpg" />
+    <Resource Include="Images\PagesIcons\ordersHistoryImage.jpg" />
+    <Resource Include="Images\PagesIcons\RefreshIcon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,17 +44,6 @@
   <ItemGroup>
     <ProjectReference Include="..\LaborProjectOOP.Database\LaborProjectOOP.Database.csproj" />
     <ProjectReference Include="..\LaborProjectOOP.Services\LaborProjectOOP.Services.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Views\Pages\addToWishListIcon.png" />
-    <Resource Include="Views\Pages\basketIcon.png" />
-    <Resource Include="Views\Pages\EmptyBookIcon.png" />
-    <Resource Include="Views\Pages\emptyCartImage.png" />
-    <Resource Include="Views\Pages\emptyWishListImage.png" />
-    <Resource Include="Views\Pages\ordersHistoryIcon.jpg" />
-    <Resource Include="Views\Pages\ordersHistoryImage.jpg" />
-    <Resource Include="Views\Pages\PagesIcons\RefreshIcon.png" />
   </ItemGroup>
 
 </Project>

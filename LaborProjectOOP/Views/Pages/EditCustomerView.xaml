@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="LaborProjectOOP.Dekstop.Views.Pages.EditCustomerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
+             mc:Ignorable="d" 
+               d:DesignHeight="800" d:DesignWidth="1250">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <DataGrid 
+                              x:Name="customerListDataGrid"
+                              IsReadOnly="True" 
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                             SelectedCellsChanged="CustomerListDataGrid_SelectedCellsChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="100" Header="Login" Binding="{Binding Login}"></DataGridTextColumn>
+                <DataGridTextColumn Width="100" Header="Password" Binding="{Binding Password}"></DataGridTextColumn>
+                <DataGridTextColumn Width="100" Header="Email" Binding="{Binding Email}"></DataGridTextColumn>
+                <DataGridTextColumn Width="100" Header="Phone" Binding="{Binding Phone}" ></DataGridTextColumn>
+                <DataGridTextColumn Width="100" Header="isBanned" Binding="{Binding IsBanned}" ></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="refreshCustomerDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Click="RefreshCustomerDataGrid_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
+                            <Image Height="30" Source="PagesIcons\RefreshIcon.png" x:Name="refreshIconImage"></Image>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
+                <Label HorizontalContentAlignment="Center">Sorting Types</Label>
+                <ComboBox SelectionChanged="sortingCustomersComboBox_SelectionChanged" x:Name="sortingCustomersComboBox" Width="100" Height="30" Text="Sort Table"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="2">
+                <Button x:Name="DeleteCustomerBtn" IsEnabled="False" Margin="0 50 0 0" Width="150" Height="30" Click="DeleteCustomer_Click">Delete Selected Customer</Button>
+                <Button x:Name="AddToBlackListCustomerBtn" IsEnabled="False" Margin="0 20 0 0" Width="200" Height="30" Click="AddToBlackList_Click">Add To Black List Selected Customer</Button>
+                <!--<Button Margin="0 20 0 0" Width="150" Height="30"></Button>-->
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</UserControl>
