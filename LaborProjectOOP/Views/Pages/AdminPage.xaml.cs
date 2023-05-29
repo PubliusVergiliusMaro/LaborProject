@@ -46,35 +46,35 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			selectedBooksGenres = new List<BookGenreTypes>();
 			InitializeComponent();
 
-			EditCustomerView editCustomerView = new EditCustomerView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
-			((Frame)editCustomerTabItem.Content).Content = editCustomerView;
+			//EditCustomerView editCustomerView = new EditCustomerView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
+			//((Frame)editCustomerTabItem.Content).Content = editCustomerView;
 
-			EditBooksView editBooksView = new EditBooksView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
-			((Frame)editBooksTabItem.Content).Content = editBooksView;
+			//EditBooksView editBooksView = new EditBooksView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
+			//((Frame)editBooksTabItem.Content).Content = editBooksView;
 
-			EditCatalogsView editCatalogsView = new EditCatalogsView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
-			((Frame)editCatalogsTabItem.Content).Content = editCatalogsView;
+			//EditCatalogsView editCatalogsView = new EditCatalogsView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
+			//((Frame)editCatalogsTabItem.Content).Content = editCatalogsView;
 
-			EditOrdersView editOrdersView = new EditOrdersView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
-			((Frame)editOrdersTabItem.Content).Content = editOrdersView;
+			//EditOrdersView editOrdersView = new EditOrdersView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
+			//((Frame)editOrdersTabItem.Content).Content = editOrdersView;
 
-			EditLibrariansView editLibrariansView = new EditLibrariansView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
-			((Frame)editLibrariansTabItem.Content).Content = editLibrariansView;
+			//EditLibrariansView editLibrariansView = new EditLibrariansView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
+			//((Frame)editLibrariansTabItem.Content).Content = editLibrariansView;
 
-			EditAuthorsView editAuthorsView = new EditAuthorsView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
-			((Frame)editAuthorsTabItem.Content).Content = editAuthorsView;
+			//EditAuthorsView editAuthorsView = new EditAuthorsView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
+			//((Frame)editAuthorsTabItem.Content).Content = editAuthorsView;
 
-			AddAuthorView addAuthorView = new AddAuthorView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
-			((Frame)addAuthorTabItem.Content).Content = addAuthorView;
+			//AddAuthorView addAuthorView = new AddAuthorView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
+			//((Frame)addAuthorTabItem.Content).Content = addAuthorView;
 
-			AddBookView addBookView = new AddBookView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
-			((Frame)addBookTabItem.Content).Content = addBookView;
+			//AddBookView addBookView = new AddBookView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
+			//((Frame)addBookTabItem.Content).Content = addBookView;
 
-			AddCatalogView addCatalogView = new AddCatalogView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
-			((Frame)addCatalogTabItem.Content).Content = addCatalogView;
+			//AddCatalogView addCatalogView = new AddCatalogView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
+			//((Frame)addCatalogTabItem.Content).Content = addCatalogView;
 
-			AddLibrarianView addLibrarianView = new AddLibrarianView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
-			((Frame)addLibrarianTabItem.Content).Content = addLibrarianView;
+			//AddLibrarianView addLibrarianView = new AddLibrarianView(bookService, catalogService, customerService, librarianService, orderService, authorService, wishListService, cartListService);
+			//((Frame)addLibrarianTabItem.Content).Content = addLibrarianView;
 		}
 
 		private void BackToMenuBtn_Click(object sender, RoutedEventArgs e)

@@ -15,7 +15,6 @@ namespace LaborProjectOOP.Database.Models
 		public string Title { get; set; }
 		public string Description { get; set; }
 		public double Price { get; set; }
-		public bool IsTaken { get; set; }
 		public string ImagePath { get; set; }
 		public AuthorEntity? Author { get; set; }
 		public int? AuthorFK { get; set; }

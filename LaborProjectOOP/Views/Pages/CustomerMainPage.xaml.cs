@@ -98,8 +98,8 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			{
 				pagesFrame.Navigate(new AdminMenuPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, currentLibrarian));
 			}
-			else
-				pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService));
+			//else
+				//pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService));
 		}
 
 		// Customer Orders

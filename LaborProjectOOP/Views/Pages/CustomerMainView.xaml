@@ -1,0 +1,156 @@
+﻿<UserControl x:Class="LaborProjectOOP.Dekstop.Views.Pages.CustomerMainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1250">
+    <UserControl.Resources>
+        <Style x:Key="IconButtonStyle">
+            <Setter Property="ItemsControl.Margin" Value="0,0,20,0"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+
+        <Grid x:Name="newPageGrid" Grid.ColumnSpan="2">
+            <Frame x:Name="pagesFrame" NavigationUIVisibility="Hidden"/>
+        </Grid>
+        <Grid x:Name="bookPageGrid" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="8*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Background="Gainsboro" Grid.Row="0" Orientation="Vertical">
+                    <Grid HorizontalAlignment="Center" Margin="0 0 200 0">
+                        <Label Margin="0 0 0 0" Content="Search at:"/>
+                        <Label  Margin="60 0 0 0" Content="All"></Label>
+                    </Grid>
+                    <StackPanel Margin="10" Orientation="Horizontal">
+                        <TextBox Text="{Binding SearchLineText, UpdateSourceTrigger=PropertyChanged}" Width="500" Height="30"/>
+                        <ComboBox ItemsSource="{Binding Catalogs}" SelectedItem="{Binding SelectedCatalog}" DisplayMemberPath="Name" Width="150" Height="30"  Grid.Row="1"/>
+                        <ComboBox ItemsSource="{Binding Genres}" SelectedItem="{Binding SelectedGenre}" x:Name="GenreComboBox" Width="150" Height="30"  Grid.Row="1"/>
+                        <Button Command="{Binding ClearFiltersCommand}"  Width="65">Clear Filters</Button>
+                    </StackPanel>
+                </StackPanel>
+                <Grid Grid.Row="1" x:Name="booksNotFoundGrid">
+                    <StackPanel Margin="0 50 0 0">
+                        <Image Height="300" Source="PagesIcons/EmptyBookIcon.png" ></Image>
+                        <Label FontSize="28"  HorizontalAlignment="Center">Such Book was not found</Label>
+                        <TextBlock Width="450" FontSize="15" HorizontalAlignment="Center" TextWrapping="Wrap">Try to change the value in the filters or search globally, if you do not find the book, it may not exist.</TextBlock>
+                    </StackPanel>
+                </Grid >
+                <Grid Grid.Row="1" x:Name ="booksListBoxGrid">
+                    <ListBox x:Name="bookList" Grid.Row="1">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid x:Name="bookGrid" HorizontalAlignment="Stretch" Margin="0 20 0 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Width="300" Height="200"  Grid.Column="0" Source="{Binding ImagePath}"/>
+                                    <Grid Grid.Column="1" Width="auto" Height="200" HorizontalAlignment="Stretch">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock FontSize="25" Margin="10 0 0 0" FontWeight="Normal" Text="{Binding Path=Title}" ></TextBlock>
+                                        <TextBlock  FontSize="22" Grid.Row="1"  Margin="10 20 0 0" Width="300">
+                                    <Run Text="{Binding Author.Name }"></Run>
+                                    <Run Text="{Binding Author.Surname}"></Run>
+                                        </TextBlock>
+                                        <!--<Button x:Name="addToBuyListBtn" Width="100" Height="40" Grid.Row="2" Margin="0 60 0 0" Click="addToBuyListBtn_Click" >Add to Buy List</Button>-->
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Column="1" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Background="Gainsboro">
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <!--#region Icons-->
+                        <Button  Style="{StaticResource IconButtonStyle}" Command="{Binding CartCommand}" Width="55" Height="55" HorizontalAlignment="Left"  VerticalAlignment="Top">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Grid>
+                                        <Image Source="/Images/PagesIcons/basketIcon.png" Width="50" Height="40" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                        <Border CornerRadius="15" Background="Red" Margin="30,21,7,16"/>
+                                        <TextBlock Height="30" FontSize="13" Text="{Binding BooksInCart, UpdateSourceTrigger=PropertyChanged}" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,21,0,0" TextAlignment="Center" Width="17"/>
+                                        
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Margin="0 3 20 0" Style="{StaticResource IconButtonStyle}" Command="{Binding WishListCommand}" Width="60" VerticalAlignment="Top" Height="55">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Image Width="50" Height="40" Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Images/PagesIcons/addToWishListIcon.png" />
+                                        <Border CornerRadius="25" Background="Green" Margin="23,15,14,18"/>
+                                        <TextBlock Height="30" FontSize="13" Text="{Binding BooksInWishList, UpdateSourceTrigger=PropertyChanged}" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="26,17,0,0" TextAlignment="Center" Width="17"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Margin="0 3 20 0" Style="{StaticResource IconButtonStyle}" Command="{Binding OrdersHistoryCommand}" Width="60" VerticalAlignment="Top"  Height="55">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Image Width="50" Height="45" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Images/PagesIcons/ordersHistoryIcon.jpg" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Margin="0 3 20 0" Style="{StaticResource IconButtonStyle}" Command="{Binding ProfileCommand}" Width="65" Height="65" HorizontalAlignment="Right" VerticalAlignment="Top">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Border CornerRadius="35" Width="65" Height="65"  Background="Black" />
+                                        <Ellipse Width="55" Height="55" >
+                                            <Ellipse.Fill>
+                                                <ImageBrush ImageSource="{Binding CustomerAvatarSource,UpdateSourceTrigger=PropertyChanged}" Stretch="UniformToFill" />
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+                <!--#endregion-->
+
+                <StackPanel Grid.Row="1" Margin="0,16,0,0">
+                    <!--<Label Margin="0 0,0,5" Content="Sort Books By:" HorizontalContentAlignment="Center"/>-->
+
+                    <Button Width="180" Height="40" Grid.Row="0" Command="{Binding TakeSelectedCommand}" Margin="0 20 0 0">Take Selected</Button>
+
+                </StackPanel>
+                <Grid Grid.Row="2">
+                    <Button Content="Back" Command="{Binding BackCommand}" Width="180" Height="40" VerticalAlignment="Bottom" Margin="0 0 0 10" />
+                </Grid>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

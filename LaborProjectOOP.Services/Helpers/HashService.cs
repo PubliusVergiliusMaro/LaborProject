@@ -7,13 +7,17 @@ namespace LaborProjectOOP.Services.Helpers
 	{
 		public static string GetMD5Hash(string key)
 		{
-			using(MD5 md5 = MD5.Create())
+			if (!string.IsNullOrEmpty(key))
 			{
-				byte[]inputBytes = Encoding.UTF8.GetBytes(key);
-				byte[]hashBytes = md5.ComputeHash(inputBytes);
-				string hashString = BitConverter.ToString(hashBytes).Replace("-",string.Empty);
-				return hashString;
+				using (MD5 md5 = MD5.Create())
+				{
+					byte[] inputBytes = Encoding.UTF8.GetBytes(key);
+					byte[] hashBytes = md5.ComputeHash(inputBytes);
+					string hashString = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
+					return hashString;
+				}
 			}
+			return null;
 		}
 	}
 }

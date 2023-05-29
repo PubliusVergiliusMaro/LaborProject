@@ -18,6 +18,7 @@
     <None Remove="Images\PagesIcons\ordersHistoryIcon.jpg" />
     <None Remove="Images\PagesIcons\ordersHistoryImage.jpg" />
     <None Remove="Images\PagesIcons\RefreshIcon.png" />
+    <None Remove="Views\Pages\SelectSomeImage.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +32,7 @@
     <Resource Include="Images\PagesIcons\ordersHistoryIcon.jpg" />
     <Resource Include="Images\PagesIcons\ordersHistoryImage.jpg" />
     <Resource Include="Images\PagesIcons\RefreshIcon.png" />
+    <Resource Include="Images\PagesIcons\SelectSomeImage.jpg" />
   </ItemGroup>
 
   <ItemGroup>

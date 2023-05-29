@@ -65,9 +65,9 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			nameCatalogTextBox.Text = "";
 
 			//List<CatalogEntity> catalogs = _catalogService.GetAll();
-			//catalogs.Add(new CatalogEntity { Name = "None" });
+			//catalogs.Add(new CatalogEntity { _name = "None" });
 			//RefreshData(catalogsComboBox, catalogs);
-			//catalogsComboBox.DisplayMemberPath = "Name";
+			//catalogsComboBox.DisplayMemberPath = "_name";
 		}
 
 

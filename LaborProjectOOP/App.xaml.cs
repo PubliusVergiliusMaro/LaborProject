@@ -1,4 +1,6 @@
 ﻿using LaborProjectOOP.Database.Models;
+using LaborProjectOOP.Dekstop.NavigationServices.Stores;
+using LaborProjectOOP.Dekstop.ViewModels;
 using LaborProjectOOP.Dekstop.Views;
 using LaborProjectOOP.EntityFramework;
 using LaborProjectOOP.EntityFramework.Repository;
@@ -10,6 +12,7 @@ using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderHistoryServices;
 using LaborProjectOOP.Services.WishListServices;
+using System;
 using System.Windows;
 
 namespace LaborProjectOOP
@@ -37,9 +40,11 @@ namespace LaborProjectOOP
 		private readonly IWishListService _wishListService;
 		private readonly ICartListService _cartListService;
 		private readonly IOrderService _orderService;
-
+		private readonly NavigationStore navigationStore;
 		public App()
 		{
+			navigationStore = new NavigationStore();
+
 			_dbContext = new ApplicationDbContext();
 			_bookRepository = new GenericRepository<BookEntity>(_dbContext);
 			_catalogRepository = new GenericRepository<CatalogEntity>(_dbContext);
@@ -61,10 +66,19 @@ namespace LaborProjectOOP
 		}
 		protected override void OnStartup(StartupEventArgs e)
 		{
-			MainWindow = new MainWindow(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService);
-			MainWindow.Show();
+		//	navigationStore.CurrentViewModel = CreateLoginViewModel();
+			MainWindow = new MainWindow()//_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService)
+			{
+				DataContext = new MainViewModel(_customerService,_librarianService,_authorService)//navigationStore)
+			};
 
+			MainWindow.Show();
 			base.OnStartup(e);
+		}
+
+		private ViewModelBase CreateLoginViewModel()
+		{
+			return new LoginViewModel(_customerService, _librarianService);
 		}
 	}
 }

@@ -86,7 +86,7 @@ namespace LaborProjectOOP.Services.BookServices
 				dbRecord.Title = book.Title;
 				dbRecord.Description = book.Description;
 				dbRecord.Price = book.Price;
-				dbRecord.IsTaken = book.IsTaken;
+				//dbRecord.IsTaken = book.IsTaken;
 				dbRecord.Author = book.Author;
 				dbRecord.AuthorFK = book.AuthorFK;
 				dbRecord.CatalogFK = book.CatalogFK;

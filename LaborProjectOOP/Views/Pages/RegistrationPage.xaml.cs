@@ -84,7 +84,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 				MessageBox.Show("Succesfuly created");
 				registrationPageGrid.Visibility = Visibility.Hidden;
 				newPageGrid.Visibility = Visibility.Visible;
-				pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService,  _orderService, _authorService,_wishListService, _cartListService));
+				//pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService,  _orderService, _authorService,_wishListService, _cartListService));
 			}
 
 		}
@@ -93,7 +93,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			registrationPageGrid.Visibility = Visibility.Hidden;
 			newPageGrid.Visibility = Visibility.Visible;
-			pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService,  _orderService, _authorService, _wishListService, _cartListService));
+			//pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService,  _orderService, _authorService, _wishListService, _cartListService));
 		}
 
 		private void selectAvatarImage_Click(object sender, RoutedEventArgs e)
