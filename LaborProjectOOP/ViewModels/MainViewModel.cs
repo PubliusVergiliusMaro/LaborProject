@@ -1,9 +1,11 @@
 ﻿using LaborProjectOOP.Dekstop.NavigationServices.Stores;
 using LaborProjectOOP.Services.AuthorServices;
 using LaborProjectOOP.Services.BookServices;
+using LaborProjectOOP.Services.CartListServices;
 using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.LibrarianServices;
+using LaborProjectOOP.Services.WishListServices;
 using System;
 
 namespace LaborProjectOOP.Dekstop.ViewModels
@@ -13,11 +15,11 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		private readonly NavigationStore _navigationStore;
 		public ViewModelBase CurrentViewModel { get; }//=> _navigationStore.CurrentViewModel;
 
-		public MainViewModel(ICustomerService customerService, ILibrarianService librarianService, IAuthorService authorService,ICatalogService catalogService,IBookService bookService)//NavigationStore navigationStore)
+		public MainViewModel(ICustomerService customerService, ILibrarianService librarianService, IAuthorService authorService,ICatalogService catalogService,IBookService bookService,ICartListService cartListService,IWishListService wishListService)//NavigationStore navigationStore)
 		{
 			//_navigationStore = navigationStore;
 			//_navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-			CurrentViewModel = new CustomerMainViewModel(catalogService,bookService,customerService);	
+			CurrentViewModel = new EditAuthorsViewModel(authorService);
 		}
 
 		private void OnCurrentViewModelChanged()

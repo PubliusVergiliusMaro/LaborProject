@@ -102,7 +102,7 @@ namespace LaborProjectOOP.Services.WishListServices
 			WishListEntity dbRecord = _wishListRepository.Table
 				.Include(w => w.Customer)
 				.Include(w => w.Book)
-				.Where(w => w.Customer.Id == customerId && w.Book.Id == bookId)
+				.Where(w => w.CustomerFK == customerId && w.BookFK == bookId)
 				.FirstOrDefault();
 			if (dbRecord == null)
 			{
@@ -116,7 +116,7 @@ namespace LaborProjectOOP.Services.WishListServices
 			WishListEntity dbRecord = _wishListRepository.Table
 				.Include(w => w.Customer)
 				.Include(w => w.Book)
-				.Where(w=>w.Customer.Id == customerId && w.Book.Id == bookId)
+				.Where(w=>w.CustomerFK == customerId && w.BookFK == bookId)
 				.FirstOrDefault();
 			if(dbRecord == null)
 			{

@@ -69,7 +69,7 @@ namespace LaborProjectOOP
 		//	navigationStore.CurrentViewModel = CreateLoginViewModel();
 			MainWindow = new MainWindow()//_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService)
 			{
-				DataContext = new MainViewModel(_customerService,_librarianService,_authorService,_catalogService,_bookService)
+				DataContext = new MainViewModel(_customerService,_librarianService,_authorService,_catalogService,_bookService,_cartListService,_wishListService)
 			};
 
 			MainWindow.Show();
