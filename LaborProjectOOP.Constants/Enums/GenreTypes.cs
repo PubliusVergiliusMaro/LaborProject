@@ -2,7 +2,8 @@
 {
     public enum BookGenreTypes
     {
-        Fantasy=0,
+        None = 0,
+        Fantasy,
         ScienceFiction,
         Dystopian,
         Adventure,

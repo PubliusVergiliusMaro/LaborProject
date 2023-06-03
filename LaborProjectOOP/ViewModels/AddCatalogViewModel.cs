@@ -2,6 +2,7 @@
 using LaborProjectOOP.Dekstop.Commands;
 using LaborProjectOOP.Services.CatalogServices;
 using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace LaborProjectOOP.Dekstop.ViewModels
@@ -24,7 +25,9 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			_catalogService.Create(new CatalogEntity
 			{
 				Name = Name,
-			});	
+			});
+			MessageBox.Show("Succesfuly created");
+			Name = "";
 		}
 
 		private string _name;

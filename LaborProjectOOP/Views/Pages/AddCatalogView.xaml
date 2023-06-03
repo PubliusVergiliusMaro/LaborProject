@@ -14,7 +14,7 @@
         <Grid Grid.Row="0">
             <StackPanel  Orientation="Vertical" Margin="0 100 0 0">
                 <Label HorizontalAlignment="Center">Title</Label>
-                <TextBox Text="{Binding Name}"  Width="300" Height="30"></TextBox>
+                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"  Width="300" Height="30"></TextBox>
                 <Button Content="Create Catalog" Margin="0 20 0 0" Width="250" Height="30" Command="{Binding CreateCatalogCommand}"/>
             </StackPanel>
         </Grid>

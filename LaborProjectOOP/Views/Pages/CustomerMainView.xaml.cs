@@ -11,5 +11,12 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		{
 			InitializeComponent();
 		}
+
+		//private void bookList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		//{
+		//	if (this.DataContext != null)
+		//	{ ((dynamic)this.DataContext).BookInfoCommand = ((ListBox)sender); }
+
+		//}
 	}
 }
