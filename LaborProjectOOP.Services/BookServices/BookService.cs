@@ -105,7 +105,7 @@ namespace LaborProjectOOP.Services.BookServices
 
 			return true;
 		}
-		public void PurchaseBooks(int CustomerId, List<BookEntity> bookEntities)
+		public void PurchaseBooks(int CustomerId, ICollection<BookEntity> bookEntities)
 		{
 			CustomerEntity dbRecord = _customerRepository.Table
 				.Where(customer => customer.Id == CustomerId)

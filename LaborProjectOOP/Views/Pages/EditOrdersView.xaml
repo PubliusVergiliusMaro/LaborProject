@@ -16,7 +16,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.Column="0">
-            <DataGrid x:Name="ordersListDataGrid" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <DataGrid ItemsSource="{Binding Orders,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedOrder,UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" x:Name="ordersListDataGrid" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="100" Header="CreatedOn" Binding="{Binding CreatedOn}"></DataGridTextColumn>
                     <DataGridTextColumn Width="100" Header="IsActual" Binding="{Binding IsActual}"></DataGridTextColumn>
@@ -30,12 +30,12 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="8*"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="refreshOrdersDataGrid" Grid.Row="0" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Click="RefreshOrdersDataGrid_Click">
+                <Button x:Name="refreshOrdersDataGrid" Grid.Row="0" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Command="{Binding RefreshOrdersCommand}">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid>
                                 <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
-                                <Image Height="30" Source="PagesIcons\RefreshIcon.png"></Image>
+                                <Image Height="30" Source="/Images/PagesIcons/RefreshIcon.png"></Image>
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                         </ControlTemplate>
@@ -49,14 +49,14 @@
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
                             <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                            <ComboBox SelectionChanged="sortingOrdersComboBox_SelectionChanged" x:Name="sortingOrdersComboBox" Width="100" Height="30" Text="Sort Table"/>
+                            <ComboBox ItemsSource ="{Binding SortingTypes,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedSortType,UpdateSourceTrigger=PropertyChanged}" x:Name="sortingOrdersComboBox" Width="100" Height="30" Text="Sort Table"/>
                         </StackPanel>
                     </Grid>
                     <StackPanel Grid.Row="1">
-                        <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Click="MakeNotActiveSelectedOrderBtn_Click">
+                        <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Command="{Binding MakeNotActiveCommand}">
                             Make selected not Active
                         </Button>
-                        <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Click="DeleteSelectedOrderBtn_Click">
+                        <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Command="{Binding DeleteSelectedOrderCommand}">
                             Delete Selected
                         </Button>
                     </StackPanel>

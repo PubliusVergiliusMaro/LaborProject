@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1250">
     <Grid>
-        <views:EditAuthorsView DataContext="{Binding CurrentViewModel}"/>
+        <views:AdminView DataContext="{Binding CurrentViewModel}"/>
     </Grid>
 </Window>

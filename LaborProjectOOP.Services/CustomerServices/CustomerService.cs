@@ -52,6 +52,8 @@ namespace LaborProjectOOP.Services.CustomerServices
 				.Where(customer => customer.Id == id)
 				.Include(customer => customer.WishList)
 				.Include(customer => customer.CartList)
+					.ThenInclude(c => c.Book)
+						.ThenInclude(b=>b.Author)
 				.Include(customer => customer.Orders)
 				.FirstOrDefault();
 			if (dbRecord == null)

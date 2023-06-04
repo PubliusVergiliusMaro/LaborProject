@@ -9,6 +9,6 @@ namespace LaborProjectOOP.Services.BookServices
 		List<BookEntity> GetAll();
 		BookEntity GetById(int id);
 		bool Update(BookEntity book);
-		void PurchaseBooks(int CustomerId, List<BookEntity> bookEntities);
+		void PurchaseBooks(int CustomerId, ICollection<BookEntity> bookEntities);
 	}
 }

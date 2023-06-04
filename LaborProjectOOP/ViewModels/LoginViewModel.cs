@@ -72,14 +72,14 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 				MessageBox.Show("It is admin");
 				//loginGrid.Visibility = Visibility.Hidden;
 				//newPageGrid.Visibility = Visibility.Visible;
-				//pagesFrame.Navigate(new AdminMenuPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentAdmin));
+				//pagesFrame.Navigate(new AdminMenuPage(_bookService, _orderService, _orderService, _orderService, _orderService, _authorService, _wishListService, _cartListService, _currentAdmin));
 			}
 			else if (canLogin)
 			{
 				MessageBox.Show("It is customer");
 				//loginGrid.Visibility = Visibility.Hidden;
 				//newPageGrid.Visibility = Visibility.Visible;
-				//pagesFrame.Navigate(new CustomerMainPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, false));
+				//pagesFrame.Navigate(new CustomerMainPage(_bookService, _orderService, _orderService, _orderService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, false));
 			}
 			else
 			{

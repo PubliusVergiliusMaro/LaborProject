@@ -16,10 +16,13 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <DataGrid 
-                              x:Name="booksListDataGrid"
-                              IsReadOnly="True" 
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch">
+            x:Name="booksListDataGrid"
+            IsReadOnly="True" 
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            AutoGenerateColumns="False"
+            ItemsSource="{Binding Books, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding SelectedBook,UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="100" Header="Title" Binding="{Binding Title}"></DataGridTextColumn>
                 <DataGridTextColumn Width="100" Header="Price" Binding="{Binding Price}"></DataGridTextColumn>
@@ -34,12 +37,12 @@
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="refreshBooksDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Click="RefreshBooksDataGrid_Click">
+            <Button x:Name="refreshBooksDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Command="{Binding RefreshBooksCommand}">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
                             <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
-                            <Image Height="30" Source="PagesIcons\RefreshIcon.png"></Image>
+                            <Image Height="30" Source="/Images/PagesIcons/RefreshIcon.png"></Image>
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </ControlTemplate>
@@ -47,16 +50,16 @@
             </Button>
             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
                 <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                <ComboBox SelectionChanged="sortingBooksComboBox_SelectionChanged" x:Name="sortingBooksComboBox" Width="100" Height="30" Text="Sort Table"/>
+                <ComboBox ItemsSource="{Binding SortingTypes,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedSortType,UpdateSourceTrigger=PropertyChanged}" x:Name="sortingBooksComboBox" Width="100" Height="30" Text="Sort Table"/>
 
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Row="2">
                 <Label HorizontalAlignment="Center">Choose Catalog</Label>
-                <ComboBox x:Name="catalogsComboBox" Width="300" Height="30"></ComboBox>
-                <Button x:Name="addBookToCatalog" Width="250" Height="35" Margin="0 50 0 0" Click="AddBookToCatalogBtn_Click">
+                <ComboBox x:Name="catalogsComboBox" ItemsSource="{Binding Catalogs,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCatalog,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath = "Name" Width="300" Height="30"></ComboBox>
+                <Button x:Name="addBookToCatalog" Width="250" Height="35" Margin="0 50 0 0" Command="{Binding AddBookToCatalogCommand}">
                     Add selected Book to the selected Catalog
                 </Button>
-                <Button Margin="0 50 0 0" Width="150" Height="30" Click="DeleteSelectedBookBtn_Click">Delete Selected Book</Button>
+                <Button Margin="0 50 0 0" Width="150" Height="30" Command="{Binding DeleteSelectedBookCommand}">Delete Selected Book</Button>
             </StackPanel>
 
         </Grid>

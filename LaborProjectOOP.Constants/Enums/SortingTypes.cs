@@ -25,7 +25,7 @@
 	public enum OrdersSorting
 	{
 		None = 0,
-		ActiveOnly
+		ActualOnly
 	} 
 	public enum AuthorsSorting
 	{

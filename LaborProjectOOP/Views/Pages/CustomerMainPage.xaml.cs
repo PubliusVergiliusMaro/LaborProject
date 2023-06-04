@@ -99,7 +99,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 				pagesFrame.Navigate(new AdminMenuPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService, currentLibrarian));
 			}
 			//else
-				//pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService));
+				//pagesFrame.Navigate(new LoginPage(_bookService, _orderService, _orderService, _orderService, _orderService, _authorService, _wishListService, _cartListService));
 		}
 
 		// Customer Orders
@@ -107,7 +107,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 		//{
 		//	bookPageGrid.Visibility = Visibility.Hidden;
 		//	newPageGrid.Visibility = Visibility.Visible;
-		//	pagesFrame.Navigate(new CustomerOrderPage(_bookService, _catalogService, _customerService, _librarianService, _orderListService, _authorService, _currentCustomer, _customerCart));
+		//	pagesFrame.Navigate(new CustomerOrderPage(_bookService, _orderService, _orderService, _orderService, _orderListService, _authorService, _currentCustomer, _customerCart));
 		//}
 
 		private void bookList_SelectionChanged(object sender, SelectionChangedEventArgs e)

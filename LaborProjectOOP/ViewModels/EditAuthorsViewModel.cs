@@ -35,8 +35,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 
 		private void DeleteSelectedAuthor()
 		{
-			int id = SelectedAuthor.Id;
-			//_authorService.Delete(SelectedAuthor.Id);
+			_authorService.Delete(SelectedAuthor.Id);
 			MessageBox.Show("Succesfully deleted");
 		}
 

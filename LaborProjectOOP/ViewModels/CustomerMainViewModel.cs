@@ -35,7 +35,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			BackCommand = new DelegateCommand(Back);
 			ClearFiltersCommand = new DelegateCommand(ClearFilters);
 			
-			//_catalogs = //catalogService.GetAll();
+			//_orders = //catalogService.GetAll();
 			//_genres = Enum.GetValues(typeof(BookGenreTypes)).Cast<BookGenreTypes>();
 			_genres = new ObservableCollection<BookGenreTypes>(Enum.GetValues(typeof(BookGenreTypes)).Cast<BookGenreTypes>().ToArray());
 			

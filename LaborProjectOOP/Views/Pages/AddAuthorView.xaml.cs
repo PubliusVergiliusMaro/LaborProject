@@ -21,9 +21,9 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 	{
 		//// Лишні прибрати
 		//private readonly IBookService _bookService;
-		//private readonly ICatalogService _catalogService;
-		//private readonly ICustomerService _customerService;
-		//private readonly ILibrarianService _librarianService;
+		//private readonly ICatalogService _orderService;
+		//private readonly ICustomerService _orderService;
+		//private readonly ILibrarianService _orderService;
 		//private readonly IAuthorService _authorService;
 		//private readonly IWishListService _wishListService;
 		//private readonly ICartListService _cartListService;
@@ -35,9 +35,9 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 			////28
 			//// Лишні прибрати
 			//_bookService = bookService;
-			//_catalogService = catalogService;
-			//_customerService = customerService;
-			//_librarianService = librarianService;
+			//_orderService = catalogService;
+			//_orderService = customerService;
+			//_orderService = librarianService;
 			//_authorService = authorService;
 			//_wishListService = wishListService;
 			//_cartListService = cartListService;

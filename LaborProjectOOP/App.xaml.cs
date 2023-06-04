@@ -67,9 +67,9 @@ namespace LaborProjectOOP
 		protected override void OnStartup(StartupEventArgs e)
 		{
 		//	navigationStore.CurrentViewModel = CreateLoginViewModel();
-			MainWindow = new MainWindow()//_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService, _wishListService, _cartListService)
+			MainWindow = new MainWindow()//_bookService, _orderService, _orderService, _orderService, _orderService, _authorService, _wishListService, _cartListService)
 			{
-				DataContext = new MainViewModel(_customerService,_librarianService,_authorService,_catalogService,_bookService,_cartListService,_wishListService)
+				DataContext = new MainViewModel(_customerService,_librarianService,_authorService,_catalogService,_bookService,_cartListService,_wishListService,_orderService)
 			};
 
 			MainWindow.Show();

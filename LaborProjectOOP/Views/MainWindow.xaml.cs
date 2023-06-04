@@ -18,9 +18,9 @@ namespace LaborProjectOOP.Dekstop.Views
 	{
 		// Лишні прибрати
 	//	private readonly IBookService _bookService;
-		//private readonly ICatalogService _catalogService;
-		//private readonly ICustomerService _customerService;
-		//private readonly ILibrarianService _librarianService;
+		//private readonly ICatalogService _orderService;
+		//private readonly ICustomerService _orderService;
+		//private readonly ILibrarianService _orderService;
 		//private readonly IAuthorService _authorService;
 		//private readonly IWishListService _wishListService;
 		//private readonly ICartListService _cartListService;
@@ -30,15 +30,15 @@ namespace LaborProjectOOP.Dekstop.Views
 		{
 			// Лишні прибрати
 			//_bookService = bookService;
-			//_catalogService = catalogService;
-			//_customerService = customerService;
-			//_librarianService = librarianService;
+			//_orderService = catalogService;
+			//_orderService = customerService;
+			//_orderService = librarianService;
 			//_authorService = authorService;
 			//_wishListService= wishListService;
 			//_cartListService= cartListService;
 			//_orderService= orderService;
 			InitializeComponent();
-			//pagesFrame.Navigate(new LoginPage(_bookService, _catalogService, _customerService, _librarianService, _orderService, _authorService,_wishListService,_cartListService));
+			//pagesFrame.Navigate(new LoginPage(_bookService, _orderService, _orderService, _orderService, _orderService, _authorService,_wishListService,_cartListService));
 		}
 	}
 }

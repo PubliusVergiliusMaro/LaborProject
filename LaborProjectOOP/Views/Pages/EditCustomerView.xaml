@@ -17,14 +17,15 @@
         </Grid.ColumnDefinitions>
 
         <DataGrid 
-                              x:Name="customerListDataGrid"
-                              IsReadOnly="True" 
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch"
-                             SelectedCellsChanged="CustomerListDataGrid_SelectedCellsChanged">
+             x:Name="customerListDataGrid"
+             IsReadOnly="True" 
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
+            AutoGenerateColumns="False"
+             ItemsSource="{Binding Customers,UpdateSourceTrigger=PropertyChanged}"  
+            SelectedItem="{Binding SelectedCustomer,UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="100" Header="Login" Binding="{Binding Login}"></DataGridTextColumn>
-                <DataGridTextColumn Width="100" Header="Password" Binding="{Binding Password}"></DataGridTextColumn>
                 <DataGridTextColumn Width="100" Header="Email" Binding="{Binding Email}"></DataGridTextColumn>
                 <DataGridTextColumn Width="100" Header="Phone" Binding="{Binding Phone}" ></DataGridTextColumn>
                 <DataGridTextColumn Width="100" Header="isBanned" Binding="{Binding IsBanned}" ></DataGridTextColumn>
@@ -36,12 +37,12 @@
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="refreshCustomerDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Click="RefreshCustomerDataGrid_Click">
+            <Button x:Name="refreshCustomerDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Command="{Binding RefreshCustomersCommand}">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
                             <Ellipse Fill="White" Stroke="Black" StrokeThickness="2"/>
-                            <Image Height="30" Source="PagesIcons\RefreshIcon.png" x:Name="refreshIconImage"></Image>
+                            <Image Height="30" Source="/Images/PagesIcons/RefreshIcon.png" x:Name="refreshIconImage"></Image>
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </ControlTemplate>
@@ -49,12 +50,12 @@
             </Button>
             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
                 <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                <ComboBox SelectionChanged="sortingCustomersComboBox_SelectionChanged" x:Name="sortingCustomersComboBox" Width="100" Height="30" Text="Sort Table"/>
+                <ComboBox ItemsSource ="{Binding SortingTypes,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedSortType,UpdateSourceTrigger=PropertyChanged}" x:Name="sortingCustomersComboBox" Width="100" Height="30" Text="Sort Table"/>
 
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="2">
-                <Button x:Name="DeleteCustomerBtn" IsEnabled="False" Margin="0 50 0 0" Width="150" Height="30" Click="DeleteCustomer_Click">Delete Selected Customer</Button>
-                <Button x:Name="AddToBlackListCustomerBtn" IsEnabled="False" Margin="0 20 0 0" Width="200" Height="30" Click="AddToBlackList_Click">Add To Black List Selected Customer</Button>
+                <Button Command="{Binding DeleteSelectedCustomerCommand}" x:Name="DeleteCustomerBtn" Margin="0 50 0 0" Width="150" Height="30">Delete Selected Customer</Button>
+                <Button Command="{Binding BannedSelectedCustomerCommand}" x:Name="AddToBlackListCustomerBtn" Margin="0 20 0 0" Width="200" Height="30">Add To Black List Selected Customer</Button>
                 <!--<Button Margin="0 20 0 0" Width="150" Height="30"></Button>-->
             </StackPanel>
         </Grid>
