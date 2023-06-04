@@ -22,8 +22,8 @@
              HorizontalAlignment="Stretch"
              VerticalAlignment="Stretch"
             AutoGenerateColumns="False"
-             ItemsSource="{Binding Customers,UpdateSourceTrigger=PropertyChanged}"  
-            SelectedItem="{Binding SelectedCustomer,UpdateSourceTrigger=PropertyChanged}">
+             ItemsSource="{Binding EditCustomersViewModel.Customers,UpdateSourceTrigger=PropertyChanged}"  
+            SelectedItem="{Binding EditCustomersViewModel.SelectedCustomer,UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="100" Header="Login" Binding="{Binding Login}"></DataGridTextColumn>
                 <DataGridTextColumn Width="100" Header="Email" Binding="{Binding Email}"></DataGridTextColumn>
@@ -37,7 +37,7 @@
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="refreshCustomerDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Command="{Binding RefreshCustomersCommand}">
+            <Button x:Name="refreshCustomerDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Command="{Binding EditCustomersViewModel.RefreshCustomersCommand}">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
@@ -50,12 +50,12 @@
             </Button>
             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
                 <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                <ComboBox ItemsSource ="{Binding SortingTypes,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedSortType,UpdateSourceTrigger=PropertyChanged}" x:Name="sortingCustomersComboBox" Width="100" Height="30" Text="Sort Table"/>
+                <ComboBox ItemsSource ="{Binding EditCustomersViewModel.SortingTypes,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding EditCustomersViewModel.SelectedSortType,UpdateSourceTrigger=PropertyChanged}" x:Name="sortingCustomersComboBox" Width="100" Height="30" Text="Sort Table"/>
 
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="2">
-                <Button Command="{Binding DeleteSelectedCustomerCommand}" x:Name="DeleteCustomerBtn" Margin="0 50 0 0" Width="150" Height="30">Delete Selected Customer</Button>
-                <Button Command="{Binding BannedSelectedCustomerCommand}" x:Name="AddToBlackListCustomerBtn" Margin="0 20 0 0" Width="200" Height="30">Add To Black List Selected Customer</Button>
+                <Button Command="{Binding EditCustomersViewModel.DeleteSelectedCustomerCommand}" x:Name="DeleteCustomerBtn" Margin="0 50 0 0" Width="150" Height="30">Delete Selected Customer</Button>
+                <Button Command="{Binding EditCustomersViewModel.BannedSelectedCustomerCommand}" x:Name="AddToBlackListCustomerBtn" Margin="0 20 0 0" Width="200" Height="30">Add To Black List Selected Customer</Button>
                 <!--<Button Margin="0 20 0 0" Width="150" Height="30"></Button>-->
             </StackPanel>
         </Grid>

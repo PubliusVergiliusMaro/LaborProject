@@ -22,8 +22,8 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 AutoGenerateColumns="False"
-                ItemsSource="{Binding Catalogs,UpdateSourceTrigger=PropertyChanged}"
-                SelectedItem="{Binding SelectedCatalog,UpdateSourceTrigger=PropertyChanged}">
+                ItemsSource="{Binding EditCatalogsViewModel.Catalogs,UpdateSourceTrigger=PropertyChanged}"
+                SelectedItem="{Binding EditCatalogsViewModel.SelectedCatalog,UpdateSourceTrigger=PropertyChanged}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="100" Header="Catalog Id" Binding="{Binding Id}"></DataGridTextColumn>
                     <DataGridTextColumn Width="100" Header="Catalog Name" Binding="{Binding Name}"></DataGridTextColumn>
@@ -37,7 +37,7 @@
                 <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
 
-            <Button x:Name="refreshCatalogsDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Command="{Binding RefreshCatalogsCommand}">
+            <Button x:Name="refreshCatalogsDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Command="{Binding EditCatalogsViewModel.RefreshCatalogsCommand}">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
@@ -50,10 +50,10 @@
             </Button>
             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
                 <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                <ComboBox ItemsSource ="{Binding SortingTypes,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedSortType,UpdateSourceTrigger=PropertyChanged}"  x:Name="sortingCatalogsComboBox" Width="100" Height="30" Text="Sort Table"/>
+                <ComboBox ItemsSource ="{Binding EditCatalogsViewModel.SortingTypes,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding EditCatalogsViewModel.SelectedSortType,UpdateSourceTrigger=PropertyChanged}"  x:Name="sortingCatalogsComboBox" Width="100" Height="30" Text="Sort Table"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="2">
-                <Button Margin="0 50 0 0" Width="150" Height="30" Command="{Binding DeleteSelectedCatalogCommand}">Delete Selected Catalog</Button>
+                <Button Margin="0 50 0 0" Width="150" Height="30" Command="{Binding EditCatalogsViewModel.DeleteSelectedCatalogCommand}">Delete Selected Catalog</Button>
                 <!--<Button Margin="0 20 0 0" Width="150" Height="30"></Button>-->
             </StackPanel>
         </Grid>

@@ -20,7 +20,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		{
 			//_navigationStore = navigationStore;
 			//_navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-			CurrentViewModel = new AdminViewModel(customerService);
+			CurrentViewModel = new AdminViewModel(customerService,librarianService,authorService,catalogService,bookService,cartListService,wishListService,orderService);
 		}
 
 		private void OnCurrentViewModelChanged()

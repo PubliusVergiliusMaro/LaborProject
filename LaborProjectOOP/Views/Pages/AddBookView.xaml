@@ -15,24 +15,24 @@
         <Grid Grid.Row="0">
             <StackPanel Width="250" Height="575" Orientation="Vertical" VerticalAlignment="Center">
                 <Label>Select Genre for Book</Label>
-                <ComboBox ItemsSource="{Binding Genres,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedGenre,UpdateSourceTrigger=PropertyChanged}" x:Name="genresComboBox" Margin="0 2 0 0"></ComboBox>
-                <Button x:Name="AddGenreForBook" Margin="0 30 0 0" Height="35" Command="{Binding AddGenreCommand}" >Add For Book</Button>
+                <ComboBox ItemsSource="{Binding AddBookViewModel.Genres,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding AddBookViewModel.SelectedGenre,UpdateSourceTrigger=PropertyChanged}" x:Name="genresComboBox" Margin="0 2 0 0"></ComboBox>
+                <Button x:Name="AddGenreForBook" Margin="0 30 0 0" Height="35" Command="{Binding AddBookViewModel.AddGenreCommand}" >Add For Book</Button>
             </StackPanel>
         </Grid>
         <StackPanel Grid.Column="1" Width="200" Orientation="Vertical" Margin="0,100,0,0" HorizontalAlignment="Center">
             <Label>Title</Label>
-            <TextBox Text="{Binding Title,UpdateSourceTrigger=PropertyChanged}" x:Name="titleTextBox" Width="200"></TextBox>
+            <TextBox Text="{Binding AddBookViewModel.Title,UpdateSourceTrigger=PropertyChanged}" x:Name="titleTextBox" Width="200"></TextBox>
             <Label>Description</Label>
-            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" x:Name="descriptionTextBox"></TextBox>
+            <TextBox Text="{Binding AddBookViewModel.Description, UpdateSourceTrigger=PropertyChanged}" x:Name="descriptionTextBox"></TextBox>
             <Label>Price</Label>
-            <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" x:Name="priceTextBox"></TextBox>
+            <TextBox Text="{Binding AddBookViewModel.Price, UpdateSourceTrigger=PropertyChanged}" x:Name="priceTextBox"></TextBox>
             <Label>Authors</Label>
-            <ComboBox ItemsSource="{Binding Authors, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedAuthor,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="FullName" x:Name="authorsComboBox"></ComboBox>
+            <ComboBox ItemsSource="{Binding AddBookViewModel.Authors, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding AddBookViewModel.SelectedAuthor,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="FullName" x:Name="authorsComboBox"></ComboBox>
             <Label>Genres List</Label>
             <Grid Margin="0 0 0 0" Height="auto">
-                <ListView ItemsSource="{Binding SelectedGenres, UpdateSourceTrigger=PropertyChanged}" x:Name="selectedGenresListView" Height="50"/>
+                <ListView ItemsSource="{Binding AddBookViewModel.SelectedGenres, UpdateSourceTrigger=PropertyChanged}" x:Name="selectedGenresListView" Height="50"/>
             </Grid>
-            <Button x:Name="addBookBtn" Command="{Binding AddBookCommand}" Content="Add" Height="30" Width="200" Margin="0 30 0 0"/>
+            <Button x:Name="addBookBtn" Command="{Binding AddBookViewModel.AddBookCommand}" Content="Add" Height="30" Width="200" Margin="0 30 0 0"/>
         </StackPanel>
 
         <Grid Grid.Column="2" Margin="0,0,10,0">
@@ -42,10 +42,10 @@
                 <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="1">
-                <Button x:Name="addImageBtn" Command="{Binding AddImageCommand}" FontSize="25" >Add Image</Button>
+                <Button x:Name="addImageBtn" Command="{Binding AddBookViewModel.AddImageCommand}" FontSize="25" >Add Image</Button>
             </Grid>
             <Grid Grid.Row="2">
-                <Image Source="{Binding BookImagePath, UpdateSourceTrigger=PropertyChanged}"></Image>
+                <Image Source="{Binding AddBookViewModel.BookImagePath, UpdateSourceTrigger=PropertyChanged}"></Image>
             </Grid>
         </Grid>
     </Grid>

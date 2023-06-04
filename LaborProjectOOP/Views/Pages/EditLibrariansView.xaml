@@ -22,8 +22,8 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 AutoGenerateColumns="False"
-                ItemsSource="{Binding Librarians,UpdateSourceTrigger=PropertyChanged}"
-                SelectedItem="{Binding SelectedLibrarian,UpdateSourceTrigger=PropertyChanged}">
+                ItemsSource="{Binding EditLibrariansViewModel.Librarians,UpdateSourceTrigger=PropertyChanged}"
+                SelectedItem="{Binding EditLibrariansViewModel.SelectedLibrarian,UpdateSourceTrigger=PropertyChanged}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="100" Header="Login" Binding="{Binding Login}"></DataGridTextColumn>
                     <DataGridTextColumn Width="100" Header="Is Admin" Binding="{Binding IsAdmin}"></DataGridTextColumn>
@@ -37,7 +37,7 @@
                 <RowDefinition Height="4*"/>
                 <RowDefinition Height="4*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="refreshLibrariansDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Command="{Binding RefreshLibrariansCommand}">
+            <Button x:Name="refreshLibrariansDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Command="{Binding EditLibrariansViewModel.RefreshLibrariansCommand}">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
@@ -56,15 +56,15 @@
                 <Grid Grid.Row="0">
                     <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
                         <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                        <ComboBox  ItemsSource ="{Binding SortingTypes,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedSortType,UpdateSourceTrigger=PropertyChanged}" x:Name="sortingLibrariansComboBox" Width="100" Height="30" Text="Sort Table"/>
+                        <ComboBox  ItemsSource ="{Binding EditLibrariansViewModel.SortingTypes,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding EditLibrariansViewModel.SelectedSortType,UpdateSourceTrigger=PropertyChanged}" x:Name="sortingLibrariansComboBox" Width="100" Height="30" Text="Sort Table"/>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="1">
                     <StackPanel>
-                        <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Command="{Binding MakeAnAdminCommand}">
+                        <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Command="{Binding EditLibrariansViewModel.MakeAnAdminCommand}">
                             Make selected an Admin
                         </Button>
-                        <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Command="{Binding DeleteSelectedLibrarianCommand}">
+                        <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Command="{Binding EditLibrariansViewModel.DeleteSelectedLibrarianCommand}">
                             Delete Selected
                         </Button>
                     </StackPanel>

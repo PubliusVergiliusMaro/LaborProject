@@ -9,7 +9,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 	public class AddAuthorViewModel : ViewModelBase
 	{
 		public readonly IAuthorService _authorService;
-		public AddAuthorViewModel(IAuthorService authorService, ViewModelBase currentViewModel)
+		public AddAuthorViewModel(IAuthorService authorService)
 		{
 			_authorService = authorService;
 			AddAuthorCommand = new DelegateCommand(AddAuthor);

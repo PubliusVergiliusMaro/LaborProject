@@ -21,8 +21,8 @@
                               IsReadOnly="True" 
                               HorizontalAlignment="Stretch"
                               VerticalAlignment="Stretch"
-            ItemsSource="{Binding Authors, UpdateSourceTrigger=PropertyChanged}"
-            SelectedItem="{Binding SelectedAuthor,UpdateSourceTrigger=PropertyChanged}">
+            ItemsSource="{Binding EditAuthorsViewModel.Authors, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding EditAuthorsViewModel.SelectedAuthor,UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
               
              </DataGrid.Columns>
@@ -33,7 +33,7 @@
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="refreshAuthorDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Command="{Binding RefreshAuthorsCommand}">
+            <Button x:Name="refreshAuthorDataGrid" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Command="{Binding EditAuthorsViewModel.RefreshAuthorsCommand}">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
@@ -46,11 +46,11 @@
             </Button>
             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
                 <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                <ComboBox ItemsSource ="{Binding SortingTypes}" SelectedItem="{Binding SelectedSortType}" x:Name="sortingAuthorsComboBox" Width="100" Height="30" Text="Sort Table"/>
+                <ComboBox ItemsSource ="{Binding EditAuthorsViewModel.SortingTypes}" SelectedItem="{Binding EditAuthorsViewModel.SelectedSortType}" x:Name="sortingAuthorsComboBox" Width="100" Height="30" Text="Sort Table"/>
 
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="2">
-                <Button x:Name="DeleteAuthorBtn" Margin="0 50 0 0" Width="150" Height="30" Command="{Binding DeleteSelectedAuthorCommand}">Delete Selected Author</Button>
+                <Button x:Name="DeleteAuthorBtn" Margin="0 50 0 0" Width="150" Height="30" Command="{Binding EditAuthorsViewModel.DeleteSelectedAuthorCommand}">Delete Selected Author</Button>
                 <!--<Button Margin="0 20 0 0" Width="150" Height="30"></Button>-->
             </StackPanel>
         </Grid>

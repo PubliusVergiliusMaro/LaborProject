@@ -16,7 +16,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Grid.Column="0">
-            <DataGrid ItemsSource="{Binding Orders,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedOrder,UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" x:Name="ordersListDataGrid" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <DataGrid ItemsSource="{Binding EditOrdersViewModel.Orders,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding EditOrdersViewModel.SelectedOrder,UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" x:Name="ordersListDataGrid" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="100" Header="CreatedOn" Binding="{Binding CreatedOn}"></DataGridTextColumn>
                     <DataGridTextColumn Width="100" Header="IsActual" Binding="{Binding IsActual}"></DataGridTextColumn>
@@ -30,7 +30,7 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="8*"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="refreshOrdersDataGrid" Grid.Row="0" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Command="{Binding RefreshOrdersCommand}">
+                <Button x:Name="refreshOrdersDataGrid" Grid.Row="0" Width="50" HorizontalAlignment="Left" Margin="5 0 0 0" Height="50" Command="{Binding EditOrdersViewModel.RefreshOrdersCommand}">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid>
@@ -49,14 +49,14 @@
                     <Grid Grid.Row="0">
                         <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1">
                             <Label HorizontalContentAlignment="Center">Sorting Types</Label>
-                            <ComboBox ItemsSource ="{Binding SortingTypes,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedSortType,UpdateSourceTrigger=PropertyChanged}" x:Name="sortingOrdersComboBox" Width="100" Height="30" Text="Sort Table"/>
+                            <ComboBox ItemsSource ="{Binding EditOrdersViewModel.SortingTypes,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding EditOrdersViewModel.SelectedSortType,UpdateSourceTrigger=PropertyChanged}" x:Name="sortingOrdersComboBox" Width="100" Height="30" Text="Sort Table"/>
                         </StackPanel>
                     </Grid>
                     <StackPanel Grid.Row="1">
-                        <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Command="{Binding MakeNotActiveCommand}">
+                        <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Command="{Binding EditOrdersViewModel.MakeNotActiveCommand}">
                             Make selected not Active
                         </Button>
-                        <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Command="{Binding DeleteSelectedOrderCommand}">
+                        <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Command="{Binding EditOrdersViewModel.DeleteSelectedOrderCommand}">
                             Delete Selected
                         </Button>
                     </StackPanel>
