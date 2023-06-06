@@ -23,8 +23,14 @@ namespace LaborProjectOOP.Services.CustomerServices
 			CustomerEntity dbRecord = _customerRepository.Table
 				.Where(customer => customer.Id == id)
 				.Include(customer => customer.WishList)
+					.ThenInclude(order => order.Book)
+						.ThenInclude(book=>book.Author)
 				.Include(customer => customer.CartList)
+					.ThenInclude(order => order.Book)
+						.ThenInclude(book => book.Author)
 				.Include(customer => customer.Orders)
+					.ThenInclude(order => order.Book)
+						.ThenInclude(book => book.Author)
 				.FirstOrDefault();
 			if (dbRecord == null)
 			{
@@ -51,10 +57,14 @@ namespace LaborProjectOOP.Services.CustomerServices
 			CustomerEntity dbRecord = _customerRepository.Table
 				.Where(customer => customer.Id == id)
 				.Include(customer => customer.WishList)
+					.ThenInclude(order => order.Book)
+						.ThenInclude(book => book.Author)
 				.Include(customer => customer.CartList)
-					.ThenInclude(c => c.Book)
-						.ThenInclude(b=>b.Author)
+					.ThenInclude(order => order.Book)
+						.ThenInclude(book => book.Author)
 				.Include(customer => customer.Orders)
+					.ThenInclude(order => order.Book)
+						.ThenInclude(book => book.Author)
 				.FirstOrDefault();
 			if (dbRecord == null)
 			{

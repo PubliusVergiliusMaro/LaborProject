@@ -1,4 +1,5 @@
-﻿using LaborProjectOOP.Dekstop.NavigationServices.Stores;
+﻿using LaborProjectOOP.Constants.Enums;
+using LaborProjectOOP.Dekstop.NavigationServices.Stores;
 using LaborProjectOOP.Services.AuthorServices;
 using LaborProjectOOP.Services.BookServices;
 using LaborProjectOOP.Services.CartListServices;
@@ -20,7 +21,9 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		{
 			//_navigationStore = navigationStore;
 			//_navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-			CurrentViewModel = new AdminViewModel(customerService,librarianService,authorService,catalogService,bookService,cartListService,wishListService,orderService);
+
+			CurrentViewModel = new CustomerActivitiesViewModel(customerService.GetById(3),wishListService,cartListService, CustomerActivitiesInfoType.WishList);
+			//CurrentViewModel = new AdminViewModel(customerService,librarianService,authorService,catalogService,bookService,cartListService,wishListService,orderService);
 		}
 
 		private void OnCurrentViewModelChanged()

@@ -110,7 +110,7 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 						imageBorder.Child = image;
 						bookPanel.Children.Add(imageBorder);
 					}
-					booksViewPanel.Children.Add(bookPanel);
+					//booksViewPanel.Children.Add(bookPanel);
 				}
 			}
 			else

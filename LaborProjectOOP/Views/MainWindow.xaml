@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1250">
     <Grid>
-        <views:AdminView DataContext="{Binding CurrentViewModel}"/>
+        <views:CustomerActivitiesView DataContext="{Binding CurrentViewModel}"/>
     </Grid>
 </Window>
