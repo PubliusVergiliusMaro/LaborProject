@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Avatars\adminAvatar.png" />
     <None Remove="Images\PagesIcons\addToWishListIcon.png" />
     <None Remove="Images\PagesIcons\basketIcon.png" />
     <None Remove="Images\PagesIcons\defaultAvatarIcon.png" />
@@ -22,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Avatars\adminAvatar.png" />
     <Resource Include="Images\PagesIcons\addToWishListIcon.png" />
     <Resource Include="Images\PagesIcons\basketIcon.png" />
     <Resource Include="Images\PagesIcons\defaultAvatarIcon.png" />

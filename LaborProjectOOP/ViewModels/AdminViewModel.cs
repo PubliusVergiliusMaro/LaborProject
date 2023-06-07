@@ -1,4 +1,6 @@
-﻿using LaborProjectOOP.Dekstop.Commands;
+﻿using LaborProjectOOP.Database.Models;
+using LaborProjectOOP.Dekstop.Commands;
+using LaborProjectOOP.Dekstop.NavigationServices.Stores;
 using LaborProjectOOP.Services.AuthorServices;
 using LaborProjectOOP.Services.BookServices;
 using LaborProjectOOP.Services.CartListServices;
@@ -15,25 +17,28 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 {
 	public class AdminViewModel : ViewModelBase
 	{
-		private readonly ICustomerService _customerService;
 		private readonly IBookService _bookService;
 		private readonly ICatalogService _catalogService;
+		private readonly ICustomerService _customerService;
 		private readonly ILibrarianService _librarianService;
 		private readonly IAuthorService _authorService;
-		private readonly ICartListService _cartListService;
 		private readonly IWishListService _wishListService;
+		private readonly ICartListService _cartListService;
 		private readonly IOrderService _orderService;
-		public AdminViewModel(ICustomerService customerService, ILibrarianService librarianService, IAuthorService authorService, ICatalogService catalogService, IBookService bookService, ICartListService cartListService, IWishListService wishListService, IOrderService orderService) 
+		private readonly CustomerEntity _currentCustomer;
+		private readonly NavigationStore _navigationStore;
+		public AdminViewModel(NavigationStore navigationStore, CustomerEntity currentCustomer, ICatalogService catalogService, IBookService bookService, ICustomerService customerService, ILibrarianService librarianService, ICartListService cartListService, IWishListService wishListService, IAuthorService authorService, IOrderService orderService)
 		{
+			_currentCustomer = currentCustomer;
 			_customerService = customerService;
-			_bookService = bookService;
-			_catalogService = catalogService;
-			_bookService = bookService;
 			_librarianService = librarianService;
-			_authorService = authorService;
-			_orderService = orderService;
+			_navigationStore = navigationStore;
 			_cartListService = cartListService;
 			_wishListService = wishListService;
+			_catalogService = catalogService;
+			_bookService = bookService;
+			_authorService = authorService;
+			_orderService = orderService;
 			EditCustomersViewModel = new EditCustomersViewModel(customerService);
 			EditBooksViewModel = new EditBooksViewModel(bookService, catalogService);
 			EditCatalogsViewModel = new EditCatalogsViewModel(catalogService);
@@ -47,10 +52,8 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			BackCommand = new DelegateCommand(Back);
 		}
 
-		private void Back()
-		{
-			MessageBox.Show("Back");
-		}
+		private void Back() => _navigationStore.CurrentViewModel = new AdminMenuViewModel(_navigationStore, _currentCustomer, _catalogService, _bookService, _customerService, _librarianService, _cartListService, _wishListService, _authorService, _orderService);
+		
 		public EditCustomersViewModel EditCustomersViewModel { get; }
 		public EditBooksViewModel EditBooksViewModel { get; }
 		public EditLibrariansViewModel EditLibrariansViewModel { get; }

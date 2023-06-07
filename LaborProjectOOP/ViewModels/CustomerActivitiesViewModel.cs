@@ -1,8 +1,14 @@
 ﻿using LaborProjectOOP.Constants.Enums;
 using LaborProjectOOP.Database.Models;
 using LaborProjectOOP.Dekstop.Commands;
+using LaborProjectOOP.Dekstop.NavigationServices.Stores;
+using LaborProjectOOP.Services.AuthorServices;
+using LaborProjectOOP.Services.BookServices;
 using LaborProjectOOP.Services.CartListServices;
+using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
+using LaborProjectOOP.Services.LibrarianServices;
+using LaborProjectOOP.Services.OrderHistoryServices;
 using LaborProjectOOP.Services.WishListServices;
 using System;
 using System.Collections;
@@ -16,9 +22,29 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 {
 	public class CustomerActivitiesViewModel : ViewModelBase
 	{
-		public CustomerActivitiesViewModel(CustomerEntity curentCustomer,IWishListService wishListService,ICartListService cartListService, CustomerActivitiesInfoType customerActivitiesInfoType)//ICustomerService customerService)
+		private readonly IBookService _bookService;
+		private readonly ICatalogService _catalogService;
+		private readonly ICustomerService _customerService;
+		private readonly ILibrarianService _librarianService;
+		private readonly IAuthorService _authorService;
+		private readonly IWishListService _wishListService;
+		private readonly ICartListService _cartListService;
+		private readonly IOrderService _orderService;
+		private readonly NavigationStore _navigationStore;
+		private readonly bool _IsItAdmin;
+		public CustomerActivitiesViewModel(NavigationStore navigationStore, CustomerEntity currentCustomer,bool IsItAdmin,CustomerActivitiesInfoType customerActivitiesInfoType, ICatalogService catalogService, IBookService bookService, ICustomerService customerService, ILibrarianService librarianService, ICartListService cartListService, IWishListService wishListService, IAuthorService authorService, IOrderService orderService)
 		{
-			_currentCustomer = curentCustomer;
+			_IsItAdmin = IsItAdmin;
+			_currentCustomer = currentCustomer;
+			_customerService = customerService;
+			_librarianService = librarianService;
+			_navigationStore = navigationStore;
+			_cartListService = cartListService;
+			_wishListService = wishListService;
+			_catalogService = catalogService;
+			_bookService = bookService;
+			_authorService = authorService;
+			_orderService = orderService;
 			_books = new ObservableCollection<BookEntity>();
 			if (customerActivitiesInfoType == CustomerActivitiesInfoType.WishList)
 			{
@@ -58,11 +84,11 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			}
 			BackCommand = new DelegateCommand(Back);
 		}
-		
-		private void Back()
-		{
-			MessageBox.Show("Go Back");
-		}
+
+		private void Back() => _navigationStore.CurrentViewModel = new CustomerMainViewModel(_navigationStore, _currentCustomer,_IsItAdmin, _catalogService, _bookService, _customerService, _librarianService, _cartListService, _wishListService, _authorService, _orderService);
+		//{
+		//	MessageBox.Show("Go Back");
+		//}
 
 		private ObservableCollection<BookEntity> _books;
 		public ICollection<BookEntity> Books => _books;

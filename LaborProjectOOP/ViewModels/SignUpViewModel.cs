@@ -1,7 +1,15 @@
 ﻿using LaborProjectOOP.Database.Models;
 using LaborProjectOOP.Dekstop.Commands;
+using LaborProjectOOP.Dekstop.NavigationServices.Stores;
+using LaborProjectOOP.Services.AuthorServices;
+using LaborProjectOOP.Services.BookServices;
+using LaborProjectOOP.Services.CartListServices;
+using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.Helpers;
+using LaborProjectOOP.Services.LibrarianServices;
+using LaborProjectOOP.Services.OrderHistoryServices;
+using LaborProjectOOP.Services.WishListServices;
 using Microsoft.Win32;
 using System;
 using System.Windows;
@@ -12,10 +20,27 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 {
 	class SignUpViewModel : ViewModelBase
 	{
+		private readonly IBookService _bookService;
+		private readonly ICatalogService _catalogService;
 		private readonly ICustomerService _customerService;
-		public SignUpViewModel(ICustomerService customerService)
+		private readonly ILibrarianService _librarianService;
+		private readonly IAuthorService _authorService;
+		private readonly IWishListService _wishListService;
+		private readonly ICartListService _cartListService;
+		private readonly IOrderService _orderService;
+		private readonly NavigationStore _navigationStore;
+		public SignUpViewModel(NavigationStore navigationStore, ICustomerService customerService,
+			ILibrarianService librarianService, IWishListService wishListService, ICartListService cartListService, ICatalogService catalogService, IBookService bookService,IAuthorService authorService, IOrderService orderService)
 		{
 			_customerService = customerService;
+			_librarianService = librarianService;
+			_navigationStore = navigationStore;
+			_cartListService = cartListService;
+			_wishListService = wishListService;
+			_catalogService = catalogService;
+			_bookService = bookService;
+			_authorService = authorService;
+			_orderService = orderService;
 			CancelCommand = new DelegateCommand(Cancel);
 			SaveCommand = new DelegateCommand(Save, CanSave);
 			SelectAvtrImgCommand = new DelegateCommand(SelectAvatarImage);
@@ -87,12 +112,12 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 				AvatarImagePath = SelectedAvatarPath
      		});
 			MessageBox.Show("Succesfully Added");
-		   //Navigate
+		    _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore, _customerService, _librarianService, _wishListService, _cartListService, _catalogService, _bookService, _authorService, _orderService);
 		}
 
 		private void Cancel()
 		{
-			MessageBox.Show("Cancel Btn");
+			_navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore, _customerService, _librarianService, _wishListService, _cartListService, _catalogService, _bookService, _authorService, _orderService);
 		}
 
 		private string _login;

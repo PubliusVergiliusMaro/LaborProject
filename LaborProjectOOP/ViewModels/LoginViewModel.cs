@@ -1,8 +1,15 @@
 ﻿using LaborProjectOOP.Database.Models;
 using LaborProjectOOP.Dekstop.Commands;
+using LaborProjectOOP.Dekstop.NavigationServices.Stores;
+using LaborProjectOOP.Services.AuthorServices;
+using LaborProjectOOP.Services.BookServices;
+using LaborProjectOOP.Services.CartListServices;
+using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.Helpers;
 using LaborProjectOOP.Services.LibrarianServices;
+using LaborProjectOOP.Services.OrderHistoryServices;
+using LaborProjectOOP.Services.WishListServices;
 using System;
 using System.Collections.Generic;
 using System.Security;
@@ -13,14 +20,37 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 {
 	public class LoginViewModel : ViewModelBase
 	{
+		private readonly IBookService _bookService;
+		private readonly ICatalogService _catalogService;
 		private readonly ICustomerService _customerService;
 		private readonly ILibrarianService _librarianService;
-		public LoginViewModel(ICustomerService customerService, ILibrarianService librarianService) 
+		private readonly IAuthorService _authorService;
+		private readonly IWishListService _wishListService;
+		private readonly ICartListService _cartListService;
+		private readonly IOrderService _orderService;
+		private readonly NavigationStore _navigationStore;
+		public LoginViewModel(NavigationStore navigationStore,ICustomerService customerService, 
+			ILibrarianService librarianService,IWishListService wishListService, ICartListService cartListService,
+			ICatalogService catalogService,IBookService bookService,IAuthorService authorService, IOrderService orderService) 
 		{
 			_customerService = customerService;
 			_librarianService = librarianService;
+			_navigationStore = navigationStore;
+			_cartListService = cartListService;
+			_wishListService = wishListService;
+			_catalogService = catalogService;
+			_bookService = bookService;
+			_authorService = authorService;
+			_orderService = orderService;
 			LoginCommand = new DelegateCommand(Login, CanLogin);
+			SignUpCommand = new DelegateCommand(SignUp);
 		}
+
+		private void SignUp()
+		{
+			_navigationStore.CurrentViewModel = new SignUpViewModel(_navigationStore, _customerService, _librarianService, _wishListService, _cartListService, _catalogService, _bookService, _authorService, _orderService);
+		}
+
 		private void Login()
 		{
 			bool isBaned = false;
@@ -29,7 +59,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 
 			List<CustomerEntity> customers = _customerService.GetAll();
 			List<LibrarianEntity> librarians = _librarianService.GetAll();
-			CustomerEntity _currentCustomer;
+			CustomerEntity _currentCustomer = new CustomerEntity();
 			LibrarianEntity _currentAdmin;
 
 			foreach (LibrarianEntity libr in librarians)
@@ -69,14 +99,15 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 
 			if (isAdmin)
 			{
-				MessageBox.Show("It is admin");
+				_navigationStore.CurrentViewModel = new AdminMenuViewModel(_navigationStore,_currentCustomer,_catalogService,_bookService,_customerService,_librarianService,_cartListService,_wishListService,_authorService,_orderService);
 				//loginGrid.Visibility = Visibility.Hidden;
 				//newPageGrid.Visibility = Visibility.Visible;
 				//pagesFrame.Navigate(new AdminMenuPage(_bookService, _orderService, _orderService, _orderService, _orderService, _authorService, _wishListService, _cartListService, _currentAdmin));
 			}
 			else if (canLogin)
 			{
-				MessageBox.Show("It is customer");
+				
+				_navigationStore.CurrentViewModel = new CustomerMainViewModel(_navigationStore, _currentCustomer,false, _catalogService, _bookService, _customerService,_librarianService, _cartListService, _wishListService, _authorService, _orderService);
 				//loginGrid.Visibility = Visibility.Hidden;
 				//newPageGrid.Visibility = Visibility.Visible;
 				//pagesFrame.Navigate(new CustomerMainPage(_bookService, _orderService, _orderService, _orderService, _orderService, _authorService, _wishListService, _cartListService, _currentCustomer, false));

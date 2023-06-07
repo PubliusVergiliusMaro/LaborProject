@@ -40,10 +40,10 @@ namespace LaborProjectOOP
 		private readonly IWishListService _wishListService;
 		private readonly ICartListService _cartListService;
 		private readonly IOrderService _orderService;
-		private readonly NavigationStore navigationStore;
+		private readonly NavigationStore _navigationStore;
 		public App()
 		{
-			navigationStore = new NavigationStore();
+			_navigationStore = new NavigationStore();
 
 			_dbContext = new ApplicationDbContext();
 			_bookRepository = new GenericRepository<BookEntity>(_dbContext);
@@ -66,19 +66,20 @@ namespace LaborProjectOOP
 		}
 		protected override void OnStartup(StartupEventArgs e)
 		{
-		//	navigationStore.CurrentViewModel = CreateLoginViewModel();
+			_navigationStore.CurrentViewModel = new LoginViewModel(
+				_navigationStore,_customerService,_librarianService,_wishListService,_cartListService,_catalogService,_bookService,_authorService,_orderService);
 			MainWindow = new MainWindow()//_bookService, _orderService, _orderService, _orderService, _orderService, _authorService, _wishListService, _cartListService)
 			{
-				DataContext = new MainViewModel(_customerService,_librarianService,_authorService,_catalogService,_bookService,_cartListService,_wishListService,_orderService)
+				DataContext = new MainViewModel(_navigationStore)//_customerService,_librarianService,_authorService,_catalogService,_bookService,_cartListService,_wishListService,_orderService)
 			};
 
 			MainWindow.Show();
 			base.OnStartup(e);
 		}
 
-		private ViewModelBase CreateLoginViewModel()
-		{
-			return new LoginViewModel(_customerService, _librarianService);
-		}
+		//private ViewModelBase CreateLoginViewModel()
+		//{
+		//	return new LoginViewModel(_customerService, _librarianService);
+		//}
 	}
 }

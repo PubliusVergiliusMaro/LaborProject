@@ -1,4 +1,5 @@
-﻿using LaborProjectOOP.Dekstop.Commands;
+﻿using LaborProjectOOP.Database.Models;
+using LaborProjectOOP.Dekstop.Commands;
 using LaborProjectOOP.Services.AuthorServices;
 using System;
 using System.Windows;
@@ -12,12 +13,27 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		public AddAuthorViewModel(IAuthorService authorService)
 		{
 			_authorService = authorService;
-			AddAuthorCommand = new DelegateCommand(AddAuthor);
+			AddAuthorCommand = new DelegateCommand(AddAuthor,CanAdd);
+		}
+
+		private bool CanAdd()
+		{
+			return
+				!string.IsNullOrEmpty(Name) &&
+				!string.IsNullOrEmpty(Surname);
 		}
 
 		private void AddAuthor()
 		{
-			MessageBox.Show("Author have ben added");
+			_authorService.Create(
+				new AuthorEntity()
+				{
+					Name = Name,
+					Surname = Surname,
+				});
+			MessageBox.Show("Author has been added");
+			Name = "";
+			Surname = "";
 		}
 
 		public string _name;
@@ -41,7 +57,6 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 				OnPropertyChanged(nameof(Surname));
 			}
 		}
-
 		public ICommand AddAuthorCommand { get; }
 	}
 }

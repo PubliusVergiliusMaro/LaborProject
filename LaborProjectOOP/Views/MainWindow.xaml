@@ -5,9 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views"
         xmlns:views="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
+        xmlns:vms="clr-namespace:LaborProjectOOP.Dekstop.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1250">
     <Grid>
-        <views:CustomerActivitiesView DataContext="{Binding CurrentViewModel}"/>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:LoginViewModel}" >
+                <views:LoginView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:SignUpViewModel}" >
+                <views:SignUpView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:CustomerMainViewModel}" >
+                <views:CustomerMainView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AdminMenuViewModel}" >
+                <views:AdminMenuView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:AdminViewModel}" >
+                <views:AdminView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:CustomerActivitiesViewModel}" >
+                <views:CustomerActivitiesView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:CustomerOrderHistoryViewModel}" >
+                <views:CustomerOrderHistoryView />
+            </DataTemplate> 
+            <DataTemplate DataType="{x:Type vms:EditProfileViewModel}" >
+                    <views:EditProfileView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:MakeOrderViewModel}" >
+                <views:MakeOrderView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:BookPageViewModel}" >
+                <views:BookView />
+            </DataTemplate>
+        </Grid.Resources>
+
+        <ContentControl Content="{Binding CurrentViewModel}"/>
+
     </Grid>
 </Window>

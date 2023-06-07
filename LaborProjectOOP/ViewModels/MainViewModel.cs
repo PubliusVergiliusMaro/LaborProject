@@ -15,17 +15,13 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 	public class MainViewModel : ViewModelBase
 	{
 		private readonly NavigationStore _navigationStore;
-		public ViewModelBase CurrentViewModel { get; }//=> _navigationStore.CurrentViewModel;
+		public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
-		public MainViewModel(ICustomerService customerService, ILibrarianService librarianService, IAuthorService authorService,ICatalogService catalogService,IBookService bookService,ICartListService cartListService,IWishListService wishListService, IOrderService orderService)//NavigationStore navigationStore)
+		public MainViewModel(NavigationStore navigationStore)//ICustomerService customerService, ILibrarianService librarianService, IAuthorService authorService,ICatalogService catalogService,IBookService bookService,ICartListService cartListService,IWishListService wishListService, IOrderService orderService)//NavigationStore _navigationStore)
 		{
-			//_navigationStore = navigationStore;
-			//_navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-
-			CurrentViewModel = new CustomerActivitiesViewModel(customerService.GetById(3),wishListService,cartListService, CustomerActivitiesInfoType.WishList);
-			//CurrentViewModel = new AdminViewModel(customerService,librarianService,authorService,catalogService,bookService,cartListService,wishListService,orderService);
+			_navigationStore = navigationStore;
+			_navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 		}
-
 		private void OnCurrentViewModelChanged()
 		{
 			OnPropertyChanged(nameof(CurrentViewModel));

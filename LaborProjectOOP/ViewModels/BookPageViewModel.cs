@@ -1,8 +1,13 @@
 ﻿using LaborProjectOOP.Database.Models;
 using LaborProjectOOP.Dekstop.Commands;
+using LaborProjectOOP.Dekstop.NavigationServices.Stores;
+using LaborProjectOOP.Services.AuthorServices;
 using LaborProjectOOP.Services.BookServices;
 using LaborProjectOOP.Services.CartListServices;
+using LaborProjectOOP.Services.CatalogServices;
 using LaborProjectOOP.Services.CustomerServices;
+using LaborProjectOOP.Services.LibrarianServices;
+using LaborProjectOOP.Services.OrderHistoryServices;
 using LaborProjectOOP.Services.WishListServices;
 using System;
 using System.Windows;
@@ -12,12 +17,32 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 {
 	public class BookPageViewModel : ViewModelBase
 	{
-		public BookPageViewModel(BookEntity selectedBook, CustomerEntity currentCustomer, ICartListService cartListService,IWishListService wishListService) 
+		private readonly IBookService _bookService;
+		private readonly ICatalogService _catalogService;
+		private readonly ICustomerService _customerService;
+		private readonly ILibrarianService _librarianService;
+		private readonly IAuthorService _authorService;
+		private readonly IWishListService _wishListService;
+		private readonly ICartListService _cartListService;
+		private readonly IOrderService _orderService;
+		private readonly NavigationStore _navigationStore;
+		private readonly CustomerEntity _currentCustomer;
+		private readonly bool _IsItAdmin;
+		public BookPageViewModel(BookEntity selectedBook, NavigationStore navigationStore, CustomerEntity currentCustomer, bool IsItAdmin,ICatalogService catalogService, IBookService bookService, ICustomerService customerService, ILibrarianService librarianService, ICartListService cartListService, IWishListService wishListService, IAuthorService authorService, IOrderService orderService)
+
 		{
+			_IsItAdmin = IsItAdmin;
 			_selectedBook = selectedBook;
 			_currentCustomer = currentCustomer;
+			_customerService = customerService;
+			_librarianService = librarianService;
+			_navigationStore = navigationStore;
 			_cartListService = cartListService;
 			_wishListService = wishListService;
+			_catalogService = catalogService;
+			_bookService = bookService;
+			_authorService = authorService;
+			_orderService = orderService;
 			BackCommand = new DelegateCommand(Back);
 			AddToCartCommand = new DelegateCommand(AddToCart,CanAddToCart);
 			AddToWishListCommand = new DelegateCommand(AddToWishList,CanAddToWishList);
@@ -26,12 +51,12 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 
 		private bool CanAddToWishList()
 		{
-			return !_wishListService.CheckIfExist(_currentCustomer.Id, _selectedBook.Id);
+			return !_wishListService.CheckIfExist(_currentCustomer.Id, _selectedBook.Id) && !_IsItAdmin;
 		}
 
 		private bool CanAddToCart()
 		{
-			return !_cartListService.CheckIfExist(_currentCustomer.Id, _selectedBook.Id);
+			return !_cartListService.CheckIfExist(_currentCustomer.Id, _selectedBook.Id) && !_IsItAdmin;
 		}
 		
 		private void AddToWishList()
@@ -55,10 +80,10 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 
 		}
 
-		private void Back()
-		{
-			MessageBox.Show("We go Back");
-		}
+		private void Back() => _navigationStore.CurrentViewModel = new CustomerMainViewModel(_navigationStore, _currentCustomer,_IsItAdmin, _catalogService, _bookService, _customerService, _librarianService, _cartListService, _wishListService, _authorService, _orderService);
+		//{
+		//	MessageBox.Show("We go Back");
+		//}
 
 		public ICommand BackCommand { get; }
 		public ICommand AddToCartCommand { get; }
@@ -73,8 +98,5 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 				OnPropertyChanged(nameof(SelectedBook));
 			}
 		}
-		private readonly CustomerEntity _currentCustomer;
-		private readonly ICartListService _cartListService;
-		private readonly IWishListService _wishListService;
 	}
 }
