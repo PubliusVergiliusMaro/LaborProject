@@ -38,11 +38,17 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		private void RefreshBooks()
 		{
             Books.Clear();
+			Catalogs.Clear();
             bksFromDb = _bookService.GetAll();
+			ctlgsFromDb = _catalogService.GetAll();
             foreach (BookEntity book in bksFromDb)
             {
                 _books.Add(book);
             }
+			foreach(CatalogEntity catalog in ctlgsFromDb)
+			{
+				_catalogs.Add(catalog);
+			}
         }
 
         private bool CanAddToCatalog()

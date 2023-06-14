@@ -78,7 +78,7 @@ namespace LaborProjectOOP.Services.CustomerServices
 					.Where(catalogus => catalogus.Id == customer.Id)
 					.Include(customer => customer.WishList)
 					.Include(customer => customer.CartList)
-					.Include(customer => customer.Orders)
+					.Include(customer => customer.Orders).OrderBy(c=>c.Id)
 					.FirstOrDefaultAsync();
 				if (dbRecord == null)
 				{
