@@ -42,7 +42,7 @@
                      Width="232"
                                 Text="{Binding UserLogin, UpdateSourceTrigger=PropertyChanged}"
                     />
-                            <Label
+                            <Label Visibility="Hidden"
                         HorizontalAlignment="Center"
                                  Foreground="Red">
                                 Error Label
@@ -65,7 +65,7 @@
                                 Margin="0,0,0,0" 
                                 FontSize="16"
                                 PasswordChanged="PasswordBox_PasswordChanged"/>
-                            <Label
+                            <Label Visibility="Hidden"
                            HorizontalAlignment="Center"
                                Foreground="Red"
                             >

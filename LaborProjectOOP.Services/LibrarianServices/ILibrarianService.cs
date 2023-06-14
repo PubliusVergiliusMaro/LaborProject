@@ -9,11 +9,11 @@ namespace LaborProjectOOP.Services.LibrarianServices
 {
 	public interface ILibrarianService
 	{
-		void Create(LibrarianEntity librarian);
-		bool Delete(int id);
+		Task Create(LibrarianEntity librarian);
+		Task<bool> Delete(int id);
 		List<LibrarianEntity> GetAll();
-		LibrarianEntity GetById(int id);
-		bool Update(LibrarianEntity librarian);
+		Task<LibrarianEntity> GetById(int id);
+		Task<bool> Update(LibrarianEntity librarian);
 
 	}
 }

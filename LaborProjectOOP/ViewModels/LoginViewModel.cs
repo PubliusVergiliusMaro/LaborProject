@@ -51,14 +51,14 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			_navigationStore.CurrentViewModel = new SignUpViewModel(_navigationStore, _customerService, _librarianService, _wishListService, _cartListService, _catalogService, _bookService, _authorService, _orderService);
 		}
 
-		private void Login()
+		private async void Login()
 		{
 			bool isBaned = false;
 			bool canLogin = false;
 			bool isAdmin = false;
 
-			List<CustomerEntity> customers = _customerService.GetAll();
-			List<LibrarianEntity> librarians = _librarianService.GetAll();
+			List<CustomerEntity> customers =  _customerService.GetAll();
+			List<LibrarianEntity> librarians =  _librarianService.GetAll();
 			CustomerEntity _currentCustomer = new CustomerEntity();
 			LibrarianEntity _currentAdmin;
 

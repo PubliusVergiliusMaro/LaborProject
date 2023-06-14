@@ -1,5 +1,6 @@
 ﻿using LaborProjectOOP.Database.Models;
 using LaborProjectOOP.EntityFramework.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace LaborProjectOOP.Services.AuthorServices
 {
@@ -12,20 +13,19 @@ namespace LaborProjectOOP.Services.AuthorServices
 			_authorRepository = authorRepository;
 		}
 
-		public void Create(AuthorEntity author)
+		public async Task Create(AuthorEntity author)
 		{
-			_authorRepository.Create(author);
-
+			await _authorRepository.Create(author);
 		}
-		public bool Delete(int id)
+		public async Task<bool> Delete(int id)
 		{
-			AuthorEntity dbRecord = _authorRepository.Table
-				.FirstOrDefault(author => author.Id == id);
+			AuthorEntity dbRecord = await _authorRepository.Table
+				.FirstOrDefaultAsync(author => author.Id == id);
 			if (dbRecord == null)
 			{
 				return false;
 			}
-			_authorRepository.Remove(dbRecord);
+			await _authorRepository.Delete(dbRecord);
 			return true;
 		}
 		public List<AuthorEntity> GetAll()
@@ -38,23 +38,23 @@ namespace LaborProjectOOP.Services.AuthorServices
 			}
 			return dbRecord;
 		}
-		public AuthorEntity GetById(int id)
+		public async Task<AuthorEntity> GetById(int id)
 		{
-			AuthorEntity dbRecord = _authorRepository.Table
-					.FirstOrDefault(author => author.Id == id);
+			AuthorEntity dbRecord = await _authorRepository.Table
+					.FirstOrDefaultAsync(author => author.Id == id);
 			if (dbRecord == null)
 			{
 				return null;
 			}
 			return dbRecord;
 		}
-		public bool Update(AuthorEntity author)
+		public async Task<bool> Update(AuthorEntity author)
 		{
 			try
 			{
-				AuthorEntity dbRecord = _authorRepository.Table
+				AuthorEntity dbRecord = await _authorRepository.Table
 					.Where(a => a.Id == author.Id)
-					.FirstOrDefault();
+					.FirstOrDefaultAsync();
 				if (dbRecord == null)
 				{
 					return false;
@@ -63,7 +63,7 @@ namespace LaborProjectOOP.Services.AuthorServices
 				dbRecord.Surname = author.Surname;
 				dbRecord.Books = author.Books;
 
-				_authorRepository.SaveChanges();
+				await _authorRepository.SaveChanges();
 				return true;
 			}
 			catch (Exception ex)

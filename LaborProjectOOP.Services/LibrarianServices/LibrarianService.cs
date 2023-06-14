@@ -1,5 +1,6 @@
 ﻿using LaborProjectOOP.Database.Models;
 using LaborProjectOOP.EntityFramework.Repository;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace LaborProjectOOP.Services.LibrarianServices
@@ -13,24 +14,22 @@ namespace LaborProjectOOP.Services.LibrarianServices
 			_librarianRepository = librarianRepository;
 		}
 
-		public void Create(LibrarianEntity librarian)
+		public async Task Create(LibrarianEntity librarian)=> await	_librarianRepository.Create(librarian);
+		
+		public async Task<bool> Delete(int id)
 		{
-			_librarianRepository.Create(librarian);
-		}
-		public bool Delete(int id)
-		{
-			LibrarianEntity dbRecord = _librarianRepository.Table
-				.FirstOrDefault(b => b.Id == id);
+			LibrarianEntity dbRecord = await _librarianRepository.Table
+				.FirstOrDefaultAsync(b => b.Id == id);
 			if (dbRecord == null)
 			{
 				return false;
 			}
-			_librarianRepository.Remove(dbRecord);
+			await _librarianRepository.Delete(dbRecord);
 			return true;
 		}
 		public List<LibrarianEntity> GetAll()
 		{
-			List<LibrarianEntity> dbRecord = _librarianRepository.Table
+			List<LibrarianEntity> dbRecord =  _librarianRepository.Table
 				 .ToList();
 			if (dbRecord == null)
 			{
@@ -38,24 +37,24 @@ namespace LaborProjectOOP.Services.LibrarianServices
 			}
 			return dbRecord;
 		}
-		public LibrarianEntity GetById(int id)
+		public async Task<LibrarianEntity> GetById(int id)
 		{
-			LibrarianEntity dbRecord = _librarianRepository.Table
+			LibrarianEntity dbRecord = await _librarianRepository.Table
 				.Where(libr => libr.Id == id)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 			if (dbRecord == null)
 			{
 				return null;
 			}
 			return dbRecord;
 		}
-		public bool Update(LibrarianEntity librarian)
+		public async Task<bool> Update(LibrarianEntity librarian)
 		{
 			try
 			{
-				LibrarianEntity dbRecord = _librarianRepository.Table
+				LibrarianEntity dbRecord = await _librarianRepository.Table
 					.Where(libr => libr.Id == librarian.Id)
-					.FirstOrDefault();
+					.FirstOrDefaultAsync();
 				if (dbRecord == null)
 				{
 					return false;
@@ -66,7 +65,7 @@ namespace LaborProjectOOP.Services.LibrarianServices
 				dbRecord.WorkExperience = librarian.WorkExperience;
 				dbRecord.IsAdmin = librarian.IsAdmin;
 
-				_librarianRepository.SaveChanges();
+				await _librarianRepository.SaveChanges();
 				return true;
 			}
 			catch (Exception ex)
@@ -75,9 +74,9 @@ namespace LaborProjectOOP.Services.LibrarianServices
 			}
 		}
 
-		public static List<LibrarianEntity> GetLibrarians() =>
-			JsonConvert.DeserializeObject<List<LibrarianEntity>>(File.ReadAllText(Constants.Constants.Constants.LIBRARIAN_FILE_PATH));
-		public static void SaveLibrarians(List<LibrarianEntity> librarians) =>
-			File.WriteAllText(Constants.Constants.Constants.LIBRARIAN_FILE_PATH, JsonConvert.SerializeObject(librarians));
+		public async static Task<List<LibrarianEntity>> GetLibrarians() =>
+	    JsonConvert.DeserializeObject<List<LibrarianEntity>>(await File.ReadAllTextAsync(Constants.Constants.Constants.LIBRARIAN_FILE_PATH));
+		public async static Task SaveLibrarians(List<LibrarianEntity> librarians) =>
+		await File.WriteAllTextAsync(Constants.Constants.Constants.LIBRARIAN_FILE_PATH, JsonConvert.SerializeObject(librarians));
 	}
 }

@@ -10,6 +10,7 @@ using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderHistoryServices;
 using LaborProjectOOP.Services.WishListServices;
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -46,32 +47,37 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			BackCommand = new DelegateCommand(Back);
 			AddToCartCommand = new DelegateCommand(AddToCart,CanAddToCart);
 			AddToWishListCommand = new DelegateCommand(AddToWishList,CanAddToWishList);
-
+			InitializeAsync();
 		}
-
+		private async Task InitializeAsync()
+		{
+			_suchBookExistInCart =_cartListService.CheckIfExist(_currentCustomer.Id, _selectedBook.Id);
+			_suchBookExistInWish = _wishListService.CheckIfExist(_currentCustomer.Id, _selectedBook.Id);
+        }
 		private bool CanAddToWishList()
 		{
-			return !_wishListService.CheckIfExist(_currentCustomer.Id, _selectedBook.Id) && !_IsItAdmin;
+			return !_suchBookExistInWish && !_IsItAdmin;
 		}
 
 		private bool CanAddToCart()
 		{
-			return !_cartListService.CheckIfExist(_currentCustomer.Id, _selectedBook.Id) && !_IsItAdmin;
+			return !_IsItAdmin;
 		}
 		
-		private void AddToWishList()
+		private async void AddToWishList()
 		{
-			_wishListService.Create(new WishListEntity
+			await _wishListService.Create(new WishListEntity
 			{
 				CustomerFK = _currentCustomer.Id,
 				BookFK = _selectedBook.Id
 			});
+			_suchBookExistInWish = true;
 			MessageBox.Show("Succesfully added");
 		}
 
-		private void AddToCart()
+		private async void AddToCart()
 		{
-			_cartListService.Create(new CartListEntity
+			await _cartListService.Create(new CartListEntity
 			{
 				CustomerFK = _currentCustomer.Id,
 				BookFK = _selectedBook.Id
@@ -84,8 +90,10 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		//{
 		//	MessageBox.Show("We go Back");
 		//}
+		private bool _suchBookExistInCart { get; set; }
+		private bool _suchBookExistInWish { get; set; }
 
-		public ICommand BackCommand { get; }
+        public ICommand BackCommand { get; }
 		public ICommand AddToCartCommand { get; }
 		public ICommand AddToWishListCommand { get; }
 		private BookEntity _selectedBook;

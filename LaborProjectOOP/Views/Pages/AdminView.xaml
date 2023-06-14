@@ -17,7 +17,7 @@
         <Grid x:Name="newPageGrid">
             <Frame x:Name="pagesFrame" NavigationUIVisibility="Hidden"/>
         </Grid>
-        <Grid x:Name="adminPageGrid">
+        <Grid x:Name="adminPageGrid" Visibility="{Binding AllDataLoaded}">
             <TabControl>
                 <TabItem x:Name="editCustomerTabItem">
                     <TabItem.Header>

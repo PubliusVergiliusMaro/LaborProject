@@ -14,22 +14,20 @@ namespace LaborProjectOOP.Services.WishListServices
 			_wishListRepository = wishListRepository;
 		}
 
-		public void Create(WishListEntity wishList)
+		public async Task Create(WishListEntity wishList) => await _wishListRepository.Create(wishList);
+
+		public async Task<bool> Delete(int id)
 		{
-			_wishListRepository.Create(wishList);
-		}
-		public bool Delete(int id)
-		{
-			WishListEntity dbRecord = _wishListRepository.Table
+			WishListEntity dbRecord = await _wishListRepository.Table
 				.Where(w => w.Id == id)
 				.Include(w=>w.Customer)
 				.Include(w=>w.Book)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 			if (dbRecord == null)
 			{
 				return false;
 			}
-			_wishListRepository.Remove(dbRecord);
+			await _wishListRepository.Delete(dbRecord);
 			return true;
 		}
 		public List<WishListEntity> GetAll()
@@ -45,13 +43,13 @@ namespace LaborProjectOOP.Services.WishListServices
 			return dbRecord;
 		}
 
-		public List<WishListEntity> GetWishListByCustomerId(int id)
+		public async Task<List<WishListEntity>> GetWishListByCustomerId(int id)
 		{
-			List<WishListEntity> dbRecord = _wishListRepository.Table
+			List<WishListEntity> dbRecord = await _wishListRepository.Table
 			.Where(w => w.CustomerFK == id)
 			.Include(w => w.Customer)
 			.Include(w => w.Book)
-			.ToList();
+			.ToListAsync();
 			if (dbRecord == null)
 			{
 				return null;
@@ -60,28 +58,28 @@ namespace LaborProjectOOP.Services.WishListServices
 		}
 		
 
-		public WishListEntity GetById(int id)
+		public async Task<WishListEntity> GetById(int id)
 		{
-			WishListEntity dbRecord = _wishListRepository.Table
+			WishListEntity dbRecord = await _wishListRepository.Table
 				.Where(w => w.Id == id)
 				.Include(w => w.Customer)
 				.Include(w => w.Book)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 			if (dbRecord == null)
 			{
 				return null;
 			}
 			return dbRecord;
 		}
-		public bool Update(WishListEntity wishList)
+		public async Task<bool> Update(WishListEntity wishList)
 		{
 			try
 			{
-				WishListEntity dbRecord = _wishListRepository.Table
+				WishListEntity dbRecord = await _wishListRepository.Table
 				.Where(w => w.Id == wishList.Id)
 				.Include(w => w.Customer)
 				.Include(w => w.Book)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 				if (dbRecord == null)
 				{
 					return false;
@@ -89,7 +87,7 @@ namespace LaborProjectOOP.Services.WishListServices
 				dbRecord.CustomerFK = wishList.CustomerFK;
 				dbRecord.BookFK = wishList.BookFK;
 
-				_wishListRepository.SaveChanges();
+				await _wishListRepository.SaveChanges();
 				return true;
 			}
 			catch (Exception ex)
@@ -97,13 +95,13 @@ namespace LaborProjectOOP.Services.WishListServices
 				return false;
 			}
 		}
-		public WishListEntity GetByCustomerIdAndBookId(int customerId, int bookId)
+		public async Task<WishListEntity> GetByCustomerIdAndBookId(int customerId, int bookId)
 		{
-			WishListEntity dbRecord = _wishListRepository.Table
+			WishListEntity dbRecord = await _wishListRepository.Table
 				.Include(w => w.Customer)
 				.Include(w => w.Book)
 				.Where(w => w.CustomerFK == customerId && w.BookFK == bookId)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 			if (dbRecord == null)
 			{
 				return null;
@@ -122,7 +120,6 @@ namespace LaborProjectOOP.Services.WishListServices
 			{
 				return false;
 			}
-
 			return true;
 		}
 

@@ -6,7 +6,39 @@
              xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
              mc:Ignorable="d" 
               d:DesignHeight="800" d:DesignWidth="1250">
-    <Grid>
+    <UserControl.Resources>
+        <Style x:Key="LabelsStyle" TargetType="Label">
+            <Setter Property="ItemsControl.FontFamily" Value="Alice"/>
+            <Setter Property="ItemsControl.FontSize" Value="14"/>
+            <Setter Property="ItemsControl.HorizontalAlignment" Value="Center"/>
+            <Setter Property="ItemsControl.Width" Value="100"/>
+            <Setter Property="ItemsControl.Height" Value="30"/>
+            <Setter Property="ItemsControl.HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="ItemsControl.Width" Value="300"/>
+            <Setter Property="ItemsControl.Height" Value="100"/>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="ItemsControl.Width" Value="200"/>
+            <Setter Property="ItemsControl.Height" Value="200"/>
+            <Setter Property="ItemsControl.Background" Value="DarkCyan"/>
+            <Setter Property="ItemsControl.Foreground" Value="Black"/>
+            <Setter Property="ItemsControl.BorderBrush" Value="DarkCyan"/>
+            <Setter Property="ItemsControl.BorderThickness" Value="2"/>
+        </Style>
+        <Style x:Key="GridStyle" TargetType="Grid">
+            <Setter Property="ItemsControl.Background" Value="White"/>
+        </Style>
+        <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="ItemsControl.Height" Value="40"/>
+            <Setter Property="ItemsControl.Width" Value="300"/>
+            <Setter Property="ItemsControl.FontFamily" Value="Alice"/>
+            <Setter Property="Margin" Value="0 0 0 0"/>
+            <Setter Property="ItemsControl.FontSize" Value="20"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid  Style="{StaticResource GridStyle}" ShowGridLines="True">
         <Grid x:Name="newPageGrid">
             <Frame x:Name="pagesFrame" NavigationUIVisibility="Hidden"/>
         </Grid>
@@ -27,8 +59,8 @@
                         <RowDefinition Height="5*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="0" Margin="0,0,0,505" Grid.RowSpan="2">
-                        <Button FontSize="20" x:Name="selectAvatarImage" Command="{Binding SelectAvtrImgCommand}" Content="Select Avatar Image"/>
+                    <Grid Grid.Row="0" Margin="0,30,0,0">
+                        <Button Width="300 " Height="30" FontSize="20" x:Name="selectAvatarImage"   Style="{StaticResource ButtonStyle}" Command="{Binding SelectAvtrImgCommand}" Content="Select Avatar Image"/>
                     </Grid>
                     <!--<Border CornerRadius="15"  Height="300"   Grid.Row="1">
                         <Ellipse Width="auto" Height="300">
@@ -39,37 +71,37 @@
                     </Border>-->
                     <Grid Grid.Row="1" x:Name="avatarImageGrid" Visibility="Visible">
                         <Border  Margin="0,0,0,0" CornerRadius="500" Width="306" Height="306" Background="Black"/>
-                        <Ellipse Width="290" Height="290">
+                        <Ellipse Width="300" Height="300">
                             <Ellipse.Fill>
                                 <ImageBrush x:Name="customerAvatarImage" ImageSource="{Binding AvatarImage}" Stretch="UniformToFill"/>
                             </Ellipse.Fill>
                         </Ellipse>
                     </Grid>
                     <Grid Grid.Row="2">
-                        <CheckBox x:Name="defaultImageCheckBox" IsChecked="{Binding CheckedDefaultAvatar}" Command="{Binding DefaultAvatarCommand}" Content="Use default avatar image"/>
+                        <CheckBox x:Name="defaultImageCheckBox" Style="{StaticResource CheckBoxStyle}"  IsChecked="{Binding CheckedDefaultAvatar}" Command="{Binding DefaultAvatarCommand}" Content="Use default avatar image" VerticalAlignment="Top"/>
                     </Grid>
                 </Grid>
-                <StackPanel VerticalAlignment="Center" Orientation="Vertical" Grid.Column="1" Height="224">
-                    <Label 
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" Grid.Column="1" Height="334">
+                    <Label Style="{StaticResource LabelsStyle}" 
                      Content="Login" 
                      HorizontalAlignment="Center"
                      Margin="0,0,0,0" 
-                     VerticalAlignment="Top"
+                     VerticalAlignment="Top" 
                     />
-                    <TextBox 
+                    <TextBox  Style="{StaticResource TextBoxStyle}"
                     x:Name="loginTextBox"
                      HorizontalAlignment="Center"
                      Height="30" 
                      Margin="0,0,0,0"
-                     Width="332"
-                        Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"
+                     Width="332" 
+                     Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"
                     />
-                    <Label 
+                    <Label  Style="{StaticResource LabelsStyle}"
                      Content="Password" 
                      HorizontalAlignment="Center"
                      Margin="0,0,0,0"
                     />
-                    <TextBox 
+                    <TextBox   Style="{StaticResource TextBoxStyle}"
                      HorizontalAlignment="Center" 
                     x:Name="passwordTextBox"
                      Height="30" 
@@ -77,13 +109,13 @@
                      Margin="0,0,0,0" 
                         Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
                     />
-                    <Label 
+                    <Label  Style="{StaticResource LabelsStyle}"
                      Content="Email" 
                      HorizontalAlignment="Center"
                      Margin="0,0,0,0" 
                      VerticalAlignment="Top"
                     />
-                    <TextBox 
+                    <TextBox  Style="{StaticResource TextBoxStyle}" 
                     x:Name="emailTextBox"
                      HorizontalAlignment="Center"
                      Height="30" 
@@ -91,12 +123,12 @@
                      Width="332"
                         Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
                     />
-                    <Label 
+                    <Label  Style="{StaticResource LabelsStyle}"
                      Content="Phone" 
                      HorizontalAlignment="Center"
                      Margin="0,0,0,0"
                     />
-                    <TextBox 
+                    <TextBox  Style="{StaticResource TextBoxStyle}" 
                      HorizontalAlignment="Center" 
                     x:Name="phoneTextBox"
                      Height="30" 
@@ -108,8 +140,9 @@
             </Grid>
             <Grid Grid.Row="1">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Width="150" Height="45" Margin="0 0 50 70" Command="{Binding CancelCommand}">Back</Button>
-                    <Button Width="150" Height="45" Margin="50 0 0 70" Command="{Binding SaveCommand}" >Save</Button>
+                    
+                    <Button Width="150" Height="45" Margin="0 0 50 70" Style="{StaticResource ButtonStyle}" Command="{Binding CancelCommand}">Back</Button>
+                    <Button Width="150" Height="45" Margin="50 0 0 70" Style="{StaticResource ButtonStyle}" Command="{Binding SaveCommand}" >Save</Button>
                 </StackPanel>
             </Grid>
         </Grid>

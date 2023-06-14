@@ -8,28 +8,37 @@
             d:DesignHeight="800" d:DesignWidth="1250">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0">
             <StackPanel Width="250" Height="575" Orientation="Vertical" VerticalAlignment="Center">
-                <Label>Select Genre for Book</Label>
+                <Label>Select Genre for Book:</Label>
                 <ComboBox ItemsSource="{Binding AddBookViewModel.Genres,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding AddBookViewModel.SelectedGenre,UpdateSourceTrigger=PropertyChanged}" x:Name="genresComboBox" Margin="0 2 0 0"></ComboBox>
                 <Button x:Name="AddGenreForBook" Margin="0 30 0 0" Height="35" Command="{Binding AddBookViewModel.AddGenreCommand}" >Add For Book</Button>
             </StackPanel>
         </Grid>
-        <StackPanel Grid.Column="1" Width="200" Orientation="Vertical" Margin="0,100,0,0" HorizontalAlignment="Center">
-            <Label>Title</Label>
-            <TextBox Text="{Binding AddBookViewModel.Title,UpdateSourceTrigger=PropertyChanged}" x:Name="titleTextBox" Width="200"></TextBox>
-            <Label>Description</Label>
-            <TextBox Text="{Binding AddBookViewModel.Description, UpdateSourceTrigger=PropertyChanged}" x:Name="descriptionTextBox"></TextBox>
-            <Label>Price</Label>
-            <TextBox Text="{Binding AddBookViewModel.Price, UpdateSourceTrigger=PropertyChanged}" x:Name="priceTextBox"></TextBox>
-            <Label>Authors</Label>
-            <ComboBox ItemsSource="{Binding AddBookViewModel.Authors, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding AddBookViewModel.SelectedAuthor,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="FullName" x:Name="authorsComboBox"></ComboBox>
-            <Label>Genres List</Label>
-            <Grid Margin="0 0 0 0" Height="auto">
+        <StackPanel Grid.Column="1" Width="300" Orientation="Vertical" Margin="0,100,0,0" HorizontalAlignment="Center">
+            <Label>Title:</Label>
+            <TextBox Text="{Binding AddBookViewModel.Title,UpdateSourceTrigger=PropertyChanged}" x:Name="titleTextBox"></TextBox>
+            <Label>Description:</Label>
+            <ScrollViewer Width="280" Height="100">
+                <TextBox TextWrapping="Wrap" Text="{Binding AddBookViewModel.Description, UpdateSourceTrigger=PropertyChanged}" 
+             x:Name="descriptionTextBox"/>
+            </ScrollViewer>
+            <Label Width="100">Price:</Label>
+            <TextBox Width="100" Text="{Binding AddBookViewModel.Price, UpdateSourceTrigger=PropertyChanged}" x:Name="priceTextBox"></TextBox>
+            <Label>Authors:</Label>
+            <StackPanel  Orientation="Horizontal">
+                <ComboBox Width="167" ItemsSource="{Binding AddBookViewModel.Authors, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding AddBookViewModel.SelectedAuthor,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="FullName" x:Name="authorsComboBox"></ComboBox>
+                    <Button Margin="3 0 0 0" Width="60" Height="30" Command="{Binding AddBookViewModel.UpdateAuthorsCommand}">
+                    <TextBlock TextWrapping="Wrap" FontSize="11" >Update List</TextBlock>
+                </Button>
+            </StackPanel>
+            
+            <Label>Genres List:</Label>
+            <Grid Width="100" Margin="0 0 0 0" Height="auto">
                 <ListView ItemsSource="{Binding AddBookViewModel.SelectedGenres, UpdateSourceTrigger=PropertyChanged}" x:Name="selectedGenresListView" Height="50"/>
             </Grid>
             <Button x:Name="addBookBtn" Command="{Binding AddBookViewModel.AddBookCommand}" Content="Add" Height="30" Width="200" Margin="0 30 0 0"/>

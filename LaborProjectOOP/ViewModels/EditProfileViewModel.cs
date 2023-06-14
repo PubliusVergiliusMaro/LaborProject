@@ -18,15 +18,6 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 {
 	public class EditProfileViewModel : ViewModelBase
 	{
-		private readonly IBookService _bookService;
-		private readonly ICatalogService _catalogService;
-		private readonly ICustomerService _customerService;
-		private readonly ILibrarianService _librarianService;
-		private readonly IAuthorService _authorService;
-		private readonly IWishListService _wishListService;
-		private readonly ICartListService _cartListService;
-		private readonly IOrderService _orderService;
-		private readonly NavigationStore _navigationStore;
 		public EditProfileViewModel(NavigationStore navigationStore, CustomerEntity currentCustomer, ICatalogService catalogService, IBookService bookService, ICustomerService customerService, ILibrarianService librarianService, ICartListService cartListService, IWishListService wishListService, IAuthorService authorService, IOrderService orderService) 
 		{
 			_currentCustomer = currentCustomer;
@@ -52,12 +43,12 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 
 		}
 
-		private void Save()
+		private async void Save()
 		{
 			// add data validation
 			if (string.IsNullOrEmpty(_oldPassword))
 			{
-				_customerService.Update(_currentCustomer);
+				await _customerService.Update(_currentCustomer);
 				MessageBox.Show("Succesfully updated");
 			}
 			else
@@ -67,7 +58,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 					if (!string.IsNullOrEmpty(_newPassword))
 					{
 						_currentCustomer.Password = HashService.GetMD5Hash(_newPassword);
-					_customerService.Update(_currentCustomer);
+                        await _customerService.Update(_currentCustomer);
 					MessageBox.Show("Succesfully updated");
 					}
 				}
@@ -113,6 +104,15 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 				OnPropertyChanged(nameof(NewPassword));
 			}
 		}
+		private readonly IBookService _bookService;
+		private readonly ICatalogService _catalogService;
+		private readonly ICustomerService _customerService;
+		private readonly ILibrarianService _librarianService;
+		private readonly IAuthorService _authorService;
+		private readonly IWishListService _wishListService;
+		private readonly ICartListService _cartListService;
+		private readonly IOrderService _orderService;
+		private readonly NavigationStore _navigationStore;
 		
 		public ICommand CancelCommand { get; }
 		public ICommand SaveCommand { get; }

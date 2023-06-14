@@ -101,9 +101,9 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 				SelectedAvatarPath != SelectAvatarImagePath;
 		}
 
-		private void Save()
+		private async void Save()
 		{
-		   _customerService.Create(new CustomerEntity
+            await _customerService.Create(new CustomerEntity
 	 		{
 				Login = Login,
 				Password = HashService.GetMD5Hash(Password),

@@ -13,22 +13,22 @@ namespace LaborProjectOOP.Services.CartListServices
 			_cartListRepository = cartListRepository;
 		}
 
-		public void Create(CartListEntity cartList)
+		public async Task Create(CartListEntity cartList)
 		{
-			_cartListRepository.Create(cartList);
+			await _cartListRepository.Create(cartList);
 		}
-		public bool Delete(int id)
+		public async Task<bool> Delete(int id)
 		{
-			CartListEntity dbRecord = _cartListRepository.Table
+			CartListEntity dbRecord =  await _cartListRepository.Table
 				.Where(c => c.Id == id)
 				.Include(c => c.Customer)
 				.Include(c => c.Book)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 			if (dbRecord == null)
 			{
 				return false;
 			}
-			_cartListRepository.Remove(dbRecord);
+			await _cartListRepository.Delete(dbRecord);
 			return true;
 		}
 		public List<CartListEntity> GetAll()
@@ -44,13 +44,13 @@ namespace LaborProjectOOP.Services.CartListServices
 			return dbRecord;
 		}
 
-		public List<CartListEntity> GetCartListByCustomerId(int id)
+		public async Task<List<CartListEntity>> GetCartListByCustomerId(int id)
 		{	
-			List<CartListEntity> dbRecord = _cartListRepository.Table
+			List<CartListEntity> dbRecord = await _cartListRepository.Table
 			.Where(c => c.CustomerFK == id)
 			.Include(c => c.Customer)
 			.Include(c => c.Book)
-			.ToList();
+			.ToListAsync();
 			if (dbRecord == null)
 			{
 				return null;
@@ -59,28 +59,28 @@ namespace LaborProjectOOP.Services.CartListServices
 		}
 
 
-		public CartListEntity GetById(int id)
+		public async Task<CartListEntity> GetById(int id)
 		{
-			CartListEntity dbRecord = _cartListRepository.Table
+			CartListEntity dbRecord = await _cartListRepository.Table
 				.Where(c => c.Id == id)
 				.Include(c => c.Customer)
 				.Include(c => c.Book)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 			if (dbRecord == null)
 			{
 				return null;
 			}
 			return dbRecord;
 		}
-		public bool Update(CartListEntity cartList)
+		public async Task<bool> Update(CartListEntity cartList)
 		{
 			try
 			{
-				CartListEntity dbRecord = _cartListRepository.Table
+				CartListEntity dbRecord = await _cartListRepository.Table
 				.Where(c => c.Id == cartList.Id)
 				.Include(c => c.Customer)
 				.Include(c => c.Book)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 				if (dbRecord == null)
 				{
 					return false;
@@ -88,7 +88,7 @@ namespace LaborProjectOOP.Services.CartListServices
 				dbRecord.CustomerFK = cartList.CustomerFK;
 				dbRecord.BookFK = cartList.BookFK;
 
-				_cartListRepository.SaveChanges();
+				await _cartListRepository.SaveChanges();
 				return true;
 			}
 			catch (Exception ex)
@@ -96,18 +96,17 @@ namespace LaborProjectOOP.Services.CartListServices
 				return false;
 			}
 		}
-		public CartListEntity GetByCustomerIdAndBookId(int customerId, int bookId)
+		public async Task<CartListEntity> GetByCustomerIdAndBookId(int customerId, int bookId)
 		{
-			CartListEntity dbRecord = _cartListRepository.Table
+			CartListEntity dbRecord = await _cartListRepository.Table
 				.Include(c => c.Customer)
 				.Include(c => c.Book)
 				.Where(c => c.Customer.Id == customerId && c.Book.Id == bookId)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 			if (dbRecord == null)
 			{
 				return null;
 			}
-
 			return dbRecord;
 		}
 		public bool CheckIfExist(int customerId, int bookId)
@@ -121,9 +120,7 @@ namespace LaborProjectOOP.Services.CartListServices
 			{
 				return false;
 			}
-
 			return true;
 		}
-
 	}
 }

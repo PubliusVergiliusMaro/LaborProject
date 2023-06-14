@@ -2,6 +2,7 @@
 using LaborProjectOOP.Dekstop.Commands;
 using LaborProjectOOP.Services.AuthorServices;
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -23,9 +24,9 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 				!string.IsNullOrEmpty(Surname);
 		}
 
-		private void AddAuthor()
+		private async void AddAuthor()
 		{
-			_authorService.Create(
+			await _authorService.Create(
 				new AuthorEntity()
 				{
 					Name = Name,

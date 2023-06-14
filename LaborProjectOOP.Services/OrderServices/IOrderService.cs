@@ -4,10 +4,10 @@ namespace LaborProjectOOP.Services.OrderHistoryServices
 {
 	public interface IOrderService
 	{
-		void Create(OrderEntity order);
-		bool Delete(int id);
+		Task Create(OrderEntity order);
+		Task<bool> Delete(int id);
 		List<OrderEntity> GetAll();
-		OrderEntity GetById(int id);
-		bool Update(OrderEntity order);
+		Task<OrderEntity> GetById(int id);
+		Task<bool> Update(OrderEntity order);
 	}
 }

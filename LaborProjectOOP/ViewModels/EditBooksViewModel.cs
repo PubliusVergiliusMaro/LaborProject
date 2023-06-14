@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -20,56 +21,60 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		{
 		     _bookService = bookService;
 			_catalogService = catalogService;
-			_books = new ObservableCollection<BookEntity>(_bookService.GetAll());
-			_catalogs = new ObservableCollection<CatalogEntity>(_catalogService.GetAll())
-			{
-				new CatalogEntity { Name = "None" }
-			};
+			bksFromDb = _bookService.GetAll();
+			ctlgsFromDb =  _catalogService.GetAll();
+            _books = new ObservableCollection<BookEntity>(bksFromDb);
+            _catalogs = new ObservableCollection<CatalogEntity>(ctlgsFromDb)
+            {
+                new CatalogEntity { Name = "None" }
+            };
 			_sortingTypes = new ObservableCollection<BooksSorting>(Enum.GetValues(typeof(BooksSorting)).Cast<BooksSorting>().ToArray());
-			
+
 			DeleteSelectedBookCommand = new DelegateCommand(DeleteSelectedBook, CanDelete);
 			AddBookToCatalogCommand = new DelegateCommand(AddBookToCatalog,CanAddToCatalog);
 			RefreshBooksCommand = new DelegateCommand(RefreshBooks);
-			//SelectedOrder = _orders.Where(c => c.Name == "None").FirstOrDefault();
 		}
-
+		
 		private void RefreshBooks()
 		{
-			Books.Clear();
-			foreach (BookEntity book in _bookService.GetAll())
-				Books.Add(book);
-		}
+            Books.Clear();
+            bksFromDb = _bookService.GetAll();
+            foreach (BookEntity book in bksFromDb)
+            {
+                _books.Add(book);
+            }
+        }
 
-		private bool CanAddToCatalog()
+        private bool CanAddToCatalog()
 		{
 			return SelectedBook!= null && SelectedCatalog!=null;
 		}
 
-		private void AddBookToCatalog()
+		private async void AddBookToCatalog()
 		{
 			if(SelectedCatalog.Name == "None")
 			{
 				SelectedBook.CatalogFK = null;
-				_bookService.Update(SelectedBook);
+				await _bookService.Update(SelectedBook);
 				MessageBox.Show("Succesfully added");
 			}
 			else
 			{
 				SelectedBook.CatalogFK = SelectedCatalog.Id;
-				_bookService.Update(SelectedBook);
+                await _bookService.Update(SelectedBook);
 				MessageBox.Show("Succesfully added");
 			}
 		}
-
 		private bool CanDelete()
 		{
 			return SelectedBook != null;
 		}
 
-		private void DeleteSelectedBook()
+		private async void DeleteSelectedBook()
 		{
-			_bookService.Delete(SelectedBook.Id);
-		}
+            await _bookService.Delete(SelectedBook.Id);
+            MessageBox.Show("Succesfully deleted. Update list.");
+        }
 
 		private ObservableCollection<BookEntity> _books;
 		public ICollection<BookEntity> Books=> _books;
@@ -99,7 +104,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 					{
 						case BooksSorting.None:
 							Books.Clear();
-							foreach (BookEntity book in _bookService.GetAll())
+							foreach (BookEntity book in bksFromDb)
 								Books.Add(book);
 							break;
 						default: break;
@@ -121,7 +126,9 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		}
 		private readonly IBookService _bookService;
 		private readonly ICatalogService _catalogService;
-		public ICommand DeleteSelectedBookCommand { get; }
+        private static ICollection<BookEntity> bksFromDb;
+        private static ICollection<CatalogEntity> ctlgsFromDb;
+        public ICommand DeleteSelectedBookCommand { get; }
 		public ICommand AddBookToCatalogCommand { get; }
 		public ICommand RefreshBooksCommand { get; }
 	}

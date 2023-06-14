@@ -2,6 +2,7 @@
 using LaborProjectOOP.Database.Models;
 using LaborProjectOOP.Dekstop.Commands;
 using LaborProjectOOP.Dekstop.NavigationServices.Stores;
+using LaborProjectOOP.Dekstop.ViewModels;
 using LaborProjectOOP.Services.AuthorServices;
 using LaborProjectOOP.Services.BookServices;
 using LaborProjectOOP.Services.CartListServices;
@@ -15,6 +16,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -22,21 +24,14 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 {
 	public class CustomerActivitiesViewModel : ViewModelBase
 	{
-		private readonly IBookService _bookService;
-		private readonly ICatalogService _catalogService;
-		private readonly ICustomerService _customerService;
-		private readonly ILibrarianService _librarianService;
-		private readonly IAuthorService _authorService;
-		private readonly IWishListService _wishListService;
-		private readonly ICartListService _cartListService;
-		private readonly IOrderService _orderService;
-		private readonly NavigationStore _navigationStore;
-		private readonly bool _IsItAdmin;
+		
+		//private static ICollection<>
 		public CustomerActivitiesViewModel(NavigationStore navigationStore, CustomerEntity currentCustomer,bool IsItAdmin,CustomerActivitiesInfoType customerActivitiesInfoType, ICatalogService catalogService, IBookService bookService, ICustomerService customerService, ILibrarianService librarianService, ICartListService cartListService, IWishListService wishListService, IAuthorService authorService, IOrderService orderService)
 		{
 			_IsItAdmin = IsItAdmin;
 			_currentCustomer = currentCustomer;
 			_customerService = customerService;
+			
 			_librarianService = librarianService;
 			_navigationStore = navigationStore;
 			_cartListService = cartListService;
@@ -46,45 +41,61 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			_authorService = authorService;
 			_orderService = orderService;
 			_books = new ObservableCollection<BookEntity>();
-			if (customerActivitiesInfoType == CustomerActivitiesInfoType.WishList)
-			{
-				List<WishListEntity> customerWishLists = wishListService.GetWishListByCustomerId(_currentCustomer.Id);
-				foreach (WishListEntity wishBook in customerWishLists)
-					_books.Add(wishBook.Book);
-			}
-			else
-			{
-				List<CartListEntity> customerCartLists = cartListService.GetCartListByCustomerId(_currentCustomer.Id);
-				foreach (CartListEntity cartBook in customerCartLists)
-					_books.Add(cartBook.Book);
-			}
-			
+			_customerActivitiesInfoType = customerActivitiesInfoType;
+			InitializeAsync();
+            _bookBlocks = new ObservableCollection<BookBlockInfoViewModel>();
+            EmptyWishList = Visibility.Hidden;
+			EmptyCartList = Visibility.Hidden;
+			BooksListVisible = Visibility.Visible;
+            BackCommand = new DelegateCommand(Back);
+			RefreshBooksCommand = new DelegateCommand(RefreshBooks);
+		}
+
+        private void RefreshBooks()
+        {
+			_books.Clear();
+			_bookBlocks.Clear();
+			InitializeAsync();
+            MessageBox.Show("Refreshed");
+        }
+
+        private async Task InitializeAsync()
+		{
+		    if (_customerActivitiesInfoType == CustomerActivitiesInfoType.WishList)
+            {
+                customerWishLists  = await _wishListService.GetWishListByCustomerId(_currentCustomer.Id);
+                foreach (WishListEntity wishBook in customerWishLists)
+                    _books.Add(wishBook.Book);
+            }
+            else
+            {
+                customerCartLists  = await _cartListService.GetCartListByCustomerId(_currentCustomer.Id);
+                foreach (CartListEntity cartBook in customerCartLists)
+                    _books.Add(cartBook.Book);
+            }
 			if (_books.Count > 0)
 			{
-				_bookBlocks = new ObservableCollection<BookBlockInfoViewModel>();
 				foreach (BookEntity book in _books)
 				{
-					_bookBlocks.Add(new BookBlockInfoViewModel(book, _currentCustomer));
+					_bookBlocks.Add(new BookBlockInfoViewModel(book, _currentCustomer, _customerActivitiesInfoType, _customerService, _wishListService, _cartListService));
 				}
-				EmptyWishList = Visibility.Hidden;
-				EmptyCartList = Visibility.Hidden;
 			}
 			else
 			{
-				if(customerActivitiesInfoType == CustomerActivitiesInfoType.WishList) 
+				if (_customerActivitiesInfoType == CustomerActivitiesInfoType.WishList)
 				{
 					EmptyWishList = Visibility.Visible;
 					EmptyCartList = Visibility.Hidden;
+					BooksListVisible = Visibility.Hidden;
 				}
 				else
 				{
 					EmptyWishList = Visibility.Hidden;
 					EmptyCartList = Visibility.Visible;
+					BooksListVisible = Visibility.Hidden;
 				}
 			}
-			BackCommand = new DelegateCommand(Back);
-		}
-
+		 }
 		private void Back() => _navigationStore.CurrentViewModel = new CustomerMainViewModel(_navigationStore, _currentCustomer,_IsItAdmin, _catalogService, _bookService, _customerService, _librarianService, _cartListService, _wishListService, _authorService, _orderService);
 		//{
 		//	MessageBox.Show("Go Back");
@@ -134,6 +145,32 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 				OnPropertyChanged(nameof(EmptyWishList));
 			}
 		}
-		public ICommand BackCommand { get; }
-	}
+        private readonly IBookService _bookService;
+        private readonly ICatalogService _catalogService;
+        private readonly ICustomerService _customerService;
+        private readonly ILibrarianService _librarianService;
+        private readonly IAuthorService _authorService;
+        private readonly IWishListService _wishListService;
+        private readonly ICartListService _cartListService;
+        private readonly IOrderService _orderService;
+        private readonly NavigationStore _navigationStore;
+        private readonly bool _IsItAdmin;
+       // private static ICollection<CustomerEntity> cstmrsFromDb;
+		private static ICollection<CartListEntity> customerCartLists;
+		private static ICollection<WishListEntity> customerWishLists;
+		private readonly CustomerActivitiesInfoType _customerActivitiesInfoType;
+		private Visibility _booksLsitVisibility;
+		public Visibility BooksListVisible 
+		{
+			get => _booksLsitVisibility;
+			set
+			{
+				_booksLsitVisibility = value;
+				OnPropertyChanged(nameof(BooksListVisible));
+			}
+		}
+        public ICommand BackCommand { get; }
+		public ICommand RefreshBooksCommand { get; }
+
+    }
 }

@@ -9,6 +9,7 @@ using System.Windows;
 using System;
 using LaborProjectOOP.Services.LibrarianServices;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LaborProjectOOP.Dekstop.ViewModels
 {
@@ -16,17 +17,16 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 	{
 		public EditLibrariansViewModel(ILibrarianService librarianService)
 		{
-
 			_librarianService = librarianService;
-			_librarians = new ObservableCollection<LibrarianEntity>(_librarianService.GetAll());
+            lbrnsFromDb = _librarianService.GetAll();
+            _librarians = new ObservableCollection<LibrarianEntity>(lbrnsFromDb);
 			_sortingTypes = new ObservableCollection<LibrariansSorting>(Enum.GetValues(typeof(LibrariansSorting)).Cast<LibrariansSorting>().ToArray());
-
 			DeleteSelectedLibrarianCommand = new DelegateCommand(DeleteSelectedCustomer, IsSelected);
 			MakeAnAdminCommand = new DelegateCommand(MakeAnAdminSelected, IsSelected);
 			RefreshLibrariansCommand = new DelegateCommand(RefreshLibrarians);
 		}
-
-		private void MakeAnAdminSelected()
+		
+		private async void MakeAnAdminSelected()
 		{
 			if (_selectedLibrarian.IsAdmin == true)
 			{
@@ -35,17 +35,18 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			else
 			{
 				_selectedLibrarian.IsAdmin = true;
-				_librarianService.Update(_selectedLibrarian);
+                await _librarianService.Update(_selectedLibrarian);
 				MessageBox.Show("Succesfully updated");
 			}
 		}
 
-		private void RefreshLibrarians()
+		private async void RefreshLibrarians()
 		{
 			Librarians.Clear();
-			foreach (LibrarianEntity librarian in _librarianService.GetAll())
-				Librarians.Add(librarian);
-		}
+            lbrnsFromDb = _librarianService.GetAll();
+            foreach (LibrarianEntity librarian in lbrnsFromDb)
+                _librarians.Add(librarian);
+        }
 
 		private bool IsSelected()
 		{
@@ -61,8 +62,8 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			else
 			{
 				_librarianService.Delete(SelectedLibrarian.Id);
-				MessageBox.Show("Succesfully deleted");
-			}
+                MessageBox.Show("Succesfully deleted. Update list.");
+            }
 		}
 
 		private ObservableCollection<LibrariansSorting> _sortingTypes;
@@ -81,11 +82,11 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 					switch (_selectedSortType)
 					{
 						case LibrariansSorting.None:
-							foreach (LibrarianEntity librarian in _librarianService.GetAll())
+							foreach (LibrarianEntity librarian in lbrnsFromDb)
 								Librarians.Add(librarian);
 							break;
 						case LibrariansSorting.AdminsOnly:
-							foreach (LibrarianEntity librarian in _librarianService.GetAll().Where(librarian => librarian.IsAdmin))
+							foreach (LibrarianEntity librarian in lbrnsFromDb.Where(librarian => librarian.IsAdmin))
 							{
 								Librarians.Add(librarian);
 							}
@@ -95,6 +96,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 				}
 			}
 		}
+		private static ICollection<LibrarianEntity> lbrnsFromDb;
 		private ObservableCollection<LibrarianEntity> _librarians;
 		public ICollection<LibrarianEntity> Librarians => _librarians;
 		private LibrarianEntity _selectedLibrarian;

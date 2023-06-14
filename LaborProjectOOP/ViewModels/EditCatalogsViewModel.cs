@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace LaborProjectOOP.Dekstop.ViewModels
 {
@@ -16,32 +18,34 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 	{
 		public EditCatalogsViewModel(ICatalogService catalogService)
 		{
-			
 			_catalogService = catalogService;
-			_catalogs = new ObservableCollection<CatalogEntity>(_catalogService.GetAll());
-			_sortingTypes = new ObservableCollection<CatalogsSorting>(Enum.GetValues(typeof(CatalogsSorting)).Cast<CatalogsSorting>().ToArray());
-
+		    ctlgsFromDb =  _catalogService.GetAll();
+            _sortingTypes = new ObservableCollection<CatalogsSorting>(Enum.GetValues(typeof(CatalogsSorting)).Cast<CatalogsSorting>().ToArray());
+            _catalogs = new ObservableCollection<CatalogEntity>(ctlgsFromDb);
+			
 			DeleteSelectedCatalogCommand = new DelegateCommand(DeleteSelectedCatalog, CanDelete);
 			RefreshCatalogsCommand = new DelegateCommand(RefreshCatalogs);
 			//SelectedOrder = _orders.Where(c => c.Name == "None").FirstOrDefault();
 		}
-
+		
 		private void RefreshCatalogs()
 		{
-			Catalogs.Clear();
-			foreach (CatalogEntity catalog in _catalogService.GetAll())
-				Catalogs.Add(catalog);
-		}
+            Catalogs.Clear();
+            ctlgsFromDb = _catalogService.GetAll();
+            foreach (CatalogEntity catalog in ctlgsFromDb)
+                Catalogs.Add(catalog);
+        }
 
 		private bool CanDelete()
 		{
 			return SelectedCatalog != null;
 		}
 
-		private void DeleteSelectedCatalog()
+		private async void DeleteSelectedCatalog()
 		{
-			_catalogService.Delete(SelectedCatalog.Id);
-		}
+			await _catalogService.Delete(SelectedCatalog.Id);
+            MessageBox.Show("Succesfully deleted. Update list.");
+        }
 
 		private ObservableCollection<CatalogsSorting> _sortingTypes;
 		public ICollection<CatalogsSorting> SortingTypes => _sortingTypes;
@@ -59,7 +63,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 					switch (_selectedSortType)
 					{
 						case CatalogsSorting.None:
-							foreach (CatalogEntity catalog in _catalogService.GetAll())
+							foreach (CatalogEntity catalog in ctlgsFromDb)
 								Catalogs.Add(catalog);
 							break;
 						default: break;
@@ -80,6 +84,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			}
 		}
 		private readonly ICatalogService _catalogService;
+		private static ICollection<CatalogEntity> ctlgsFromDb;
 		public ICommand DeleteSelectedCatalogCommand { get; }
 		public ICommand RefreshCatalogsCommand { get; }
 	}

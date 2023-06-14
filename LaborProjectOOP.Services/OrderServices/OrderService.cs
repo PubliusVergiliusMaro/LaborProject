@@ -13,21 +13,18 @@ namespace LaborProjectOOP.Services.OrderHistoryServices
 			_orderRepository = orderRepository;
 		}
 
-		public void Create(OrderEntity order)
+		public async Task Create(OrderEntity order) => await _orderRepository.Create(order);
+		public async Task<bool> Delete(int id)
 		{
-			_orderRepository.Create(order);
-		}
-		public bool Delete(int id)
-		{
-			OrderEntity dbRecord = _orderRepository.Table
+			OrderEntity dbRecord = await _orderRepository.Table
 				.Include(ord => ord.Customer)
 				.Include(ord => ord.Book)
-				.FirstOrDefault(order => order.Id == id);
+				.FirstOrDefaultAsync(order => order.Id == id);
 			if (dbRecord == null)
 			{
 				return false;
 			}
-			_orderRepository.Remove(dbRecord);
+			await _orderRepository.Delete(dbRecord);
 			return true;
 		}
 		public List<OrderEntity> GetAll()
@@ -42,28 +39,28 @@ namespace LaborProjectOOP.Services.OrderHistoryServices
 			}
 			return dbRecord;
 		}
-		public OrderEntity GetById(int id)
+		public async Task<OrderEntity> GetById(int id)
 		{
-			OrderEntity dbRecord = _orderRepository.Table
+			OrderEntity dbRecord = await _orderRepository.Table
 				.Include(ord => ord.Customer)
 					.Include(ord => ord.Book)
 				.Where(catalog => catalog.Id == id)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 			if (dbRecord == null)
 			{
 				return null;
 			}
 			return dbRecord;
 		}
-		public bool Update(OrderEntity order)
+		public async Task<bool> Update(OrderEntity order)
 		{
 			try
 			{
-				OrderEntity dbRecord = _orderRepository.Table
+				OrderEntity dbRecord = await _orderRepository.Table
 					.Include(ord => ord.Customer)
 					.Include(ord => ord.Book)
 					.Where(ord => ord.Id == order.Id)
-					.FirstOrDefault();
+					.FirstOrDefaultAsync();
 				if (dbRecord == null)
 				{
 					return false;
@@ -72,7 +69,7 @@ namespace LaborProjectOOP.Services.OrderHistoryServices
 				dbRecord.BookFK = order.BookFK;
 				dbRecord.CreatedOn = order.CreatedOn;
 				dbRecord.IsActual = order.IsActual;
-				_orderRepository.SaveChanges();
+				await _orderRepository.SaveChanges();
 				return true;
 			}
 			catch (Exception ex)

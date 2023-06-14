@@ -10,7 +10,10 @@ using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderHistoryServices;
 using LaborProjectOOP.Services.WishListServices;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace LaborProjectOOP.Dekstop.ViewModels
@@ -27,6 +30,10 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		private readonly IOrderService _orderService;
 		private readonly CustomerEntity _currentCustomer;
 		private readonly NavigationStore _navigationStore;
+
+		private static IEnumerable<CatalogEntity> _catalogs;
+		private static ICollection<AuthorEntity> _authors;
+		private static ICollection<CustomerEntity> _customers;
 		public AdminViewModel(NavigationStore navigationStore, CustomerEntity currentCustomer, ICatalogService catalogService, IBookService bookService, ICustomerService customerService, ILibrarianService librarianService, ICartListService cartListService, IWishListService wishListService, IAuthorService authorService, IOrderService orderService)
 		{
 			_currentCustomer = currentCustomer;
@@ -39,20 +46,23 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			_bookService = bookService;
 			_authorService = authorService;
 			_orderService = orderService;
-			EditCustomersViewModel = new EditCustomersViewModel(customerService);
-			EditBooksViewModel = new EditBooksViewModel(bookService, catalogService);
-			EditCatalogsViewModel = new EditCatalogsViewModel(catalogService);
-			EditLibrariansViewModel = new EditLibrariansViewModel(librarianService);
-			EditOrdersViewModel = new EditOrdersViewModel(orderService);
-			EditAuthorsViewModel = new EditAuthorsViewModel(authorService);
-			AddBookViewModel = new AddBookViewModel(authorService,bookService);
-			AddCatalogViewModel = new AddCatalogViewModel(catalogService);
-			AddAuthorViewModel = new AddAuthorViewModel(authorService);
-			AddLibrarianViewModel = new AddLibrarianViewModel(librarianService);
-			BackCommand = new DelegateCommand(Back);
-		}
+			
+				EditCustomersViewModel = new EditCustomersViewModel( customerService);
+				EditBooksViewModel = new EditBooksViewModel(bookService, catalogService);
+				EditCatalogsViewModel = new EditCatalogsViewModel(catalogService);
+				EditLibrariansViewModel = new EditLibrariansViewModel(librarianService);
+				EditOrdersViewModel = new EditOrdersViewModel(orderService);
+				EditAuthorsViewModel = new EditAuthorsViewModel(authorService);
+				AddBookViewModel = new AddBookViewModel( authorService, bookService);
+				AddCatalogViewModel = new AddCatalogViewModel(catalogService);
+				AddAuthorViewModel = new AddAuthorViewModel(authorService);
+				AddLibrarianViewModel = new AddLibrarianViewModel(librarianService);
+				BackCommand = new DelegateCommand(Back);
+        }
 
-		private void Back() => _navigationStore.CurrentViewModel = new AdminMenuViewModel(_navigationStore, _currentCustomer, _catalogService, _bookService, _customerService, _librarianService, _cartListService, _wishListService, _authorService, _orderService);
+       
+
+        private void Back() => _navigationStore.CurrentViewModel = new AdminMenuViewModel(_navigationStore, _currentCustomer, _catalogService, _bookService, _customerService, _librarianService, _cartListService, _wishListService, _authorService, _orderService);
 		
 		public EditCustomersViewModel EditCustomersViewModel { get; }
 		public EditBooksViewModel EditBooksViewModel { get; }
@@ -65,6 +75,20 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		public AddAuthorViewModel AddAuthorViewModel { get; }
 		public AddLibrarianViewModel AddLibrarianViewModel { get; }
 
-		public ICommand BackCommand { get; }
-	}
+		private Visibility _allDataLoaded;
+		public Visibility AllDataLoaded
+		{
+			get => _allDataLoaded;
+			set
+			{
+				//LoadData();
+				_allDataLoaded = value;
+				OnPropertyChanged(nameof(AllDataLoaded));
+			}
+		}
+
+        public ICommand BackCommand { get; }
+		public ICommand LoadDataCommand { get; }
+
+    }
 }

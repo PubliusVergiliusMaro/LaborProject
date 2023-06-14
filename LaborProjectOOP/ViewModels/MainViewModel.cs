@@ -17,7 +17,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		private readonly NavigationStore _navigationStore;
 		public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
-		public MainViewModel(NavigationStore navigationStore)//ICustomerService customerService, ILibrarianService librarianService, IAuthorService authorService,ICatalogService catalogService,IBookService bookService,ICartListService cartListService,IWishListService wishListService, IOrderService orderService)//NavigationStore _navigationStore)
+		public MainViewModel(NavigationStore navigationStore)
 		{
 			_navigationStore = navigationStore;
 			_navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;

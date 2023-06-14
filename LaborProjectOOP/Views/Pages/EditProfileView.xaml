@@ -6,26 +6,42 @@
              xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="ItemsControl.FontFamily" Value="Arial"/>
+            <Setter Property="ItemsControl.FontSize" Value="20"/>
+        </Style>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="ItemsControl.Width" Value="200"/>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="ItemsControl.Height" Value="100"/>
+            <Setter Property="ItemsControl.Width" Value="200"/>
+            <Setter Property="ItemsControl.Background" Value="blue"/>
+            <Setter Property="ItemsControl.Foreground" Value="white"/>
+            <Setter Property="ItemsControl.FontSize" Value="30"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid x:Name="newPageGrid" Visibility="Hidden">
             <Frame x:Name="pagesFrame" NavigationUIVisibility="Hidden"/>
         </Grid>
         <Grid x:Name="editProfilePage" Visibility="Visible">
             <StackPanel Orientation="Vertical" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label>Login</Label>
-                <TextBox x:Name="loginTextBox" Text="{Binding CurrentCustomer.Login,UpdateSourceTrigger=PropertyChanged}" Width="200"></TextBox>
-                <Label>Email</Label>
-                <TextBox x:Name="emailTextBox" Width="200" Text="{Binding CurrentCustomer.Email,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                <Label Content="Phone"/>
-                <TextBox x:Name="phoneTextBox" Width="200" Text="{Binding CurrentCustomer.Phone,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                <Label>Old Password</Label>
-                <TextBox x:Name="oldPasswordTextBox" Text="{Binding OldPassword,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                <Label>New Password</Label>
-                <TextBox x:Name="newPasswordTextBox" Text="{Binding NewPassword,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                <Button Content="Save" Height="30" Width="70" Margin="0 30 0 0" Command="{Binding SaveCommand}"></Button>
+                <Label Style="{StaticResource LabelStyle}">Login</Label>
+                <TextBox x:Name="loginTextBox" Text="{Binding CurrentCustomer.Login,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}"></TextBox>
+                <Label Style="{StaticResource LabelStyle}">Email</Label>
+                <TextBox x:Name="emailTextBox" Width="200" Text="{Binding CurrentCustomer.Email,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}"></TextBox>
+                <Label Style="{StaticResource LabelStyle}" Content="Phone"/>
+                <TextBox x:Name="phoneTextBox" Width="200" Text="{Binding CurrentCustomer.Phone,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}"></TextBox>
+                <Label Style="{StaticResource LabelStyle}">Old Password</Label>
+                <TextBox x:Name="oldPasswordTextBox" Text="{Binding OldPassword,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}"></TextBox>
+                <Label Style="{StaticResource LabelStyle}">New Password</Label>
+                <TextBox x:Name="newPasswordTextBox" Text="{Binding NewPassword,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}"></TextBox>
+                <Button Style="{StaticResource ButtonStyle}" Content="Save" Margin="0 30 0 0" Command="{Binding SaveCommand}" Background="#FF0050DE"></Button>
 
             </StackPanel>
-            <Button Height="30" Width="70" Margin="84,387,646,33" Command="{Binding CancelCommand}">Cancel</Button>
+            <Button Margin="84,387,646,33" Style="{StaticResource ButtonStyle}" Command="{Binding CancelCommand}">Cancel</Button>
         </Grid>
     </Grid>
 </UserControl>

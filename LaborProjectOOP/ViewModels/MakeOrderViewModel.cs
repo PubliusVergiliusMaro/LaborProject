@@ -54,15 +54,15 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			MakeOrderCommand = new DelegateCommand(MakeOrder);
 		}
 
-		private void MakeOrder()
+		private async void MakeOrder()
 		{
-			_bookService.PurchaseBooks(_currentCustomer.Id, _books);
+            await _bookService.PurchaseBooks(_currentCustomer.Id, _books);
 			MessageBox.Show("Succesfuly created");
 			foreach (CartListEntity customerCart in _currentCustomer.CartList.ToList())
 			{
-				_cartListService.Delete(customerCart.Id);
+                await _cartListService.Delete(customerCart.Id);
 			}
-			_customerService.Update(_currentCustomer);
+            await _customerService.Update(_currentCustomer);
 			_navigationStore.CurrentViewModel = new CustomerMainViewModel(_navigationStore, _currentCustomer, false, _catalogService, _bookService, _customerService, _librarianService, _cartListService, _wishListService, _authorService, _orderService);
 
 		}

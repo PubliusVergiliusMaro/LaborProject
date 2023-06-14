@@ -15,9 +15,9 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			CreateLibrarian = new DelegateCommand(Create, CanCreate);
 		}
 
-		private void Create()
+		private async void Create()
 		{
-			_librarianService.Create(new LibrarianEntity
+			await _librarianService.Create(new LibrarianEntity
 			{
 				Login = Login,
 				Password = Password,

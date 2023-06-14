@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -17,27 +18,34 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		public EditAuthorsViewModel(IAuthorService authorService)
 		{
 			_authorService = authorService;
-			_authors = new ObservableCollection<AuthorEntity>(_authorService.GetAll());
+			athrsFromDb = _authorService.GetAll();
+			_authors = new ObservableCollection<AuthorEntity>(athrsFromDb);
 			_sortingTypes = new ObservableCollection<AuthorsSorting>(Enum.GetValues(typeof(AuthorsSorting)).Cast<AuthorsSorting>().ToArray());
+			
 			DeleteSelectedAuthorCommand = new DelegateCommand(DeleteSelectedAuthor,CanDelete);
-			RefreshAuthorsCommand = new DelegateCommand(RefreshAuthors);
+			RefreshAuthorsCommand = new DelegateCommand(RefreshAuthors);	
 		}
-
+		
 		private void RefreshAuthors()
-		{
-			_authors = new ObservableCollection<AuthorEntity>(_authorService.GetAll());
-		}
+		{  
+            _authors.Clear();
+            athrsFromDb = _authorService.GetAll();
+			foreach(AuthorEntity author in athrsFromDb)
+			{
+				_authors.Add(author);
+			}
+        }
 
 		private bool CanDelete()
 		{
 			return SelectedAuthor != null;
 		}
 
-		private void DeleteSelectedAuthor()
+		private async void DeleteSelectedAuthor()
 		{
-			_authorService.Delete(SelectedAuthor.Id);
-			MessageBox.Show("Succesfully deleted");
-		}
+            await _authorService.Delete(SelectedAuthor.Id);
+            MessageBox.Show("Succesfully deleted. Update list.");
+        }
 
 		private ObservableCollection<AuthorEntity> _authors;
 		public ICollection<AuthorEntity> Authors => _authors;
@@ -63,25 +71,21 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			{
 				if (_selectedSortType != value)
 				{
-					//switch (selectedSort)
-					//	{
-					//		case AuthorsSorting.None:
-					//			authorsListDataGrid.Items.Clear();
-					//			foreach (AuthorEntity author in authors)
-					//				authorsListDataGrid.Items.Add(author);
-					//			break;
-					//		default: break;
-					//	}
-					_selectedSortType = value;
+                    _selectedSortType = value;
 					OnPropertyChanged(nameof(SelectedSortType));
 					Authors.Clear();
-					foreach (AuthorEntity author in _authorService.GetAll())
+                    switch (_selectedSortType)
 					{
-						Authors.Add(author);
+						case AuthorsSorting.None:
+							foreach (AuthorEntity author in athrsFromDb)
+								Authors.Add(author);
+							break;
+						default: break;
 					}
 				}
 			}
 		}
+		private static ICollection<AuthorEntity> athrsFromDb;
 		public ICommand DeleteSelectedAuthorCommand { get; }
 		public ICommand RefreshAuthorsCommand { get; }
 	}

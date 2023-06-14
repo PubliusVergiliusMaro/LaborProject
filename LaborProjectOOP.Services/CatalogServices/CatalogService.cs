@@ -13,25 +13,24 @@ namespace LaborProjectOOP.Services.CatalogServices
 			_catalogRepository = catalogRepository;
 		}
 
-		public void Create(CatalogEntity catalog)
+		public async Task Create(CatalogEntity catalog)=> await _catalogRepository.Create(catalog);
+		
+		public async Task<bool> Delete(int id)
 		{
-			_catalogRepository.Create(catalog);
-		}
-		public bool Delete(int id)
-		{
-			CatalogEntity dbRecord = _catalogRepository.Table
+			CatalogEntity dbRecord = await _catalogRepository.Table
 				.Include(c => c.Books)
-				.FirstOrDefault(b => b.Id == id);
+				.FirstOrDefaultAsync(b => b.Id == id);
 			if (dbRecord == null)
 			{
 				return false;
 			}
-			_catalogRepository.Remove(dbRecord);
+			await _catalogRepository.Delete(dbRecord);
 			return true;
 		}
-		public List<CatalogEntity> GetAll()
+		public  List<CatalogEntity> GetAll()
 		{
 			List<CatalogEntity> dbRecord = _catalogRepository.Table
+				 .Include(c => c.Books)
 				 .ToList();
 			if (dbRecord == null)
 			{
@@ -39,26 +38,26 @@ namespace LaborProjectOOP.Services.CatalogServices
 			}
 			return dbRecord;
 		}
-		public CatalogEntity GetById(int id)
+		public async Task<CatalogEntity> GetById(int id)
 		{
-			CatalogEntity dbRecord = _catalogRepository.Table
+			CatalogEntity dbRecord = await _catalogRepository.Table
 				.Where(catalog => catalog.Id == id)
 				.Include(c => c.Books)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 			if (dbRecord == null)
 			{
 				return null;
 			}
 			return dbRecord;
 		}
-		public bool Update(CatalogEntity catalog)
+		public async Task<bool> Update(CatalogEntity catalog)
 		{
 			try
 			{
-				CatalogEntity dbRecord = _catalogRepository.Table
+				CatalogEntity dbRecord = await _catalogRepository.Table
 					.Where(catalogus => catalogus.Id == catalog.Id)
 					.Include(c => c.Books)
-					.FirstOrDefault();
+					.FirstOrDefaultAsync();
 				if (dbRecord == null)
 				{
 					return false;
@@ -66,7 +65,7 @@ namespace LaborProjectOOP.Services.CatalogServices
 				dbRecord.Name = catalog.Name;
 				dbRecord.Books = catalog.Books;
 
-				_catalogRepository.SaveChanges();
+				await _catalogRepository.SaveChanges();
 				return true;
 			}
 			catch (Exception ex)
@@ -75,9 +74,9 @@ namespace LaborProjectOOP.Services.CatalogServices
 			}
 		}
 
-		public List<CatalogEntity> GetCatalogs() { return null; }
+		public async Task<List<CatalogEntity>> GetCatalogsFromFIle() { return null; }
 		//=> JsonConvert.DeserializeObject<List<CatalogEntity>>(File.ReadAllText(Constants.Constants.CATALOG_FILE_PATH));
-		public void SaveCatalogs(List<CatalogEntity> catalogs) { }
+		public async Task SaveCatalogsToFile(List<CatalogEntity> catalogs) { }
 		//=> File.WriteAllText(Constants.Constants.CATALOG_FILE_PATH, JsonConvert.SerializeObject(catalogs));
 	}
 }

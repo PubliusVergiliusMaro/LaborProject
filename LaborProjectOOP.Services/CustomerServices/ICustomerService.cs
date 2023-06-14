@@ -9,12 +9,12 @@ namespace LaborProjectOOP.Services.CustomerServices
 {
 	public interface ICustomerService
 	{
-		void Create(CustomerEntity customer);
-		bool Delete(int id);
+		Task Create(CustomerEntity customer);
+		Task<bool> Delete(int id);
 		List<CustomerEntity> GetAll();
-		CustomerEntity GetById(int id);
-		bool Update(CustomerEntity customer);
-		List<CustomerEntity> GetCustomers();
-		void SaveCustomers(List<CustomerEntity> customers);
+		Task<CustomerEntity> GetById(int id);
+		Task<bool> Update(CustomerEntity customer);
+		Task<List<CustomerEntity>> GetCustomersFromFile();
+		Task SaveCustomersToFile(List<CustomerEntity> customers);
 	}
 }

@@ -20,9 +20,9 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			return !string.IsNullOrEmpty(Name);
 		}
 
-		private void CreateCatalog()
+		private async void CreateCatalog()
 		{
-			_catalogService.Create(new CatalogEntity
+			await _catalogService.Create(new CatalogEntity
 			{
 				Name = Name,
 			});

@@ -14,13 +14,11 @@ namespace LaborProjectOOP.Services.CustomerServices
 			_customerRepository = customerRepository;
 		}
 
-		public void Create(CustomerEntity customer)
+		public async Task Create(CustomerEntity customer)=>	await _customerRepository.Create(customer);
+		
+		public async Task<bool> Delete(int id)
 		{
-			_customerRepository.Create(customer);
-		}
-		public bool Delete(int id)
-		{
-			CustomerEntity dbRecord = _customerRepository.Table
+			CustomerEntity dbRecord = await _customerRepository.Table
 				.Where(customer => customer.Id == id)
 				.Include(customer => customer.WishList)
 					.ThenInclude(order => order.Book)
@@ -31,12 +29,12 @@ namespace LaborProjectOOP.Services.CustomerServices
 				.Include(customer => customer.Orders)
 					.ThenInclude(order => order.Book)
 						.ThenInclude(book => book.Author)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 			if (dbRecord == null)
 			{
 				return false;
 			}
-			_customerRepository.Remove(dbRecord);
+			await _customerRepository.Delete(dbRecord);
 			return true;
 		}
 		public List<CustomerEntity> GetAll()
@@ -52,9 +50,9 @@ namespace LaborProjectOOP.Services.CustomerServices
 			}
 			return dbRecord;
 		}
-		public CustomerEntity GetById(int id)
+		public async Task<CustomerEntity> GetById(int id)
 		{
-			CustomerEntity dbRecord = _customerRepository.Table
+			CustomerEntity dbRecord = await _customerRepository.Table
 				.Where(customer => customer.Id == id)
 				.Include(customer => customer.WishList)
 					.ThenInclude(order => order.Book)
@@ -65,23 +63,23 @@ namespace LaborProjectOOP.Services.CustomerServices
 				.Include(customer => customer.Orders)
 					.ThenInclude(order => order.Book)
 						.ThenInclude(book => book.Author)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 			if (dbRecord == null)
 			{
 				return null;
 			}
 			return dbRecord;
 		}
-		public bool Update(CustomerEntity customer)
+		public async Task<bool> Update(CustomerEntity customer)
 		{
 			try
 			{
-				CustomerEntity dbRecord = _customerRepository.Table
+				CustomerEntity dbRecord = await _customerRepository.Table
 					.Where(catalogus => catalogus.Id == customer.Id)
 					.Include(customer => customer.WishList)
 					.Include(customer => customer.CartList)
 					.Include(customer => customer.Orders)
-					.FirstOrDefault();
+					.FirstOrDefaultAsync();
 				if (dbRecord == null)
 				{
 					return false;
@@ -94,7 +92,7 @@ namespace LaborProjectOOP.Services.CustomerServices
 				dbRecord.Orders = customer.Orders;
 				dbRecord.WishList = customer.WishList;
 				dbRecord.CartList = customer.CartList;
-				_customerRepository.SaveChanges();
+				await _customerRepository.SaveChanges();
 				return true;
 			}
 			catch (Exception ex)
@@ -103,9 +101,9 @@ namespace LaborProjectOOP.Services.CustomerServices
 			}
 		}
 
-		public List<CustomerEntity> GetCustomers() =>
+		public async Task<List<CustomerEntity>> GetCustomersFromFile() =>
 			JsonConvert.DeserializeObject<List<CustomerEntity>>(File.ReadAllText(Constants.Constants.Constants.CUSTOMER_FILE_PATH));
-		public void SaveCustomers(List<CustomerEntity> customers) =>
+		public async Task SaveCustomersToFile(List<CustomerEntity> customers) =>
 			File.WriteAllText(Constants.Constants.Constants.CUSTOMER_FILE_PATH, JsonConvert.SerializeObject(customers));
 	}
 }

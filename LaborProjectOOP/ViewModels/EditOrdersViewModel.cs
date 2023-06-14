@@ -9,6 +9,7 @@ using System.Windows;
 using System;
 using LaborProjectOOP.Services.OrderHistoryServices;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LaborProjectOOP.Dekstop.ViewModels
 {
@@ -16,40 +17,42 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 	{
 		public EditOrdersViewModel(IOrderService orderService)
 		{
-
 			_orderService = orderService;
-			_orders = new ObservableCollection<OrderEntity>(_orderService.GetAll());
+            ordrsFromDb = _orderService.GetAll();
+            _orders = new ObservableCollection<OrderEntity>(ordrsFromDb);	
 			_sortingTypes = new ObservableCollection<OrdersSorting>(Enum.GetValues(typeof(OrdersSorting)).Cast<OrdersSorting>().ToArray());
 
 			DeleteSelectedOrderCommand = new DelegateCommand(DeleteSelectedOrder, IsSelected);
 			MakeNotActiveCommand = new DelegateCommand(MakeNotActiveAdminSelected, IsSelected);
 			RefreshOrdersCommand = new DelegateCommand(RefreshLibrarians);
 		}
-
-		private void MakeNotActiveAdminSelected()
+       
+      
+		private async void MakeNotActiveAdminSelected()
 		{
 			_selectedOrder.IsActual = false;
-			_orderService.Update(_selectedOrder);
+            await _orderService.Update(_selectedOrder);
 			MessageBox.Show("Succesfully make not active");
 		}
 
-		private void RefreshLibrarians()
+		private  void RefreshLibrarians()
 		{
-			Orders.Clear();
-			foreach (OrderEntity order in _orderService.GetAll())
-				Orders.Add(order);
-		}
+            Orders.Clear();
+            ordrsFromDb = _orderService.GetAll();
+            foreach (OrderEntity order in ordrsFromDb)
+                _orders.Add(order);
+        }
 
 		private bool IsSelected()
 		{
 			return SelectedOrder != null;
 		}
 
-		private void DeleteSelectedOrder()
+		private async void DeleteSelectedOrder()
 		{
-			_orderService.Delete(SelectedOrder.Id);
-			MessageBox.Show("Succesfully deleted");
-		}
+			await _orderService.Delete(SelectedOrder.Id);
+            MessageBox.Show("Succesfully deleted. Update list.");
+        }
 
 		private ObservableCollection<OrdersSorting> _sortingTypes;
 		public ICollection<OrdersSorting> SortingTypes => _sortingTypes;
@@ -67,11 +70,11 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 					switch (_selectedSortType)
 					{
 						case OrdersSorting.None:
-							foreach (OrderEntity order in _orderService.GetAll())
+							foreach (OrderEntity order in ordrsFromDb)
 								Orders.Add(order);
 							break;
 						case OrdersSorting.ActualOnly:
-							foreach (OrderEntity order in _orderService.GetAll().Where(order => order.IsActual))
+							foreach (OrderEntity order in ordrsFromDb.Where(order => order.IsActual))
 							{
 								Orders.Add(order);
 							}
@@ -94,6 +97,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			}
 		}
 		private readonly IOrderService _orderService;
+		private static ICollection<OrderEntity> ordrsFromDb;
 		public ICommand DeleteSelectedOrderCommand { get; }
 		public ICommand MakeNotActiveCommand { get; }
 		public ICommand RefreshOrdersCommand { get; }

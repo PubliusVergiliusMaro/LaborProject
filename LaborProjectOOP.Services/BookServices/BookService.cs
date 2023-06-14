@@ -16,30 +16,27 @@ namespace LaborProjectOOP.Services.BookServices
 			_orderRepository = orderRepository;
 		}
 
-		public void Create(BookEntity book)
-		{
-			_bookRepository.Create(book);
+		public async Task Create(BookEntity book) => await _bookRepository.Create(book);
 
-		}
-		public bool Delete(int id)
+		public async Task<bool> Delete(int id)
 		{
-			BookEntity dbRecord = _bookRepository.Table
+			BookEntity dbRecord = await _bookRepository.Table
 				.Include(b => b.Author)
 				.Include(b => b.Catalog)
 				.Include(b => b.WishLists)
 				.Include(b => b.CartLists)
 				.Include(b => b.OrderList)
-				.FirstOrDefault(b => b.Id == id);
+				.FirstOrDefaultAsync(b => b.Id == id);
 			if (dbRecord == null)
 			{
 				return false;
 			}
-			_bookRepository.Remove(dbRecord);
+			await _bookRepository.Delete(dbRecord);
 			return true;
 		}
 		public List<BookEntity> GetAll()
 		{
-			List<BookEntity> dbRecord = _bookRepository.Table
+			List<BookEntity> dbRecord =  _bookRepository.Table
 				.Include(b => b.Author)
 				.Include(b => b.Catalog)
 				.Include(b => b.WishLists)
@@ -52,33 +49,33 @@ namespace LaborProjectOOP.Services.BookServices
 			}
 			return dbRecord;
 		}
-		public BookEntity GetById(int id)
+		public async Task<BookEntity> GetById(int id)
 		{
-			BookEntity dbRecord = _bookRepository.Table
+			BookEntity dbRecord = await _bookRepository.Table
 					.Include(b => b.Author)
 					.Include(b => b.Catalog)
 					.Include(b => b.WishLists)
 					.Include(b => b.CartLists)
 					.Include(b => b.OrderList)
-					.FirstOrDefault(book => book.Id == id);
+					.FirstOrDefaultAsync(book => book.Id == id);
 			if (dbRecord == null)
 			{
 				return null;
 			}
 			return dbRecord;
 		}
-		public bool Update(BookEntity book)
+		public async Task<bool> Update(BookEntity book)
 		{
 			try
 			{
-				BookEntity dbRecord = _bookRepository.Table
+				BookEntity dbRecord = await _bookRepository.Table
 					.Where(b => b.Id == book.Id)
 					.Include(b => b.Author)
 					.Include(b => b.Catalog)
 					.Include(b => b.WishLists)
 					.Include(b => b.CartLists)
 					.Include(b => b.OrderList)
-					.FirstOrDefault();
+					.FirstOrDefaultAsync();
 				if (dbRecord == null)
 				{
 					return false;
@@ -86,13 +83,12 @@ namespace LaborProjectOOP.Services.BookServices
 				dbRecord.Title = book.Title;
 				dbRecord.Description = book.Description;
 				dbRecord.Price = book.Price;
-				//dbRecord.IsTaken = book.IsTaken;
 				dbRecord.Author = book.Author;
 				dbRecord.AuthorFK = book.AuthorFK;
 				dbRecord.CatalogFK = book.CatalogFK;
 				dbRecord.ImagePath = book.ImagePath;
 					
-				_bookRepository.SaveChanges();
+				await _bookRepository.SaveChanges();
 				return true;
 			}
 			catch (Exception ex)
@@ -100,19 +96,14 @@ namespace LaborProjectOOP.Services.BookServices
 				return false;
 			}
 		}
-		public bool AddBookToCatalog(int bookId, int CatalogId)
+		public async Task PurchaseBooks(int CustomerId, ICollection<BookEntity> bookEntities)
 		{
-
-			return true;
-		}
-		public void PurchaseBooks(int CustomerId, ICollection<BookEntity> bookEntities)
-		{
-			CustomerEntity dbRecord = _customerRepository.Table
+			CustomerEntity dbRecord = await _customerRepository.Table
 				.Where(customer => customer.Id == CustomerId)
 				.Include(b => b.WishList)
 				.Include(b => b.CartList)
 				.Include(b => b.Orders)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();
 			if (dbRecord != null)
 			{
 				foreach (BookEntity bookEntity in bookEntities) 
@@ -124,7 +115,7 @@ namespace LaborProjectOOP.Services.BookServices
 						CreatedOn = DateTime.UtcNow,
 						IsActual = true
 					};
-					_orderRepository.Create(order);
+					await _orderRepository.Create(order);
 				}
 			}
 		}

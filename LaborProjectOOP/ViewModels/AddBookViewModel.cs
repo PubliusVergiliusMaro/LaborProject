@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -19,24 +20,37 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		public AddBookViewModel(IAuthorService authorService, IBookService bookService)
 		{
 			_authorService = authorService;
-			_bookService = bookService;
+			_bookService = bookService;          
+            athrFromDb = _authorService.GetAll();
+            _authors = new ObservableCollection<AuthorEntity>(athrFromDb);
 			_genres = new ObservableCollection<BookGenreTypes>(Enum.GetValues(typeof(BookGenreTypes)).Cast<BookGenreTypes>().ToArray());
-			_authors = new ObservableCollection<AuthorEntity>(_authorService.GetAll());
+			BookImagePath = DefaultImagePath;
 			_selectedGenres = new ObservableCollection<BookGenreTypes>();
 			AddImageCommand = new DelegateCommand(AddImage);
-			AddBookCommand = new DelegateCommand(AddBook, CanAddBook);
-			AddGenreCommand = new DelegateCommand(AddGenre, CanAddGenre);
-			BookImagePath = DefaultImagePath;
-		}
+            AddBookCommand = new DelegateCommand(AddBook, CanAddBook);
+            AddGenreCommand = new DelegateCommand(AddGenre, CanAddGenre);
+			UpdateAuthorsCommand = new DelegateCommand(UpdateAuthors);
 
-		private void AddGenre()
+        }
+
+        private void UpdateAuthors()
+        {
+            athrFromDb = _authorService.GetAll();
+			_authors.Clear();
+			foreach(AuthorEntity author in athrFromDb)
+			{
+				_authors.Add(author);
+			}
+        }
+        private void AddGenre()
 		{
 			SelectedGenres.Add(SelectedGenre);
 		}
 
 		private bool CanAddGenre()
 		{
-			return !string.IsNullOrEmpty(SelectedGenre.ToString()) &&
+			return 
+				!string.IsNullOrEmpty(SelectedGenre.ToString()) &&
 				!SelectedGenres.Contains(SelectedGenre);
 		}
 
@@ -51,9 +65,9 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 				BookImagePath != DefaultImagePath;
 		}
 
-		private void AddBook()
+		private async void AddBook()
 		{
-			_bookService.Create(
+		    await _bookService.Create(
 				new BookEntity
 				{
 					Title = Title,
@@ -69,9 +83,8 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			Price= 0;
 			BookImagePath = DefaultImagePath;
 			SelectedAuthor = null;
-
+			_selectedGenre = BookGenreTypes.None;
 			_selectedGenres.Clear();
-			_selectedGenres = new ObservableCollection<BookGenreTypes>();
 		}
 
 		private void AddImage()
@@ -162,10 +175,13 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		
 		private static ObservableCollection<BookGenreTypes> _selectedGenres;
 		public static ICollection<BookGenreTypes> SelectedGenres => _selectedGenres;
-		public ICommand AddBookCommand { get; }
-		public ICommand AddImageCommand { get; }
-		public ICommand AddGenreCommand { get; }
-		private readonly IBookService _bookService;
+		private static ICollection<AuthorEntity> athrFromDb;
+		public ICommand AddBookCommand { get; private set; }
+		public ICommand AddImageCommand { get; private set; }
+		public ICommand AddGenreCommand { get; private set; }
+        public ICommand UpdateAuthorsCommand { get; private set; }
+
+        private readonly IBookService _bookService;
 		private readonly IAuthorService _authorService;
 	}
 }
