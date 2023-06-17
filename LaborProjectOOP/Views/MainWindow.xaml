@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
         xmlns:vms="clr-namespace:LaborProjectOOP.Dekstop.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1250">
+        Title="Library" Height="800" Width="1250">
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:LoginViewModel}" >

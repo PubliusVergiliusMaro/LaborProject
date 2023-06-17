@@ -6,6 +6,13 @@
              xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
              mc:Ignorable="d" 
             d:DesignHeight="800" d:DesignWidth="1250">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="ItemsControl.Background" Value="Black"/>
+            <Setter Property="ItemsControl.Foreground" Value="White"/>
+            <Setter Property="ItemsControl.FontSize" Value="13"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -55,11 +62,11 @@
             </StackPanel>
             <StackPanel Orientation="Vertical" Grid.Row="2">
                 <Label HorizontalAlignment="Center">Choose Catalog</Label>
-                <ComboBox x:Name="catalogsComboBox" ItemsSource="{Binding EditBooksViewModel.Catalogs,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding EditBooksViewModel.SelectedCatalog,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath = "Name" Width="300" Height="30"></ComboBox>
-                <Button x:Name="addBookToCatalog" Width="250" Height="35" Margin="0 50 0 0" Command="{Binding EditBooksViewModel.AddBookToCatalogCommand}">
+                <ComboBox x:Name="catalogsComboBox" ItemsSource="{Binding EditBooksViewModel.Catalogs,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding EditBooksViewModel.SelectedCatalog,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath = "Name" Width="250" Height="30"></ComboBox>
+                <Button Style="{StaticResource ButtonStyle}" x:Name="addBookToCatalog" Width="250" Height="35" Margin="0 20 0 0" Command="{Binding EditBooksViewModel.AddBookToCatalogCommand}">
                     Add selected Book to the selected Catalog
                 </Button>
-                <Button Margin="0 50 0 0" Width="150" Height="30" Command="{Binding EditBooksViewModel.DeleteSelectedBookCommand}">Delete Selected Book</Button>
+                <Button Style="{StaticResource ButtonStyle}" FontSize="20" Margin="0 20 0 0" Width="250" Height="30" Command="{Binding EditBooksViewModel.DeleteSelectedBookCommand}">Delete Selected Book</Button>
             </StackPanel>
 
         </Grid>

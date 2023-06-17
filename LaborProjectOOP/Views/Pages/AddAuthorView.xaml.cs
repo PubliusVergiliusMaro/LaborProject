@@ -19,59 +19,9 @@ namespace LaborProjectOOP.Dekstop.Views.Pages
 	/// </summary>
 	public partial class AddAuthorView : UserControl
 	{
-		//// Лишні прибрати
-		//private readonly IBookService _bookService;
-		//private readonly ICatalogService _orderService;
-		//private readonly ICustomerService _orderService;
-		//private readonly ILibrarianService _orderService;
-		//private readonly IAuthorService _authorService;
-		//private readonly IWishListService _wishListService;
-		//private readonly ICartListService _cartListService;
-		//private readonly IOrderService _orderService;
-		//private readonly LibrarianEntity _adminEntity;
-		//private static List<BookGenreTypes> selectedBooksGenres;
-		public AddAuthorView()//IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService, IOrderService orderService, IAuthorService authorService, IWishListService wishListService, ICartListService cartListService)
+		public AddAuthorView()
 		{
-			////28
-			//// Лишні прибрати
-			//_bookService = bookService;
-			//_orderService = catalogService;
-			//_orderService = customerService;
-			//_orderService = librarianService;
-			//_authorService = authorService;
-			//_wishListService = wishListService;
-			//_cartListService = cartListService;
-			//_orderService = orderService;
-			//selectedBooksGenres = new List<BookGenreTypes>();
-			InitializeComponent();
-			//List <AuthorEntity> authors = _authorService.GetAll();
-			//authorsComboBox.ItemsSource = authors;
-			
+			InitializeComponent();		
 		}
-		//public void RefreshData<T>(DataGrid dataGrid, List<T> items)
-		//{
-		//	dataGrid.Items.Clear();
-		//	foreach (T entity in items)
-		//		dataGrid.Items.Add(entity);
-		//}
-		//public void RefreshData<T>(ComboBox comboBox, List<T> items)
-		//{
-		//	comboBox.ItemsSource = items;
-		//}
-		//private void AddAuthorBtn_Click(object sender, RoutedEventArgs e)
-		//{
-		//	AuthorEntity authorEntity = new()
-		//	{
-		//		Name = nameAuthorTextBox.Text,
-		//		Surname = surnameAuthorTextBox.Text,
-		//	};
-		//	_authorService.Create(authorEntity);
-		//	MessageBox.Show("Succesfully create a new Author");
-		//	nameAuthorTextBox.Text = "";
-		//	surnameAuthorTextBox.Text = "";
-
-		//	//RefreshData(authorsComboBox, _authorService.GetAll());
-		//	//authorsComboBox.DisplayMemberPath = "FullName";
-		//}
 	}
 }

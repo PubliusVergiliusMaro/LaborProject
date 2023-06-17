@@ -10,6 +10,19 @@
         <Style x:Key="IconButtonStyle">
             <Setter Property="ItemsControl.Margin" Value="0,0,20,0"/>
         </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="ItemsControl.Background" Value="Black"/>
+            <Setter Property="ItemsControl.Foreground" Value="White"/>
+            <Setter Property="ItemsControl.Width" Value="260"/>
+            <Setter Property="ItemsControl.Height" Value="40"/>
+            <Setter Property="ItemsControl.FontSize" Value="20"/>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="ItemsControl.Foreground" Value="DarkSlateGray" />
+                    <Setter Property="ItemsControl.BorderThickness" Value="2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid>
 
@@ -27,10 +40,13 @@
                     <RowDefinition Height="8*"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Background="Gainsboro" Grid.Row="0" Orientation="Vertical">
-                    <Grid HorizontalAlignment="Center" Margin="0 0 200 0">
-                        <Label Margin="0 0 0 0" Content="Search at:"/>
-                        <Label  Margin="60 0 0 0" Content="All"></Label>
+                <StackPanel Background="Black" Grid.Row="0" Orientation="Vertical">
+                    <Grid HorizontalAlignment="Center"  Margin="0 0 200 0">
+                        <StackPanel Orientation="Horizontal">
+                            
+                        <Label Foreground="White" FontSize="18" Margin="0 0 0 0" Content="Search at:"/>
+                            <Label Foreground="White" FontSize="18" Margin="0 0 0 0" Content="{Binding SearchParameter,UpdateSourceTrigger=PropertyChanged}"></Label>
+                        </StackPanel>
                     </Grid>
                     <StackPanel Margin="10" Orientation="Horizontal">
                         <TextBox Text="{Binding SearchLineText, UpdateSourceTrigger=PropertyChanged}" Width="500" Height="30"/>
@@ -65,7 +81,7 @@
                                             <RowDefinition Height="auto"/>
                                             <RowDefinition Height="auto"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock FontSize="25" Margin="10 0 0 0" FontWeight="Normal" Text="{Binding Title,UpdateSourceTrigger=PropertyChanged}" ></TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Width="550" FontSize="25" Margin="10 0 0 0" FontWeight="Normal" Text="{Binding Title,UpdateSourceTrigger=PropertyChanged}" ></TextBlock>
                                         <TextBlock  FontSize="22" Text="{Binding Author.FullName,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"  Margin="10 20 0 0" Width="300"/>
                                     </Grid>
                                 </Grid>
@@ -83,7 +99,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0" Background="Gainsboro">
+                <Grid Grid.Row="0" Background="White">
 
                     <StackPanel Orientation="Horizontal">
 
@@ -92,15 +108,15 @@
                             <Button.Template>
                                 <ControlTemplate>
                                     <Grid>
-                                        <Image Source="/Images/PagesIcons/basketIcon.png" Width="50" Height="40" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                                        <Border CornerRadius="15" Background="Red" Margin="30,21,7,16"/>
-                                        <TextBlock Height="30" FontSize="13" Text="{Binding BooksInCart, UpdateSourceTrigger=PropertyChanged}" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,21,0,0" TextAlignment="Center" Width="17"/>
+                                        <Image Source="/Images/PagesIcons/basketIcon.png" Width="70" Height="60" Margin="0 -10 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                        <Border CornerRadius="15" Background="Red" Margin="34,18,0,15"/>
+                                        <TextBlock Height="30" FontSize="13" Text="{Binding BooksInCart, UpdateSourceTrigger=PropertyChanged}" Foreground="Beige"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="35.5,20,0,0" TextAlignment="Center" Width="17"/>
                                         
                                     </Grid>
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button Margin="0 3 20 0" Style="{StaticResource IconButtonStyle}" Command="{Binding WishListCommand}" Width="60" VerticalAlignment="Top" Height="55">
+                        <Button Margin="10 3 20 0" Style="{StaticResource IconButtonStyle}" Command="{Binding WishListCommand}" Width="60" VerticalAlignment="Top" Height="55">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Grid>
@@ -120,7 +136,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button Margin="0 3 20 0" Style="{StaticResource IconButtonStyle}" Command="{Binding ProfileCommand}" Width="65" Height="65" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Button Margin="-5 0 0 0" Style="{StaticResource IconButtonStyle}" Command="{Binding ProfileCommand}" Width="65" Height="65" HorizontalAlignment="Right" VerticalAlignment="Top">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Grid>
@@ -139,10 +155,10 @@
                 <!--#endregion-->
 
                 <StackPanel Grid.Row="1" Margin="0,16,0,0">
-                    <Button Width="180" Height="40" Grid.Row="0" Command="{Binding MakeOrderCommand}" Margin="0 20 0 0">Make Order</Button>
+                    <Button Style="{StaticResource ButtonStyle}" Grid.Row="0" Command="{Binding MakeOrderCommand}" Margin="0 20 0 0">Make Order</Button>
                 </StackPanel>
                 <Grid Grid.Row="2">
-                    <Button Content="Back" Command="{Binding BackCommand}" Width="180" Height="40" VerticalAlignment="Bottom" Margin="0 0 0 10" />
+                    <Button Style="{StaticResource ButtonStyle}" Content="Back" Command="{Binding BackCommand}" VerticalAlignment="Bottom" Margin="0 0 0 10" />
                 </Grid>
 
             </Grid>

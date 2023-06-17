@@ -6,13 +6,20 @@
              xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1250">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="ItemsControl.Background" Value="Black"/>
+            <Setter Property="ItemsControl.Foreground" Value="White"/>
+            <Setter Property="ItemsControl.FontSize" Value="13"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <StackPanel Orientation="Vertical" Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label>Name</Label>
+            <Label FontSize="15">Name</Label>
             <TextBox x:Name="nameAuthorTextBox" Text="{Binding AddAuthorViewModel.Name, UpdateSourceTrigger=PropertyChanged}" Width="200"></TextBox>
-            <Label>Surname</Label>
+            <Label FontSize="15">Surname</Label>
             <TextBox x:Name="surnameAuthorTextBox" Text="{Binding AddAuthorViewModel.Surname, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <Button Content="Add Author" Height="30" Command="{Binding AddAuthorViewModel.AddAuthorCommand}" Margin="0 90 0 0"/>
+            <Button Content="Add Author" Height="30" Style="{StaticResource ButtonStyle}" Command="{Binding AddAuthorViewModel.AddAuthorCommand}" Margin="0 90 0 0"/>
         </StackPanel>
     </Grid>
 </UserControl>

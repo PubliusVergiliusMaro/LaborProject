@@ -10,6 +10,10 @@
         <Style x:Key="LabelStyle">
             <Setter Property="ItemsControl.FontSize" Value="30"/>
         </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="ItemsControl.Background" Value="Black"/>
+            <Setter Property="ItemsControl.Foreground" Value="White"/>
+        </Style>
     </UserControl.Resources>
 
     <Grid ShowGridLines="True">
@@ -101,14 +105,7 @@
                 </TabItem>
             </TabControl>
 
-            <Button 
-             Width="125" 
-             Height="45"
-             VerticalAlignment="Bottom" 
-             HorizontalAlignment="Left" 
-             Margin="10,0,0,10"
-             Command="{Binding BackCommand}">Back To Menu</Button>
+            <Button FontSize="20" Style="{StaticResource ButtonStyle}" Width="200" Height="45" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10" Command="{Binding BackCommand}">Back To Menu</Button>
         </Grid>
-
     </Grid>
 </UserControl>

@@ -6,6 +6,13 @@
              xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
              mc:Ignorable="d" 
                d:DesignHeight="800" d:DesignWidth="1250">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="ItemsControl.Background" Value="Black"/>
+            <Setter Property="ItemsControl.Foreground" Value="White"/>
+            <Setter Property="ItemsControl.FontSize" Value="13"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
@@ -54,8 +61,8 @@
 
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="2">
-                <Button Command="{Binding EditCustomersViewModel.DeleteSelectedCustomerCommand}" x:Name="DeleteCustomerBtn" Margin="0 50 0 0" Width="150" Height="30">Delete Selected Customer</Button>
-                <Button Command="{Binding EditCustomersViewModel.BannedSelectedCustomerCommand}" x:Name="AddToBlackListCustomerBtn" Margin="0 20 0 0" Width="200" Height="30">Add To Black List Selected Customer</Button>
+                <Button Style="{StaticResource ButtonStyle}" Command="{Binding EditCustomersViewModel.DeleteSelectedCustomerCommand}" x:Name="DeleteCustomerBtn" Margin="0 50 0 0" Width="230" Height="40">Delete Selected Customer</Button>
+                <Button Style="{StaticResource ButtonStyle}" Command="{Binding EditCustomersViewModel.BannedSelectedCustomerCommand}" x:Name="AddToBlackListCustomerBtn" Margin="0 20 0 0" Width="230" Height="40">Add To Black List Selected Customer</Button>
                 <!--<Button Margin="0 20 0 0" Width="150" Height="30"></Button>-->
             </StackPanel>
         </Grid>

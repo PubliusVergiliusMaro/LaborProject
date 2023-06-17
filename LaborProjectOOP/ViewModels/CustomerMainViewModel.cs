@@ -10,6 +10,7 @@ using LaborProjectOOP.Services.CustomerServices;
 using LaborProjectOOP.Services.LibrarianServices;
 using LaborProjectOOP.Services.OrderHistoryServices;
 using LaborProjectOOP.Services.WishListServices;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -65,7 +66,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
                 CustomerAvatarSource = _currentCustomer.AvatarImagePath;
             NotFoundBook = Visibility.Hidden;
             BooksList = Visibility.Visible;
-
+            SearchParameter = "All";
          
             _genres = new ObservableCollection<BookGenreTypes>(Enum.GetValues(typeof(BookGenreTypes)).Cast<BookGenreTypes>().ToArray());
             CartCommand = new DelegateCommand(OpenCart);
@@ -84,6 +85,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
         private void ClearFilters()
         {
             SelectedCatalog = _catalogs.Where(c => c.Name == "None").FirstOrDefault();
+            SearchParameter = "All";
             SelectedGenre = 0;
         }
 
@@ -209,10 +211,20 @@ namespace LaborProjectOOP.Dekstop.ViewModels
                     _selectedCatalog = value;
                     OnPropertyChanged(nameof(SelectedCatalog));
                     SetBooksToListBox();
+
                 }
             }
         }
-
+        private string _searchParameter;
+        public string SearchParameter
+        {
+            get => _searchParameter;
+            set
+            {
+                _searchParameter = value;
+                OnPropertyChanged(nameof(SearchParameter));
+            }
+        }
         private static ObservableCollection<BookGenreTypes> _genres;
         public static IEnumerable<BookGenreTypes> Genres => _genres;
         private static BookGenreTypes _selectedGenre;
@@ -261,15 +273,18 @@ namespace LaborProjectOOP.Dekstop.ViewModels
                 {
                     if (SelectedCatalog.Name != "None")
                     {
+                        SearchParameter = $"Catalog: {SelectedCatalog.Name} + Genre: {SelectedGenre}";
                         foreach (BookEntity book in bksFromDb
                             .Where(book => book.Catalog == SelectedCatalog && book.Genres.Contains(SelectedGenre))
                             .Where(book => book.Title.Contains(SearchLineText)))
                         {
                             _books.Add(book);
                         }
+
                     }
                     else
                     {
+                        SearchParameter = $"Genre: {SelectedGenre}";
                         foreach (BookEntity book in bksFromDb
                             .Where(book => book.Genres.Contains(SelectedGenre))
                             .Where(book => book.Title.Contains(SearchLineText)))
@@ -280,8 +295,9 @@ namespace LaborProjectOOP.Dekstop.ViewModels
                 }
                 else
                 {
+                    
                     if (SelectedCatalog.Name != "None")
-                    {
+                    {   SearchParameter = $"Catalog: {SelectedCatalog.Name}";
                         foreach (BookEntity book in bksFromDb
                             .Where(book => book.Catalog == SelectedCatalog)
                             .Where(book => book.Title.Contains(SearchLineText)))
@@ -291,6 +307,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
                     }
                     else
                     {
+                        SearchParameter = "All";
                         foreach (BookEntity book in bksFromDb
                             .Where(book => book.Title.Contains(SearchLineText)))
                         {

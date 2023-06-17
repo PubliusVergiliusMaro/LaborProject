@@ -6,16 +6,23 @@
              xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
              mc:Ignorable="d" 
             d:DesignHeight="800" d:DesignWidth="1250">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="ItemsControl.Background" Value="Black"/>
+            <Setter Property="ItemsControl.Foreground" Value="White"/>
+            <Setter Property="ItemsControl.FontSize" Value="13"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" VerticalAlignment="Center">
             <StackPanel  Orientation="Vertical" Margin="0 100 0 0">
                 <Label HorizontalAlignment="Center">Title</Label>
                 <TextBox Text="{Binding AddCatalogViewModel.Name, UpdateSourceTrigger=PropertyChanged}"  Width="300" Height="30"></TextBox>
-                <Button Content="Create Catalog" Margin="0 20 0 0" Width="250" Height="30" Command="{Binding AddCatalogViewModel.CreateCatalogCommand}"/>
+                <Button Style="{StaticResource ButtonStyle}" Content="Create Catalog" Margin="0 20 0 0" Width="250" Height="30" Command="{Binding AddCatalogViewModel.CreateCatalogCommand}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">

@@ -68,18 +68,13 @@ namespace LaborProjectOOP
 		{
 			_navigationStore.CurrentViewModel = new LoginViewModel(
 				_navigationStore,_customerService,_librarianService,_wishListService,_cartListService,_catalogService,_bookService,_authorService,_orderService);
-			MainWindow = new MainWindow()//_bookService, _orderService, _orderService, _orderService, _orderService, _authorService, _wishListService, _cartListService)
+			MainWindow = new MainWindow()
 			{
-				DataContext = new MainViewModel(_navigationStore)//_customerService,_librarianService,_authorService,_catalogService,_bookService,_cartListService,_wishListService,_orderService)
+				DataContext = new MainViewModel(_navigationStore)
 			};
 
 			MainWindow.Show();
 			base.OnStartup(e);
 		}
-
-		//private ViewModelBase CreateLoginViewModel()
-		//{
-		//	return new LoginViewModel(_customerService, _librarianService);
-		//}
 	}
 }

@@ -6,6 +6,13 @@
              xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1250">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="ItemsControl.Background" Value="Black"/>
+            <Setter Property="ItemsControl.Foreground" Value="White"/>
+            <Setter Property="ItemsControl.FontSize" Value="13"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
@@ -50,7 +57,7 @@
 
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="2">
-                <Button x:Name="DeleteAuthorBtn" Margin="0 50 0 0" Width="150" Height="30" Command="{Binding EditAuthorsViewModel.DeleteSelectedAuthorCommand}">Delete Selected Author</Button>
+                <Button x:Name="DeleteAuthorBtn" Margin="0 50 0 0" Width="250" Height="40" FontSize="20" Style="{StaticResource ButtonStyle}" Command="{Binding EditAuthorsViewModel.DeleteSelectedAuthorCommand}">Delete Selected Author</Button>
                 <!--<Button Margin="0 20 0 0" Width="150" Height="30"></Button>-->
             </StackPanel>
         </Grid>

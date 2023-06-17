@@ -6,6 +6,13 @@
              xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
              mc:Ignorable="d" 
                d:DesignHeight="800" d:DesignWidth="1250">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="ItemsControl.Background" Value="Black"/>
+            <Setter Property="ItemsControl.Foreground" Value="White"/>
+            <Setter Property="ItemsControl.FontSize" Value="13"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -53,7 +60,7 @@
                 <ComboBox ItemsSource ="{Binding EditCatalogsViewModel.SortingTypes,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding EditCatalogsViewModel.SelectedSortType,UpdateSourceTrigger=PropertyChanged}"  x:Name="sortingCatalogsComboBox" Width="100" Height="30" Text="Sort Table"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="2">
-                <Button Margin="0 50 0 0" Width="150" Height="30" Command="{Binding EditCatalogsViewModel.DeleteSelectedCatalogCommand}">Delete Selected Catalog</Button>
+                <Button Style="{StaticResource ButtonStyle}" Margin="0 50 0 0" Width="220" Height="40" Command="{Binding EditCatalogsViewModel.DeleteSelectedCatalogCommand}">Delete Selected Catalog</Button>
                 <!--<Button Margin="0 20 0 0" Width="150" Height="30"></Button>-->
             </StackPanel>
         </Grid>

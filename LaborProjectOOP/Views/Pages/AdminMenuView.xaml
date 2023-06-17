@@ -6,28 +6,36 @@
              xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
              mc:Ignorable="d" 
               d:DesignHeight="800" d:DesignWidth="1250">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="ItemsControl.Background" Value="Black"/>
+            <Setter Property="ItemsControl.Foreground" Value="White"/>
+            <Setter Property="ItemsControl.Width" Value="300"/>
+            <Setter Property="ItemsControl.Height" Value="40"/>
+            <Setter Property="ItemsControl.FontSize" Value="20"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-
         <Grid x:Name="newPageGrid" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <Frame x:Name="pagesFrame" NavigationUIVisibility="Hidden"/>
         </Grid>
         <Grid x:Name="menuPageGrid" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <Grid>
                 <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
-                    <Button Width="200" Height="30" Command="{Binding EnterAsAdminCommand}">Enter as Admin</Button>
-                    <Button Width="200" Height="30" Command="{Binding EnterAsCustomerCommand}">Enter as Customer</Button>
+                    <Button  Style="{StaticResource ButtonStyle}" Command="{Binding EnterAsAdminCommand}">Enter as Admin</Button>
+                    <Button Margin="0 20 0 0" Style="{StaticResource ButtonStyle}" Command="{Binding EnterAsCustomerCommand}">Enter as Customer</Button>
                 </StackPanel>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="169*"/>
-                    <ColumnDefinition Width="1081*"/>
+                    <ColumnDefinition Width="291*"/>
+                    <ColumnDefinition Width="959*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="719*"/>
                     <RowDefinition Height="81*"/>
                 </Grid.RowDefinitions>
-                <Button Grid.Column="0" Grid.Row="1" Margin="10 0 0 0" Height="50" FontSize="20" Command="{Binding BackCommand}">Back to Autoriz</Button>
+                <Button Grid.Column="0" Width="180" Grid.Row="1" Margin="0 0 0 0" Style="{StaticResource ButtonStyle}" Command="{Binding BackCommand}">Back to Autoriz</Button>
             </Grid>
 
         </Grid>

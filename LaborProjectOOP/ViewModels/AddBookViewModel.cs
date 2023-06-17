@@ -51,7 +51,8 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 		{
 			return 
 				!string.IsNullOrEmpty(SelectedGenre.ToString()) &&
-				!SelectedGenres.Contains(SelectedGenre);
+				!SelectedGenres.Contains(SelectedGenre)&&
+				SelectedGenre != BookGenreTypes.None;
 		}
 
 		private bool CanAddBook()
@@ -83,7 +84,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
 			Price= 0;
 			BookImagePath = DefaultImagePath;
 			SelectedAuthor = null;
-			_selectedGenre = BookGenreTypes.None;
+			SelectedGenre = BookGenreTypes.None;
 			_selectedGenres.Clear();
 		}
 

@@ -22,10 +22,12 @@
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="ItemsControl.Width" Value="200"/>
             <Setter Property="ItemsControl.Height" Value="200"/>
-            <Setter Property="ItemsControl.Background" Value="DarkCyan"/>
-            <Setter Property="ItemsControl.Foreground" Value="Black"/>
-            <Setter Property="ItemsControl.BorderBrush" Value="DarkCyan"/>
+            <Setter Property="ItemsControl.Background" Value="Black"/>
+            <Setter Property="ItemsControl.Foreground" Value="White"/>
+            <Setter Property="ItemsControl.BorderBrush" Value="Black"/>
             <Setter Property="ItemsControl.BorderThickness" Value="2"/>
+            <Setter Property="ItemsControl.FontSize" Value="20"/>
+
         </Style>
         <Style x:Key="GridStyle" TargetType="Grid">
             <Setter Property="ItemsControl.Background" Value="White"/>
@@ -60,7 +62,7 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Margin="0,30,0,0">
-                        <Button Width="300 " Height="30" FontSize="20" x:Name="selectAvatarImage"   Style="{StaticResource ButtonStyle}" Command="{Binding SelectAvtrImgCommand}" Content="Select Avatar Image"/>
+                        <Button Width="300 " Height="40" x:Name="selectAvatarImage"   Style="{StaticResource ButtonStyle}" Command="{Binding SelectAvtrImgCommand}" Content="Select Avatar Image"/>
                     </Grid>
                     <!--<Border CornerRadius="15"  Height="300"   Grid.Row="1">
                         <Ellipse Width="auto" Height="300">

@@ -20,27 +20,27 @@
         </Style>
 
         <Style x:Key="ButtonStyle">
-            <Setter Property="ItemsControl.Width" Value="150"/>
-            <Setter Property="ItemsControl.Height" Value="45"/>
+            <Setter Property="ItemsControl.Width" Value="168"/>
+            <Setter Property="ItemsControl.Height" Value="55"/>
+            <Setter Property="ItemsControl.Background" Value="Black"/>
+            <Setter Property="ItemsControl.Foreground" Value="White"/>
+            <Setter Property="ItemsControl.FontSize" Value="25"/>
         </Style>
     </UserControl.Resources>
-    <Grid ShowGridLines="True">
+    <Grid>
         <Grid x:Name="newPageGrid">
             <Frame x:Name ="pagesFrame" NavigationUIVisibility="Hidden"></Frame>
         </Grid>
         <Grid x:Name="orderPageGrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.5*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
+            <Label Style="{StaticResource LabelStyle}" Height="40" Width="250"  Margin="100,50,0,0" VerticalAlignment="Top" Grid.Row="0">Order info</Label>
             <StackPanel Orientation="Vertical" 
                     Grid.Row="0" 
-                    HorizontalAlignment="Right" 
+                    HorizontalAlignment="Center" 
                     Margin="0 100 50 0" >
                 <Label Style="{StaticResource LabelStyle}">Login:</Label>
                 <Label x:Name="loginLabel" Content="{Binding CurrentCustomer.Login,UpdateSourceTrigger=PropertyChanged}" FontSize="20" Style="{StaticResource LabelStyle}"></Label>
@@ -48,12 +48,15 @@
                 <Label x:Name="emailLabel" Content="{Binding CurrentCustomer.Email,UpdateSourceTrigger=PropertyChanged}"  FontSize="20" Style="{StaticResource LabelStyle}"></Label>
                 <Label Style="{StaticResource LabelStyle}">Phone Number:</Label>
                 <Label x:Name="phoneLabel" Content="{Binding CurrentCustomer.Phone,UpdateSourceTrigger=PropertyChanged}" FontSize="20" Style="{StaticResource LabelStyle}"></Label>
+                <Label Content="Cart:" FontSize="25" Style="{StaticResource LabelStyle}"></Label>
+
                 <DataGrid 
                       x:Name="booksListDataGrid"
                       IsReadOnly="True" 
-                      Height="200"
+                      Height="150"
                 Width="500"
-                Margin="0 50 0 0"
+                Margin="0 0 0 0"
+                          AutoGenerateColumns="False"
                     ItemsSource="{Binding Books,UpdateSourceTrigger=PropertyChanged}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="100" Header="Title" Binding="{Binding Title}"></DataGridTextColumn>
@@ -77,13 +80,13 @@
                 </StackPanel>
             </Grid>-->
 
-            <Grid Grid.Row="2" Grid.Column="0" ShowGridLines="True">
+            <Grid Grid.Row="2" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
-                <Label Style="{StaticResource LabelStyle}" Height="40" Width="250"  Margin="350,0,0,0" Grid.Row="0">Everything Correct?</Label>
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,50" Width="600" Grid.Row="1">
+                
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,0,0,50" Width="600" Grid.Row="1">
                     <Button Margin="0 0 50 0" Style="{StaticResource ButtonStyle}" Command="{Binding CancelCommand}">Cancel</Button>
                     <Button x:Name="editCartBtn" Margin="0 0 0 0" Style="{StaticResource ButtonStyle}" Command="{Binding EditCartCommand}">Edit Cart</Button>
                     <Button Margin="50 0 0 0" Style="{StaticResource ButtonStyle}" Command="{Binding MakeOrderCommand}">Make order</Button>

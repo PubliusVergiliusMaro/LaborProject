@@ -16,29 +16,9 @@ namespace LaborProjectOOP.Dekstop.Views
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		// Лишні прибрати
-	//	private readonly IBookService _bookService;
-		//private readonly ICatalogService _orderService;
-		//private readonly ICustomerService _orderService;
-		//private readonly ILibrarianService _orderService;
-		//private readonly IAuthorService _authorService;
-		//private readonly IWishListService _wishListService;
-		//private readonly ICartListService _cartListService;
-	//	private readonly IOrderService _orderService;
-
-		public MainWindow()//IBookService bookService, ICatalogService catalogService, ICustomerService customerService, ILibrarianService librarianService,  IOrderService orderService, IAuthorService authorService, IWishListService wishListService, ICartListService cartListService)
+		public MainWindow()
 		{
-			// Лишні прибрати
-			//_bookService = bookService;
-			//_orderService = catalogService;
-			//_orderService = customerService;
-			//_orderService = librarianService;
-			//_authorService = authorService;
-			//_wishListService= wishListService;
-			//_cartListService= cartListService;
-			//_orderService= orderService;
 			InitializeComponent();
-			//pagesFrame.Navigate(new LoginPage(_bookService, _orderService, _orderService, _orderService, _orderService, _authorService,_wishListService,_cartListService));
 		}
 	}
 }

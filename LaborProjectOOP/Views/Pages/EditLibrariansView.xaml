@@ -6,6 +6,13 @@
              xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1250">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="ItemsControl.Background" Value="Black"/>
+            <Setter Property="ItemsControl.Foreground" Value="White"/>
+            <Setter Property="ItemsControl.FontSize" Value="13"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -61,10 +68,10 @@
                 </Grid>
                 <Grid Grid.Row="1">
                     <StackPanel>
-                        <Button Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Command="{Binding EditLibrariansViewModel.MakeAnAdminCommand}">
+                        <Button Style="{StaticResource ButtonStyle}" Width="190" Margin="0 10 0 0" Height="50" FontSize="15" Command="{Binding EditLibrariansViewModel.MakeAnAdminCommand}">
                             Make selected an Admin
                         </Button>
-                        <Button Margin="0 40 0 0" Width="190" Height="50" FontSize="20" Command="{Binding EditLibrariansViewModel.DeleteSelectedLibrarianCommand}">
+                        <Button Style="{StaticResource ButtonStyle}" Margin="0 20 0 0" Width="190" Height="50" FontSize="20" Command="{Binding EditLibrariansViewModel.DeleteSelectedLibrarianCommand}">
                             Delete Selected
                         </Button>
                     </StackPanel>

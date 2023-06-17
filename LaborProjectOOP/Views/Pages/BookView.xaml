@@ -7,7 +7,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <Style x:Key="LabelStyle">
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="ItemsControl.FontSize" Value="18"/>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="DarkSlateGray"/>
+                    <Setter Property="BorderThickness" Value="3"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </UserControl.Resources>
     <Grid>
@@ -44,7 +53,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Content="Title:" FontSize="20" Grid.Column="0"/>
-                    <TextBlock Text="{Binding SelectedBook.Title,UpdateSourceTrigger=PropertyChanged}" Margin="0 3 0 0" FontSize="20" Grid.Column="1"/>
+                    <TextBlock Text="{Binding SelectedBook.Title,UpdateSourceTrigger=PropertyChanged}" Margin="0 5 0 0" FontSize="20" Grid.Column="1"/>
                 </Grid>
 
                 <Grid  Grid.Row="1" Grid.Column="1">
@@ -52,8 +61,8 @@
                         <ColumnDefinition Width="135*"/>
                         <ColumnDefinition Width="437*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="Description" Grid.Column="0"/>
-                    <TextBlock Width="auto" TextWrapping="Wrap" Text="{Binding SelectedBook.Description,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+                    <Label FontSize="20" Content="Description:" Grid.Column="0"/>
+                    <TextBlock Width="auto" FontSize="15" TextWrapping="Wrap" Text="{Binding SelectedBook.Description,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
 
                 </Grid>
 
@@ -63,21 +72,21 @@
                         <ColumnDefinition Width="393*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Content="Price"  Grid.Column="0" />
-                    <TextBlock Text="{Binding SelectedBook.Price,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+                    <Label FontSize="20" Content="Price:"  Grid.Column="0" />
+                    <TextBlock FontSize="20" Margin="-150 6 0 0" Text="{Binding SelectedBook.Price,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
                 </Grid>
 
             </Grid>
             <Image Source="{Binding SelectedBook.ImagePath,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Height="300" Grid.Column="0" Grid.Row="1"></Image>
-            <Button Command="{Binding BackCommand}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" x:Name="backBtn">
+            <Button Style="{StaticResource ButtonStyle}" Command="{Binding BackCommand}" Width="130" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" x:Name="backBtn">
                 Back
             </Button>
             <Grid Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="160 0 0 0">
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="addToBuyListBtn" Width="200" Height="40" Margin="0 0 40 0" Command="{Binding AddToCartCommand}" >
+                    <Button Style="{StaticResource ButtonStyle}" x:Name="addToBuyListBtn" Width="200" Height="40" Margin="0 0 40 0" Command="{Binding AddToCartCommand}" >
                         Add to Cart
                     </Button>
-                    <Button x:Name="addToWishListListBtn" Width="200" Height="40"  Margin="40 0 0 0" Command="{Binding AddToWishListCommand}" >
+                    <Button Style="{StaticResource ButtonStyle}" x:Name="addToWishListListBtn" Width="200" Height="40"  Margin="40 0 0 0" Command="{Binding AddToWishListCommand}" >
                         Add to Wish List
                     </Button>
                 </StackPanel>

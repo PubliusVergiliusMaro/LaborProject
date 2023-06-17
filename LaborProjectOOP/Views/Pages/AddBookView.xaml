@@ -6,6 +6,16 @@
              xmlns:local="clr-namespace:LaborProjectOOP.Dekstop.Views.Pages"
              mc:Ignorable="d" 
             d:DesignHeight="800" d:DesignWidth="1250">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="ItemsControl.Background" Value="Black"/>
+            <Setter Property="ItemsControl.Foreground" Value="White"/>
+            <Setter Property="ItemsControl.FontSize" Value="13"/>
+        </Style>
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="ItemsControl.FontSize" Value="15"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
@@ -16,32 +26,32 @@
             <StackPanel Width="250" Height="575" Orientation="Vertical" VerticalAlignment="Center">
                 <Label>Select Genre for Book:</Label>
                 <ComboBox ItemsSource="{Binding AddBookViewModel.Genres,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding AddBookViewModel.SelectedGenre,UpdateSourceTrigger=PropertyChanged}" x:Name="genresComboBox" Margin="0 2 0 0"></ComboBox>
-                <Button x:Name="AddGenreForBook" Margin="0 30 0 0" Height="35" Command="{Binding AddBookViewModel.AddGenreCommand}" >Add For Book</Button>
+                <Button x:Name="AddGenreForBook" Margin="0 30 0 0" Height="35" Style="{StaticResource ButtonStyle}" Command="{Binding AddBookViewModel.AddGenreCommand}" >Add For Book</Button>
             </StackPanel>
         </Grid>
         <StackPanel Grid.Column="1" Width="300" Orientation="Vertical" Margin="0,100,0,0" HorizontalAlignment="Center">
-            <Label>Title:</Label>
+            <Label Style="{StaticResource LabelStyle}">Title:</Label>
             <TextBox Text="{Binding AddBookViewModel.Title,UpdateSourceTrigger=PropertyChanged}" x:Name="titleTextBox"></TextBox>
-            <Label>Description:</Label>
+            <Label Style="{StaticResource LabelStyle}">Description:</Label>
             <ScrollViewer Width="280" Height="100">
                 <TextBox TextWrapping="Wrap" Text="{Binding AddBookViewModel.Description, UpdateSourceTrigger=PropertyChanged}" 
              x:Name="descriptionTextBox"/>
             </ScrollViewer>
-            <Label Width="100">Price:</Label>
+            <Label Style="{StaticResource LabelStyle}" Width="100">Price:</Label>
             <TextBox Width="100" Text="{Binding AddBookViewModel.Price, UpdateSourceTrigger=PropertyChanged}" x:Name="priceTextBox"></TextBox>
-            <Label>Authors:</Label>
+            <Label Style="{StaticResource LabelStyle}">Authors:</Label>
             <StackPanel  Orientation="Horizontal">
                 <ComboBox Width="167" ItemsSource="{Binding AddBookViewModel.Authors, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding AddBookViewModel.SelectedAuthor,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="FullName" x:Name="authorsComboBox"></ComboBox>
-                    <Button Margin="3 0 0 0" Width="60" Height="30" Command="{Binding AddBookViewModel.UpdateAuthorsCommand}">
+                    <Button Margin="3 0 0 0" Width="60" Height="30" Style="{StaticResource ButtonStyle}" Command="{Binding AddBookViewModel.UpdateAuthorsCommand}">
                     <TextBlock TextWrapping="Wrap" FontSize="11" >Update List</TextBlock>
                 </Button>
             </StackPanel>
-            
-            <Label>Genres List:</Label>
+
+            <Label Style="{StaticResource LabelStyle}">Genres List:</Label>
             <Grid Width="100" Margin="0 0 0 0" Height="auto">
                 <ListView ItemsSource="{Binding AddBookViewModel.SelectedGenres, UpdateSourceTrigger=PropertyChanged}" x:Name="selectedGenresListView" Height="50"/>
             </Grid>
-            <Button x:Name="addBookBtn" Command="{Binding AddBookViewModel.AddBookCommand}" Content="Add" Height="30" Width="200" Margin="0 30 0 0"/>
+            <Button x:Name="addBookBtn" Style="{StaticResource ButtonStyle}" Command="{Binding AddBookViewModel.AddBookCommand}" FontSize="20" Content="Add" Height="40" Width="230" Margin="0 30 0 0"/>
         </StackPanel>
 
         <Grid Grid.Column="2" Margin="0,0,10,0">
@@ -51,7 +61,7 @@
                 <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="1">
-                <Button x:Name="addImageBtn" Command="{Binding AddBookViewModel.AddImageCommand}" FontSize="25" >Add Image</Button>
+                <Button x:Name="addImageBtn" Style="{StaticResource ButtonStyle}" Command="{Binding AddBookViewModel.AddImageCommand}" FontSize="25" >Add Image</Button>
             </Grid>
             <Grid Grid.Row="2">
                 <Image Source="{Binding AddBookViewModel.BookImagePath, UpdateSourceTrigger=PropertyChanged}"></Image>
