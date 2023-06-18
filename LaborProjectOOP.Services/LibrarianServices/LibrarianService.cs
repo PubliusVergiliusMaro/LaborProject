@@ -73,10 +73,5 @@ namespace LaborProjectOOP.Services.LibrarianServices
 				return false;
 			}
 		}
-
-		public async static Task<List<LibrarianEntity>> GetLibrarians() =>
-	    JsonConvert.DeserializeObject<List<LibrarianEntity>>(await File.ReadAllTextAsync(Constants.Constants.Constants.LIBRARIAN_FILE_PATH));
-		public async static Task SaveLibrarians(List<LibrarianEntity> librarians) =>
-		await File.WriteAllTextAsync(Constants.Constants.Constants.LIBRARIAN_FILE_PATH, JsonConvert.SerializeObject(librarians));
 	}
 }

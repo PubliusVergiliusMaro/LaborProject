@@ -100,10 +100,5 @@ namespace LaborProjectOOP.Services.CustomerServices
 				return false;
 			}
 		}
-
-		public async Task<List<CustomerEntity>> GetCustomersFromFile() =>
-			JsonConvert.DeserializeObject<List<CustomerEntity>>(File.ReadAllText(Constants.Constants.Constants.CUSTOMER_FILE_PATH));
-		public async Task SaveCustomersToFile(List<CustomerEntity> customers) =>
-			File.WriteAllText(Constants.Constants.Constants.CUSTOMER_FILE_PATH, JsonConvert.SerializeObject(customers));
 	}
 }

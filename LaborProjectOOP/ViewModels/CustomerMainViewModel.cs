@@ -47,8 +47,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
             _authorService = authorService;
             _orderService = orderService;
             _IsAdmin = IsAdmin;
-            bksFromDb = _bookService.GetAll();
-            
+            bksFromDb = _bookService.GetAll();           
             _catalogs = new ObservableCollection<CatalogEntity>(_catalogService.GetAll())
             {
                 new CatalogEntity { Name = "None" }
@@ -60,10 +59,8 @@ namespace LaborProjectOOP.Dekstop.ViewModels
             SelectedGenre = BookGenreTypes.None;
             SelectedCatalog = _catalogs.Where(c => c.Name == "None").FirstOrDefault();
             SearchLineText = "";
-            if (_IsAdmin)
-                CustomerAvatarSource =  @"/Images/Avatars/adminAvatar.png";
-            else
-                CustomerAvatarSource = _currentCustomer.AvatarImagePath;
+            if (_IsAdmin) CustomerAvatarSource =  @"/Images/Avatars/adminAvatar.png";  
+            else CustomerAvatarSource = _currentCustomer.AvatarImagePath;
             NotFoundBook = Visibility.Hidden;
             BooksList = Visibility.Visible;
             SearchParameter = "All";
@@ -79,16 +76,12 @@ namespace LaborProjectOOP.Dekstop.ViewModels
         }
         private bool CanOpen()=> _currentCustomer.CartList.Count != 0 && !_IsAdmin;
         private bool CanOpe() => !_IsAdmin;
-
-        private void ShowBookInfo() => _navigationStore.CurrentViewModel = new BookPageViewModel(SelectedBook, _navigationStore, _currentCustomer, _IsAdmin, _catalogService, _bookService, _customerService, _librarianService, _cartListService, _wishListService, _authorService, _orderService);
-
         private void ClearFilters()
         {
             SelectedCatalog = _catalogs.Where(c => c.Name == "None").FirstOrDefault();
             SearchParameter = "All";
             SelectedGenre = 0;
         }
-
         private void Back()
         {
             if (_IsAdmin)
@@ -97,29 +90,12 @@ namespace LaborProjectOOP.Dekstop.ViewModels
             }
             else
                 _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore, _customerService, _librarianService, _wishListService, _cartListService, _catalogService, _bookService, _authorService, _orderService);
-
-        }//{
-         //	MessageBox.Show("We go Back");
-         //}
+        }
 
         private void OpenProfile() => _navigationStore.CurrentViewModel = new EditProfileViewModel(_navigationStore, _currentCustomer, _catalogService, _bookService, _customerService, _librarianService, _cartListService, _wishListService, _authorService, _orderService);
-        //{
-        //	MessageBox.Show("We go to Profile");
-        //}
-
         private void OpenOrdersHistory() => _navigationStore.CurrentViewModel = new CustomerOrderHistoryViewModel(_navigationStore, _currentCustomer, _IsAdmin, _catalogService, _bookService, _customerService, _librarianService, _cartListService, _wishListService, _authorService, _orderService);
-        //{
-        //	MessageBox.Show("We go to History");
-        //}
-
         private void OpenWishList() => _navigationStore.CurrentViewModel = new CustomerActivitiesViewModel(_navigationStore, _currentCustomer, _IsAdmin, CustomerActivitiesInfoType.WishList, _catalogService, _bookService, _customerService, _librarianService, _cartListService, _wishListService, _authorService, _orderService);
-        //{
-        //	MessageBox.Show("We go to wishList"); ;
-        //}
-
         private void OpenCart() => _navigationStore.CurrentViewModel = new CustomerActivitiesViewModel(_navigationStore, _currentCustomer, _IsAdmin, CustomerActivitiesInfoType.CartList, _catalogService, _bookService, _customerService, _librarianService, _cartListService, _wishListService, _authorService, _orderService);
-
-
         private void MakeOrder()
         {
             if (_currentCustomer.CartList.Count != 0)
@@ -244,10 +220,8 @@ namespace LaborProjectOOP.Dekstop.ViewModels
                 }
             }
         }
-
         private static ObservableCollection<BookEntity> _books;
         public static ICollection<BookEntity> Books => _books;
-
         private static BookEntity _selectedBook;
         public BookEntity SelectedBook
         {
@@ -280,7 +254,6 @@ namespace LaborProjectOOP.Dekstop.ViewModels
                         {
                             _books.Add(book);
                         }
-
                     }
                     else
                     {
@@ -294,8 +267,7 @@ namespace LaborProjectOOP.Dekstop.ViewModels
                     }
                 }
                 else
-                {
-                    
+                {                    
                     if (SelectedCatalog.Name != "None")
                     {   SearchParameter = $"Catalog: {SelectedCatalog.Name}";
                         foreach (BookEntity book in bksFromDb

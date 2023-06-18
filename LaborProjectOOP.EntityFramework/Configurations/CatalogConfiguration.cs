@@ -11,7 +11,6 @@ namespace LaborProjectOOP.EntityFramework.Configurations
 			builder
 				.ToTable("Catalogs")
 				.HasKey(c => c.Id);
-
 		}
 	}
 }

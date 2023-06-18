@@ -16,8 +16,7 @@ namespace LaborProjectOOP.EntityFramework.Configurations
 				.WithMany(cust=>cust.CartList)
 				.HasForeignKey(cart => cart.CustomerFK)
 				.OnDelete(DeleteBehavior.Cascade);
-				
-				
+							
 			builder
 				.HasOne(cart => cart.Book)
 				.WithMany(book => book.CartLists)

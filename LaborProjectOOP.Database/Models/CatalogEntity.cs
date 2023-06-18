@@ -1,6 +1,6 @@
 ﻿namespace LaborProjectOOP.Database.Models
 {
-	public class CatalogEntity //: IEnumerator 
+	public class CatalogEntity
 	{
 		public CatalogEntity()
 		{
@@ -9,36 +9,5 @@
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public ICollection<BookEntity> Books { get; set; }
-
-
-		#region Lab3
-
-		//private int _position=-1;
-		//public object Current
-		//{
-		//	get
-		//	{
-		//		try
-		//		{
-		//			return Orders[_position];
-		//		}
-		//		catch(Exception e)
-		//		{
-		//			throw new ArgumentException($"Error: {e.Message}");
-		//		}
-		//	}
-		//}
-
-		//public bool MoveNext()
-		//{
-		//	_position++;
-		//	return (_position < Orders.Count );
-		//}
-
-		//public void Reset()
-		//{
-		//	_position = -1;
-		//}
-		#endregion
 	}
 }

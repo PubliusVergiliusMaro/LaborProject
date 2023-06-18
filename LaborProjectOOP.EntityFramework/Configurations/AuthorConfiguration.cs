@@ -10,8 +10,7 @@ namespace LaborProjectOOP.EntityFramework.Configurations
 		{
 			builder
 				.ToTable("Authors")
-				.HasKey(a => a.Id);
-			
+				.HasKey(a => a.Id);			
 		}
 	}
 }

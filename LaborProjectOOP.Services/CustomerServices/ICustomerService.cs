@@ -14,7 +14,5 @@ namespace LaborProjectOOP.Services.CustomerServices
 		List<CustomerEntity> GetAll();
 		Task<CustomerEntity> GetById(int id);
 		Task<bool> Update(CustomerEntity customer);
-		Task<List<CustomerEntity>> GetCustomersFromFile();
-		Task SaveCustomersToFile(List<CustomerEntity> customers);
 	}
 }
